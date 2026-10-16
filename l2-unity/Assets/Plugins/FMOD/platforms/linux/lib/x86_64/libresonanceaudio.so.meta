@@ -3,70 +3,97 @@ guid: bca6f630c310b4945b52486d2ed1da0a
 timeCreated: 1511469552
 licenseType: Store
 PluginImporter:
-  serializedVersion: 1
+  externalObjects: {}
+  serializedVersion: 2
   iconMap: {}
   executionOrder: {}
   isPreloaded: 0
   isOverridable: 0
   platformData:
-    Android:
+  - first:
+      Android: Android
+    second:
       enabled: 0
       settings:
         CPU: ARMv7
-    Any:
+  - first:
+      Any:
+    second:
       enabled: 0
       settings:
         CPU: AnyCPU
-    Editor:
+  - first:
+      Editor: Editor
+    second:
       enabled: 1
       settings:
         CPU: x86_64
         DefaultValueInitialized: true
         OS: Linux
-    Linux:
+  - first:
+      Standalone: Linux
+    second:
       enabled: 0
       settings:
         CPU: None
-    Linux64:
+  - first:
+      Standalone: Linux64
+    second:
       enabled: 1
       settings:
         CPU: x86_64
-    LinuxUniversal:
+  - first:
+      Standalone: LinuxUniversal
+    second:
       enabled: 1
       settings:
         CPU: x86_64
-    OSXIntel:
+  - first:
+      Standalone: OSXIntel
+    second:
       enabled: 0
       settings:
         CPU: None
-    OSXIntel64:
+  - first:
+      Standalone: OSXIntel64
+    second:
       enabled: 0
       settings:
         CPU: None
-    OSXUniversal:
+  - first:
+      Standalone: OSXUniversal
+    second:
       enabled: 0
       settings:
         CPU: None
-    SamsungTV:
+  - first:
+      SamsungTV: SamsungTV
+    second:
       enabled: 0
       settings:
         STV_MODEL: STANDARD_15
-    Win:
+  - first:
+      Standalone: Win
+    second:
       enabled: 0
       settings:
         CPU: None
-    Win64:
+  - first:
+      Standalone: Win64
+    second:
       enabled: 0
       settings:
         CPU: AnyCPU
-    iOS:
+  - first:
+      iOS: iOS
+    second:
       enabled: 0
       settings:
-        CompileFlags: 
-        FrameworkDependencies: 
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+        CompileFlags:
+        FrameworkDependencies:
+  userData:
+  assetBundleName:
+  assetBundleVariant:
 AssetOrigin:
   serializedVersion: 1
   productId: 161631

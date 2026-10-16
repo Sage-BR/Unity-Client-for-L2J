@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +20,7 @@ public class FlotatingText {
 
 public class DamageText : MonoBehaviour {
 
-    public FlotatingText myText;
+    [System.NonSerialized] public FlotatingText myText;
 
     void Start() {
         transform.SetParent(GameObject.Find("Damages").transform);

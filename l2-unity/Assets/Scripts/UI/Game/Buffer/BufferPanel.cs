@@ -20,8 +20,8 @@ public class BufferPanel : L2Window
     private int[] _weightPenalty;
     private int[] _weaponPenalty;
     public static BufferPanel Instance { get { return _instance; } }
-    public BLink _bLink;
-    public VisualElement _content;
+    [System.NonSerialized] public BLink _bLink;
+    [System.NonSerialized] public VisualElement _content;
     private FilterData _filterData;
 
     [Inject] SkillgrpTable _skillGrps;
@@ -38,7 +38,7 @@ public class BufferPanel : L2Window
             _instance = this;
             _dictElement = new Dictionary<int, DataCell>();
             _filterData = new FilterData(_dictElement);
-            _bLink = new BLink(this);
+          _bLink = new BLink(this);
         }
         else
         {
@@ -58,7 +58,7 @@ public class BufferPanel : L2Window
         InitWindow(root);
 
         var dragArea = GetElementByClass("drag-area");
-        _content = GetElementById("content");
+      _content = GetElementById("content");
         
         DragManipulator drag = new DragManipulator(dragArea, _windowEle);
         dragArea.AddManipulator(drag);

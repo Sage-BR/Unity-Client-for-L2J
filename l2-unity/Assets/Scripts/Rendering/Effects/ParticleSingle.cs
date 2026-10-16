@@ -45,9 +45,15 @@ public class ParticleSingle : EffectPart
     private readonly ParticleSingleLifetimeTracker _lifetime = new ParticleSingleLifetimeTracker();
     private readonly L2ShaderHoldController _holdController = new L2ShaderHoldController();
 
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     private float _lastShaderFadeDiagLog;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     private float _lastQuadSizeDiagLog;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     private bool _loggedHalfSecondCheckpoint;
+#endif
     private uint _spriteSpinAppRandBaseState;
     private uint _spriteMotionAppRandBaseState;
     private uint _meshAppRandBaseState;
@@ -94,7 +100,7 @@ public class ParticleSingle : EffectPart
         if (_lifetime.IsSlotExpired(now, _preserveShaderTimeInContinuousLoop))
         {
             ParticleSingleLifetimeDebug.LogSlotOff(BuildDebugSnapshot(now), now);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             DocExtractorParticleSnapshotLogger.OnSlotOff(this);
             DropAdenaDestroyLog.Event(
                 "SLOT_EXPIRED",
@@ -134,16 +140,18 @@ public class ParticleSingle : EffectPart
         else
         {
             UpdateOwnerWorldPos();
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             DocExtractorParticleSnapshotLogger.OnFixedUpdateTick(this, now, ResolveRenderer());
 #endif
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (ParticleSingleLifetimeDebug.ShouldTrace(name, _owner, transform)
                 && _lifetime.Active
                 && !_loggedHalfSecondCheckpoint
                 && now - _lifetime.SpawnedAt >= 0.45f)
             {
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
                 _loggedHalfSecondCheckpoint = true;
+#endif
                 Renderer checkRenderer = ResolveRenderer();
                 Material checkMat = checkRenderer != null && checkRenderer.materials != null && checkRenderer.materials.Length > 0
                     ? checkRenderer.materials[0]
@@ -153,7 +161,9 @@ public class ParticleSingle : EffectPart
 
             if (ParticleSingleLifetimeDebug.ShouldTrace(name, _owner, transform) && now - _lastShaderFadeDiagLog >= 0.25f)
             {
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
                 _lastShaderFadeDiagLog = now;
+#endif
                 ParticleSingleLifetimeDebug.LogTick(BuildDebugSnapshot(now), now);
             }
 
@@ -161,7 +171,9 @@ public class ParticleSingle : EffectPart
                 && _lifetime.Active
                 && now - _lastQuadSizeDiagLog >= L2FxQuadSizeDiagnostic.LogIntervalSec)
             {
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
                 _lastQuadSizeDiagLog = now;
+#endif
                 Renderer quadRenderer = ResolveRenderer();
                 Material runtimeMat = quadRenderer != null && quadRenderer.materials != null && quadRenderer.materials.Length > 0
                     ? quadRenderer.materials[0]
@@ -235,9 +247,15 @@ public class ParticleSingle : EffectPart
 
         float now = Now();
         _lifetime.ResetForPlayPart(now);
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _lastShaderFadeDiagLog = 0f;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _lastQuadSizeDiagLog = 0f;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _loggedHalfSecondCheckpoint = false;
+#endif
         _holdController.ResetReleaseLogs();
         _holdController.ResetCastEndFade();
 
@@ -262,7 +280,7 @@ public class ParticleSingle : EffectPart
 
         SetActive(false, "playpart_reset");
         ParticleSingleLifetimeDebug.LogPlay(BuildDebugSnapshot(now));
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DropAdenaDestroyLog.Event(
             "PLAY_PART",
             this,
@@ -305,7 +323,7 @@ public class ParticleSingle : EffectPart
             ? stopRenderer.materials[0]
             : null;
         ParticleSingleLifetimeDebug.LogStopPart(BuildDebugSnapshot(now), now, stopRenderer, stopMat);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DropAdenaDestroyLog.Event(
             "STOP_PART",
             this,
@@ -327,7 +345,7 @@ public class ParticleSingle : EffectPart
             return;
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (holdSettings.ShaderHold > 1e-4f && holdSettings.ReleaseByCastProgress)
         {
             Debug.LogWarning(
@@ -368,7 +386,7 @@ public class ParticleSingle : EffectPart
 
     void OnDestroy()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DropAdenaDestroyLog.Event(
             "PARTICLE_SINGLE_ON_DESTROY",
             this,
@@ -457,13 +475,15 @@ public class ParticleSingle : EffectPart
                 _smoothShaderHoldRelease,
                 renderer,
                 runtimeMat);
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (L2FxQuadSizeDiagnostic.ShouldTrace(name, _owner, transform))
             {
                 L2FxQuadSizeDiagnostic.Log(name, renderer, now, runtimeMat);
             }
+#endif
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DocExtractorParticleSnapshotLogger.OnParticleActivated(
             this,
             renderer,
@@ -495,7 +515,7 @@ public class ParticleSingle : EffectPart
         bool wasActive = renderer.gameObject.activeSelf;
         renderer.gameObject.SetActive(value);
         ParticleSingleLifetimeDebug.LogSetActive(BuildDebugSnapshot(Now()), value, reason, renderer, wasActive);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (!value)
         {
             DropAdenaDestroyLog.Event(
@@ -598,8 +618,6 @@ public class ParticleSingle : EffectPart
             CastData = _castData
         };
     }
-
-    private float Now() => Application.isPlaying ? Time.time : Time.realtimeSinceStartup;
 
     private void UpdateOwnerWorldPos()
     {

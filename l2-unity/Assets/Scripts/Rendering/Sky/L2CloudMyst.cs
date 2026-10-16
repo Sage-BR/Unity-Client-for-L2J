@@ -11,7 +11,7 @@ using UnityEngine.Rendering;
 public class L2CloudMyst : MonoBehaviour
 {
     // Port draws a solid colored card; original 1566 noise is not visible yet.
-    public const bool PortEnabled = false;
+    public static bool PortEnabled { get; set; } = false;
 
     const string ShaderName = "L2/Sky/CloudMyst";
     const string TexColor = "Data/Clock/Cloud_MystColor";

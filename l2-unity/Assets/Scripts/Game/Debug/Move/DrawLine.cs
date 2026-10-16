@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
@@ -81,6 +81,8 @@ public class DrawLine : MonoBehaviour
         {
             return render;
         }
+
+        public override int GetHashCode() => entity_id;
 
         public override bool Equals(object obj)
         {

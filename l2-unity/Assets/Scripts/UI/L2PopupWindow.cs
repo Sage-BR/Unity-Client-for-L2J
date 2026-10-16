@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public abstract class L2PopupWindow : L2Window
 {
-    protected void RegisterCloseWindowEvent(string closeButtonClass)
+    protected virtual void RegisterCloseWindowEvent(string closeButtonClass)
     {
         Button closeButton = (Button)GetElementByClass(closeButtonClass);
         if (closeButton == null)

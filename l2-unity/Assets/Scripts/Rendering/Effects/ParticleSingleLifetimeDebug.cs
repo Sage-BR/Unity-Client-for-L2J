@@ -1,5 +1,5 @@
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
 using UnityEngine;
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
 
 /// <summary>
 /// Development-only lifetime and hold-release tracing for ParticleSingle.

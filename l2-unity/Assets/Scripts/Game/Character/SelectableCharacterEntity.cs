@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ public class SelectableCharacterEntity : MonoBehaviour
     [SerializeField] private Vector3 _destination;
     [SerializeField] private Vector3 _destEulerAngles;
     [SerializeField] private CharSelectionInfoPackage _characterInfo;
-    [SerializeField] private CharSelectInfoPackage _characterInfoInterlude;
+    [System.NonSerialized] private CharSelectInfoPackage _characterInfoInterlude;
     [SerializeField] private bool _walking = false;
 
     private CharacterController _characterController;
@@ -27,7 +27,9 @@ public class SelectableCharacterEntity : MonoBehaviour
     }
 
     private void Update() {
-        float ditanceToDestination = Vector3.Distance(_destination, transform.position);
+        Vector3 offset = _destination - transform.position;
+        offset.y = 0f;
+        float ditanceToDestination = offset.magnitude;
         if(ditanceToDestination > 0.05f) {
             if(!_walking) {
                 StartWalking();
@@ -35,7 +37,8 @@ public class SelectableCharacterEntity : MonoBehaviour
             }
             
             transform.LookAt(new Vector3(_destination.x, transform.position.y, _destination.z));
-            _characterController.Move(transform.forward.normalized * Time.deltaTime * GetWalkSpeedPoint(_characterInfoInterlude));
+            float step = Mathf.Min(ditanceToDestination, Time.deltaTime * GetWalkSpeedPoint(_characterInfoInterlude));
+            _characterController.Move(offset.normalized * step);
            
         } else if(_walking) {
             StopWalking();

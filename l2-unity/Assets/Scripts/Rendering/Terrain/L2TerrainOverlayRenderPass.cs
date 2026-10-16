@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 /// Graphics.RenderMesh + UniversalForwardOnly is skipped by URP Deferred's
 /// transparent list, so this pass CommandBuffer.DrawMesh's pass 0 explicitly.
 /// </summary>
-public sealed class L2TerrainOverlayRenderPass : ScriptableRenderPass
+public sealed class L2TerrainOverlayRenderPass : L2RenderGraphPass
 {
     static readonly ProfilingSampler Sampler = new ProfilingSampler("L2 Terrain Overlays");
     static bool _loggedSkip;
@@ -18,7 +18,7 @@ public sealed class L2TerrainOverlayRenderPass : ScriptableRenderPass
         ConfigureInput(ScriptableRenderPassInput.Color | ScriptableRenderPassInput.Depth);
     }
 
-    public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+    protected override void Render(CommandBuffer cmd, ref L2RenderGraphFrame renderingData)
     {
         CameraType type = renderingData.cameraData.camera.cameraType;
         if (type != CameraType.Game && type != CameraType.SceneView && type != CameraType.VR)
@@ -26,8 +26,8 @@ public sealed class L2TerrainOverlayRenderPass : ScriptableRenderPass
 
         L2TerrainLayerStack.EnsureAttached();
 
-        RTHandle cameraColor = renderingData.cameraData.renderer.cameraColorTargetHandle;
-        RTHandle cameraDepth = renderingData.cameraData.renderer.cameraDepthTargetHandle;
+        RTHandle cameraColor = renderingData.cameraColor;
+        RTHandle cameraDepth = renderingData.cameraDepth;
         if (cameraColor == null)
         {
             if (!_loggedSkip)
@@ -37,8 +37,6 @@ public sealed class L2TerrainOverlayRenderPass : ScriptableRenderPass
             }
             return;
         }
-
-        CommandBuffer cmd = CommandBufferPool.Get("L2 Terrain Overlays");
         using (new ProfilingScope(cmd, Sampler))
         {
             if (cameraDepth != null)
@@ -47,8 +45,5 @@ public sealed class L2TerrainOverlayRenderPass : ScriptableRenderPass
                 CoreUtils.SetRenderTarget(cmd, cameraColor, ClearFlag.None, Color.clear);
             L2TerrainLayerStack.DrawAll(cmd);
         }
-
-        context.ExecuteCommandBuffer(cmd);
-        CommandBufferPool.Release(cmd);
     }
 }

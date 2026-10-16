@@ -46,13 +46,12 @@ public class RecipeBookItemListDto : IWireDto
 public class RecipeInstance :ItemInstance
 {
     private RecipeData _data;
-    private int _position;
     private ItemInstance _recipeInstance;
     public RecipeInstance(RecipeData data , int position): 
         base(-1, data.ItemId, ItemLocation.Void, position, 1, ItemCategory.Item, false, ItemSlot.none, 0, -1)
     {
         _data = data;
-        _position = position;
+
         _recipeInstance = new ItemInstance(-1, data.RecipeId, ItemLocation.Void, position, 1, ItemCategory.Item, false, ItemSlot.none, 0, -1);
     }
 
@@ -66,10 +65,7 @@ public class RecipeInstance :ItemInstance
         return this;
     }
 
-    public int GetPosition()
-    {
-        return _position;
-    }
+
 
     public int GetIDMK()
     {

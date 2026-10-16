@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -14,7 +14,7 @@ public class NameplatesManager : MonoBehaviour
     [SerializeField] private Color _defaultNameColor = Color.white;
     [SerializeField] private float _pixelScale = 1f;
     [Tooltip("Meters after L2 capsule top (Location + CollisionHeight). Negative lowers names.")]
-    [SerializeField] private float _headHeightOffset = -0.12f;
+    [SerializeField] private float _headHeightOffset = L2NameplateAnchor.DefaultHeadHeightOffsetMeters;
     [Tooltip("L2 canvas: lock plate to whole screen pixels (hysteresis).")]
     [SerializeField] private bool _snapAnchorToPixels = true;
     [SerializeField] private float _snapHysteresisPx = 0.75f;
@@ -25,7 +25,7 @@ public class NameplatesManager : MonoBehaviour
     [SerializeField] private string _atlasResourcePath = "Data/UI/Font/L2Lobby/l2_lobby_font_atlas";
     [SerializeField] private string _csvResourcePath = "Data/UI/Font/L2Lobby/ul2font_ascii";
 
-    [SerializeField] public RaycastHit[] _entitiesInRange;
+    [System.NonSerialized] public RaycastHit[] _entitiesInRange;
 
     private readonly List<NameplatePaintItem> _paintList = new List<NameplatePaintItem>(64);
 

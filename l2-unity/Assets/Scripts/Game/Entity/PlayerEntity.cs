@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 
@@ -32,8 +32,9 @@ public class PlayerEntity : Entity
 
     //private readonly Animation[] pAtkList = {  AnimationNames.ATK01 };
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if (_instance == null)
         {
             _instance = this;
@@ -240,7 +241,7 @@ public class PlayerEntity : Entity
         }
         catch(Exception ex)
         {
-            Debug.LogError("");
+            Debug.LogException(ex);
         }
 
 
@@ -255,7 +256,7 @@ public class PlayerEntity : Entity
         }
         catch (Exception ex)
         {
-            Debug.LogError("");
+            Debug.LogException(ex);
         }
 
     }

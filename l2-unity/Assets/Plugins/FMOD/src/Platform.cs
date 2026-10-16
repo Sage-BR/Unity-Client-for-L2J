@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace FMOD
 {
     public partial class VERSION
     {
-#if DEVELOPMENT_BUILD
+#if UNITY_ENABLE_CHECKS
         public const string dllSuffix = "L";
 #else
         public const string dllSuffix = "";
@@ -25,7 +25,7 @@ namespace FMOD.Studio
 {
     public partial class STUDIO_VERSION
     {
-#if DEVELOPMENT_BUILD
+#if UNITY_ENABLE_CHECKS
         public const string dllSuffix = "L";
 #else
         public const string dllSuffix = "";
@@ -538,15 +538,15 @@ namespace FMODUnity
 
                 FMOD.RESULT result = coreSystem.loadPlugin(pluginPath, out handle);
 
-#if UNITY_64 || UNITY_EDITOR_64
-                // Add a "64" suffix and try again
-                if (result == FMOD.RESULT.ERR_FILE_BAD || result == FMOD.RESULT.ERR_FILE_NOTFOUND)
+                if (IntPtr.Size == 8)
                 {
-                    string pluginPath64 = GetPluginPath(pluginName + "64");
-                    result = coreSystem.loadPlugin(pluginPath64, out handle);
+                    // Add a "64" suffix and try again.
+                    if (result == FMOD.RESULT.ERR_FILE_BAD || result == FMOD.RESULT.ERR_FILE_NOTFOUND)
+                    {
+                        string pluginPath64 = GetPluginPath(pluginName + "64");
+                        result = coreSystem.loadPlugin(pluginPath64, out handle);
+                    }
                 }
-#endif
-
                 reportResult(result, string.Format("Loading plugin '{0}' from '{1}'", pluginName, pluginPath));
             }
         }
@@ -668,7 +668,7 @@ namespace FMODUnity
         {
             get
             {
-#if DEVELOPMENT_BUILD || UNITY_EDITOR
+#if UNITY_ENABLE_CHECKS || UNITY_EDITOR
                 return LiveUpdate != TriStateBool.Disabled;
 #else
                 return LiveUpdate == TriStateBool.Enabled;
@@ -680,7 +680,7 @@ namespace FMODUnity
         {
             get
             {
-#if DEVELOPMENT_BUILD || UNITY_EDITOR
+#if UNITY_ENABLE_CHECKS || UNITY_EDITOR
                 return Overlay != TriStateBool.Disabled;
 #else
                 return Overlay == TriStateBool.Enabled;
@@ -689,6 +689,7 @@ namespace FMODUnity
         }
 
         // A property value that can be inherited from the parent or overridden.
+        [Serializable]
         public class Property<T>
         {
             public T Value;

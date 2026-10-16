@@ -75,6 +75,11 @@ public class CharacterClassParser
 {
     public static bool IsMage(CharacterClass characterClass)
     {
+        // Third professions in the local Interlude server's ClassId enum.
+        int classId = (int)characterClass;
+        if ((classId >= 94 && classId <= 98) || (classId >= 103 && classId <= 105) ||
+            (classId >= 110 && classId <= 112) || classId == 115 || classId == 116)
+            return true;
         switch (characterClass)
         {
             case CharacterClass.Mage:

@@ -49,7 +49,7 @@ public class SwordCollisionService : MonoBehaviour
 
     public LayerMask _entityMask;
     private readonly List<TimedSwordHit> _activeTimedHits = new List<TimedSwordHit>();
-    private readonly Dictionary<Transform, HashSet<int>> _hitRegistry = new Dictionary<Transform, HashSet<int>>();
+    private readonly Dictionary<Transform, HashSet<EntityId>> _hitRegistry = new Dictionary<Transform, HashSet<EntityId>>();
     private readonly Dictionary<int, AttackTimingContext> _attackContextsByEntityId = new Dictionary<int, AttackTimingContext>();
 
     public event Action<Transform, Transform, Vector3, Vector3> OnHitCollider;
@@ -227,7 +227,7 @@ public class SwordCollisionService : MonoBehaviour
 
     public void ResetHitRegistry(Transform swordBase)
     {
-        if (!_hitRegistry.ContainsKey(swordBase)) _hitRegistry[swordBase] = new HashSet<int>();
+        if (!_hitRegistry.ContainsKey(swordBase)) _hitRegistry[swordBase] = new HashSet<EntityId>();
         _hitRegistry[swordBase].Clear();
     }
 
@@ -266,9 +266,9 @@ public class SwordCollisionService : MonoBehaviour
         // }
     }
 
-    private bool RegisterHit(Transform swordBase, int targetId)
+    private bool RegisterHit(Transform swordBase, EntityId targetId)
     {
-        if (!_hitRegistry.ContainsKey(swordBase)) _hitRegistry[swordBase] = new HashSet<int>();
+        if (!_hitRegistry.ContainsKey(swordBase)) _hitRegistry[swordBase] = new HashSet<EntityId>();
         if (_hitRegistry[swordBase].Contains(targetId)) return false;
 
         _hitRegistry[swordBase].Add(targetId);
@@ -299,7 +299,7 @@ public class SwordCollisionService : MonoBehaviour
         Transform attackerAnchor = attackerEntity != null ? attackerEntity.transform : swordBase;
         Transform targetAnchor = targetEntity != null ? targetEntity.transform : target;
         Transform hitAnchor = HitAnchorResolver.ResolveHitAnchor(targetEntity, targetAnchor);
-        int targetId = targetAnchor.GetInstanceID();
+        EntityId targetId = targetAnchor.GetEntityId();
         if (!RegisterHit(swordBase, targetId))
         {
             Debug.Log(

@@ -94,7 +94,7 @@ public class ModelTable : AbstractCache
             {
                 for (int color = 0; color < HAIR_COLOR_COUNT; color++)
                 {
-                    int index = style * HAIR_STYLE_COUNT + color * 2;
+                    int index = (style * HAIR_COLOR_COUNT + color) * 2;
                     string hairPrefix = folder + "/Hair/" + raceId + "_h_" + style + "_" + color;
                     _hair[r, index] = Resources.Load<GameObject>(hairPrefix + "_ah");
                     _hair[r, index + 1] = Resources.Load<GameObject>(hairPrefix + "_bh");

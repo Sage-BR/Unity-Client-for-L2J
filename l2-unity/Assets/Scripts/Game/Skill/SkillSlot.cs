@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Bson;
+using Newtonsoft.Json.Bson;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 public class SkillSlot : L2DraggableSlot
 {
     private SkillInstance _skillInstance { get;  set; }
-    private bool _empty = false;
     public event Action<int> EventLeftClick;
     private bool _isPassive = false;
     public SkillSlot(VisualElement slotElement, int position, SlotType slotType) : base(position, slotElement, slotType, true, false)
@@ -71,8 +70,6 @@ public class SkillSlot : L2DraggableSlot
             return;
         }
 
-        _empty = false;
-
         if (_slotDragManipulator != null)
             _slotDragManipulator.enabled = true;
 
@@ -101,7 +98,6 @@ public class SkillSlot : L2DraggableSlot
 
     public void AssignDestroy()
     {
-        _empty = true;
         _id = 0;
         _name = "Unknown";
         _description = "Unknown item.";
@@ -112,7 +108,6 @@ public class SkillSlot : L2DraggableSlot
     }
     public void AssignEmpty()
     {
-        _empty = true;
         _id = 0;
         _name = "Unknown";
         _description = "Unknown item.";

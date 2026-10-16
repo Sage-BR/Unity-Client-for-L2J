@@ -40,7 +40,6 @@ public static class L2FxSkyDebug
 
     public static void LogLut(float hours, L2DayNightLut.Sample sample, Material skyMat)
     {
-        return;
         if (Time.unscaledTime < _nextLut)
             return;
         _nextLut = Time.unscaledTime + PeriodSec;
@@ -79,7 +78,6 @@ public static class L2FxSkyDebug
         float boostStart,
         float boostFull)
     {
-        return;
         if (!CpuDue)
             return;
         _nextCpu = Time.unscaledTime + PeriodSec;

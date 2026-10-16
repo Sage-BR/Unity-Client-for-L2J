@@ -8,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 /// target is already raw UNORM, so effects draw into cameraColor without copies.
 /// The legacy encode/post/decode path remains available as a fallback.
 /// </summary>
-public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
+public sealed class L2FxCompositorRenderPass : L2RenderGraphPass
 {
     const int PostExtractPass = 0;
     const int PostKawasePass = 1;
@@ -30,6 +30,7 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
     static readonly ProfilingSampler Sampler = new ProfilingSampler("L2Fx D3D9 Compositor");
 
     readonly L2FxCompositorSettings _settings;
+    protected override L2FxCompositorSettings EffectSettings => _settings;
     readonly Material _transferMaterial;
     readonly Material _postMaterial;
 
@@ -52,8 +53,27 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         _filtering = new FilteringSettings(RenderQueueRange.transparent, settings.effectLayerMask);
     }
 
+    protected override System.Collections.Generic.IEnumerable<RTHandle> PersistentTargets
+    {
+        get
+        {
+            yield return _l2Color;
+            yield return _l2Scene;
+            yield return _l2Sky;
+            yield return _l2BloomA;
+            yield return _l2BloomB;
+        }
+    }
+
+    protected override void RegisterRendererLists(L2RenderGraphFrame frame)
+    {
+        if (_settings == null) return;
+        foreach (int mask in new[] { (int)_settings.effectLayerMask, (int)_settings.celestialLayerMask, (int)_settings.cloudLayerMask, (int)_settings.hazeLayerMask })
+            frame.Register(mask, RenderQueueRange.transparent, SortingCriteria.SortingLayer | SortingCriteria.RenderQueue);
+    }
     public void Dispose()
     {
+        ReleaseMaterialSnapshots();
         _l2Color?.Release();
         _l2Color = null;
         _l2Scene?.Release();
@@ -66,7 +86,7 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         _l2BloomB = null;
     }
 
-    public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
+    protected override void Prepare(L2RenderGraphFrame renderingData)
     {
         if (_settings != null && _settings.directCameraColor)
             return;
@@ -77,7 +97,7 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         desc.graphicsFormat = GraphicsFormat.R8G8B8A8_UNorm;
         desc.sRGB = false;
 
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _l2Color,
             desc,
             FilterMode.Bilinear,
@@ -87,7 +107,7 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         if (!WantSkillPost())
             return;
 
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _l2Scene,
             desc,
             FilterMode.Bilinear,
@@ -98,13 +118,13 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         halfDesc.width = Mathf.Max(1, desc.width / 2);
         halfDesc.height = Mathf.Max(1, desc.height / 2);
 
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _l2BloomA,
             halfDesc,
             FilterMode.Bilinear,
             TextureWrapMode.Clamp,
             name: "_L2FxBloomA");
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _l2BloomB,
             halfDesc,
             FilterMode.Bilinear,
@@ -112,11 +132,11 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
             name: "_L2FxBloomB");
     }
 
-    public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+    protected override void Render(CommandBuffer cmd, ref L2RenderGraphFrame renderingData)
     {
         if (_settings != null && _settings.directCameraColor)
         {
-            ExecuteDirect(ref context, ref renderingData);
+            ExecuteDirect(cmd, ref renderingData);
             return;
         }
 
@@ -133,47 +153,43 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
             L2FxGpuDrawQueue.FlushImmediateFallback();
             if (!L2YebisPostRuntime.WillFlushNameplates)
                 L2NameplateOverlayQueue.FlushImmediateFallback();
-            Shader.SetGlobalFloat(D3D9ActiveId, 0f);
+            cmd.SetGlobalFloat(D3D9ActiveId, 0f);
             return;
         }
-
-        CommandBuffer cmd = CommandBufferPool.Get("L2Fx D3D9 Compositor");
         using (new ProfilingScope(cmd, Sampler))
         {
-            Shader.SetGlobalFloat(D3D9ActiveId, 1f);
-            Shader.SetGlobalFloat(DebugModeId, _settings.debugMode);
+            cmd.SetGlobalFloat(D3D9ActiveId, 1f);
+            cmd.SetGlobalFloat(DebugModeId, _settings.debugMode);
 
-            RTHandle cameraColor = renderingData.cameraData.renderer.cameraColorTargetHandle;
-            RTHandle cameraDepth = renderingData.cameraData.renderer.cameraDepthTargetHandle;
+            RTHandle cameraColor = renderingData.cameraColor;
+            RTHandle cameraDepth = renderingData.cameraDepth;
 
             if (UseSkillPost())
-                ExecuteSkillPost(context, ref renderingData, cmd, cameraColor, cameraDepth);
+                ExecuteSkillPost(cmd, ref renderingData, cameraColor, cameraDepth);
             else
-                ExecuteLegacyComposite(context, ref renderingData, cmd, cameraColor, cameraDepth);
+                ExecuteLegacyComposite(cmd, ref renderingData, cameraColor, cameraDepth);
 
             if (!L2YebisPostRuntime.WillFlushNameplates)
                 DrawNameplatesAfterComposite(cmd, cameraColor);
         }
-
-        context.ExecuteCommandBuffer(cmd);
-        CommandBufferPool.Release(cmd);
+        cmd.SetGlobalFloat(D3D9ActiveId, 0f);
     }
 
     void ExecuteDirect(
-        ref ScriptableRenderContext context,
-        ref RenderingData renderingData)
+        CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData)
     {
         if (!ShouldRun(ref renderingData))
         {
             L2FxGpuDrawQueue.FlushImmediateFallback();
             if (!L2YebisPostRuntime.WillFlushNameplates)
                 L2NameplateOverlayQueue.FlushImmediateFallback();
-            Shader.SetGlobalFloat(D3D9ActiveId, 0f);
+            cmd.SetGlobalFloat(D3D9ActiveId, 0f);
             return;
         }
 
-        RTHandle cameraColor = renderingData.cameraData.renderer.cameraColorTargetHandle;
-        RTHandle cameraDepth = renderingData.cameraData.renderer.cameraDepthTargetHandle;
+        RTHandle cameraColor = renderingData.cameraColor;
+        RTHandle cameraDepth = renderingData.cameraDepth;
         if (cameraColor == null)
         {
             L2FxGpuDrawQueue.FlushImmediateFallback();
@@ -181,17 +197,14 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
                 L2NameplateOverlayQueue.FlushImmediateFallback();
             return;
         }
-
-        CommandBuffer cmd = CommandBufferPool.Get("L2 FX Direct UNORM");
         using (new ProfilingScope(cmd, Sampler))
         {
             cmd.SetGlobalFloat(D3D9ActiveId, 1f);
             cmd.SetGlobalFloat(DebugModeId, _settings.debugMode);
             cmd.SetGlobalFloat(FxGainId, 1f);
             DrawSkillFx(
-                context,
-                ref renderingData,
                 cmd,
+                ref renderingData,
                 cameraColor,
                 cameraDepth,
                 clearFx: false);
@@ -199,63 +212,58 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
                 DrawNameplatesAfterComposite(cmd, cameraColor);
             cmd.SetGlobalFloat(D3D9ActiveId, 0f);
         }
-
-        context.ExecuteCommandBuffer(cmd);
-        CommandBufferPool.Release(cmd);
     }
 
     void ExecuteLegacyComposite(
-        ScriptableRenderContext context,
-        ref RenderingData renderingData,
         CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData,
         RTHandle cameraColor,
         RTHandle cameraDepth)
     {
         _transferMaterial.SetFloat("_TransferMode", _settings.encodeLinearToSrgb ? 1f : 0f);
-        Blitter.BlitCameraTexture(cmd, cameraColor, _l2Color, _transferMaterial, 0);
+        Blitter.BlitCameraTexture(cmd, cameraColor, _l2Color, SnapshotMaterial(_transferMaterial), 0);
 
-        DrawCelestialDiscs(context, ref renderingData, cmd, _l2Color, cameraDepth, "legacy", _l2Color);
-        DrawCloudSheets(context, ref renderingData, cmd, _l2Color, cameraDepth);
-        DrawHazeRing(context, ref renderingData, cmd, _l2Color, cameraDepth);
-        DrawSkillFx(context, ref renderingData, cmd, _l2Color, cameraDepth, clearFx: false);
+        DrawCelestialDiscs(cmd, ref renderingData, _l2Color, cameraDepth, "legacy", _l2Color);
+        DrawCloudSheets(cmd, ref renderingData, _l2Color, cameraDepth);
+        DrawHazeRing(cmd, ref renderingData, _l2Color, cameraDepth);
+        DrawSkillFx(cmd, ref renderingData, _l2Color, cameraDepth, clearFx: false);
         DecodeToCamera(cmd, _l2Color, cameraColor);
     }
 
     void ExecuteSkillPost(
-        ScriptableRenderContext context,
-        ref RenderingData renderingData,
         CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData,
         RTHandle cameraColor,
         RTHandle cameraDepth)
     {
         // 1) Encode camera → UNORM working buffer (same path that already matched L2).
         _transferMaterial.SetFloat("_TransferMode", _settings.encodeLinearToSrgb ? 1f : 0f);
-        Blitter.BlitCameraTexture(cmd, cameraColor, _l2Color, _transferMaterial, 0);
+        Blitter.BlitCameraTexture(cmd, cameraColor, _l2Color, SnapshotMaterial(_transferMaterial), 0);
 
         // 2) Snapshot the colour pass (sky+world, A=1), then blend clouds onto it —
         // same as original: Tex Before is the sky, then SrcA/InvSrcA.
         cmd.CopyTexture(_l2Color, _l2Scene);
-        DrawCloudSheets(context, ref renderingData, cmd, _l2Color, cameraDepth);
+        DrawCloudSheets(cmd, ref renderingData, _l2Color, cameraDepth);
 
         // 3) Snapshot again so clouds stay in the scene copy (no fxGain/bloom).
         // Haze still draws after and covers the horizon belt.
         cmd.CopyTexture(_l2Color, _l2Scene);
-        DrawHazeRing(context, ref renderingData, cmd, _l2Color, cameraDepth);
-        DrawSkillFx(context, ref renderingData, cmd, _l2Color, cameraDepth, clearFx: false);
+        DrawHazeRing(cmd, ref renderingData, _l2Color, cameraDepth);
+        DrawSkillFx(cmd, ref renderingData, _l2Color, cameraDepth, clearFx: false);
 
-        BindPostParams();
+        BindPostParams(cmd);
         _postMaterial.SetTexture(SceneTexId, _l2Scene != null ? _l2Scene.rt : null);
 
         // 3) Bloom from what skills added above the scene (not from darken).
-        Blitter.BlitCameraTexture(cmd, _l2Color, _l2BloomA, _postMaterial, PostExtractPass);
+        Blitter.BlitCameraTexture(cmd, _l2Color, _l2BloomA, SnapshotMaterial(_postMaterial), PostExtractPass);
 
         _postMaterial.SetFloat(KawaseOffsetId, 1f);
         SetBlitTexelSize(_postMaterial, _l2BloomA);
-        Blitter.BlitCameraTexture(cmd, _l2BloomA, _l2BloomB, _postMaterial, PostKawasePass);
+        Blitter.BlitCameraTexture(cmd, _l2BloomA, _l2BloomB, SnapshotMaterial(_postMaterial), PostKawasePass);
 
         _postMaterial.SetFloat(KawaseOffsetId, 2f);
         SetBlitTexelSize(_postMaterial, _l2BloomB);
-        Blitter.BlitCameraTexture(cmd, _l2BloomB, _l2BloomA, _postMaterial, PostKawasePass);
+        Blitter.BlitCameraTexture(cmd, _l2BloomB, _l2BloomA, SnapshotMaterial(_postMaterial), PostKawasePass);
 
         if (_settings.debugMode == 2)
         {
@@ -276,7 +284,7 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         }
 
         // 4) RGB Boost on skill/sun/moon delta. Sky stays in the scene copy (no extra dest).
-        DrawCelestialDiscs(context, ref renderingData, cmd, _l2Color, cameraDepth, "skillPost", _l2Scene);
+        DrawCelestialDiscs(cmd, ref renderingData, _l2Color, cameraDepth, "skillPost", _l2Scene);
 
         _postMaterial.SetTexture(BloomTexId, _l2BloomA != null ? _l2BloomA.rt : null);
         _postMaterial.SetFloat(
@@ -284,13 +292,12 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
             _settings.debugMode == 1
                 ? 3f
                 : (_settings.decodeSrgbToLinear ? 2f : 0f));
-        Blitter.BlitCameraTexture(cmd, _l2Color, cameraColor, _postMaterial, PostCompositePass);
+        Blitter.BlitCameraTexture(cmd, _l2Color, cameraColor, SnapshotMaterial(_postMaterial), PostCompositePass);
     }
 
     void DrawCelestialDiscs(
-        ScriptableRenderContext context,
-        ref RenderingData renderingData,
         CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData,
         RTHandle colorTarget,
         RTHandle cameraDepth,
         string path,
@@ -305,11 +312,11 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
             full = 0.50f;
         }
 
-        Shader.SetGlobalFloat(FxGainId, 1f);
+        cmd.SetGlobalFloat(FxGainId, 1f);
 
         int celestialMask = _settings != null ? (int)_settings.celestialLayerMask : 0;
         if (celestialMask != 0)
-            DrawFxLayer(context, ref renderingData, cmd, colorTarget, cameraDepth, celestialMask);
+            DrawFxLayer(cmd, ref renderingData, colorTarget, cameraDepth, celestialMask);
 
         L2FxSkyDebug.LogCpuAndEnqueueGpu(
             cmd,
@@ -324,13 +331,12 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
             gain,
             start,
             full);
-        Shader.SetGlobalFloat(FxGainId, gain);
+        cmd.SetGlobalFloat(FxGainId, gain);
     }
 
     void DrawSkillFx(
-        ScriptableRenderContext context,
-        ref RenderingData renderingData,
         CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData,
         RTHandle colorTarget,
         RTHandle cameraDepth,
         bool clearFx)
@@ -341,20 +347,10 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         else
             CoreUtils.SetRenderTarget(cmd, colorTarget, clear, Color.clear);
 
-        context.ExecuteCommandBuffer(cmd);
-        cmd.Clear();
-
-        DrawingSettings drawing = CreateDrawingSettings(
-            ForwardOnlyTag,
-            ref renderingData,
+        renderingData.Draw(cmd, _settings.effectLayerMask, RenderQueueRange.transparent,
             SortingCriteria.SortingLayer | SortingCriteria.RenderQueue);
-        drawing.perObjectData = PerObjectData.None;
-
-        context.DrawRenderers(renderingData.cullResults, ref drawing, ref _filtering);
 
         L2FxGpuDrawQueue.Flush(cmd);
-        context.ExecuteCommandBuffer(cmd);
-        cmd.Clear();
     }
 
     static void BindUnormColorKeepContents(CommandBuffer cmd, RTHandle colorTarget, RTHandle cameraDepth)
@@ -378,9 +374,8 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
     }
 
     void DrawFxLayer(
-        ScriptableRenderContext context,
-        ref RenderingData renderingData,
         CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData,
         RTHandle colorTarget,
         RTHandle cameraDepth,
         int layerMask)
@@ -393,22 +388,14 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
             colorTarget,
             _settings.bindCameraDepth ? cameraDepth : null);
 
-        context.ExecuteCommandBuffer(cmd);
-        cmd.Clear();
-
         var filtering = new FilteringSettings(RenderQueueRange.transparent, layerMask);
-        DrawingSettings drawing = CreateDrawingSettings(
-            ForwardOnlyTag,
-            ref renderingData,
+        renderingData.Draw(cmd, layerMask, RenderQueueRange.transparent,
             SortingCriteria.SortingLayer | SortingCriteria.RenderQueue);
-        drawing.perObjectData = PerObjectData.None;
-        context.DrawRenderers(renderingData.cullResults, ref drawing, ref filtering);
     }
 
     void DrawCloudSheets(
-        ScriptableRenderContext context,
-        ref RenderingData renderingData,
         CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData,
         RTHandle colorTarget,
         RTHandle cameraDepth)
     {
@@ -416,14 +403,13 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         if (cloudMask == 0)
             return;
 
-        Shader.SetGlobalFloat(FxGainId, 1f);
-        DrawFxLayer(context, ref renderingData, cmd, colorTarget, cameraDepth, cloudMask);
+        cmd.SetGlobalFloat(FxGainId, 1f);
+        DrawFxLayer(cmd, ref renderingData, colorTarget, cameraDepth, cloudMask);
     }
 
     void DrawHazeRing(
-        ScriptableRenderContext context,
-        ref RenderingData renderingData,
         CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData,
         RTHandle colorTarget,
         RTHandle cameraDepth)
     {
@@ -431,9 +417,9 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
         if (hazeMask == 0)
             return;
 
-        Shader.SetGlobalFloat(FxGainId, 1f);
-        DrawFxLayer(context, ref renderingData, cmd, colorTarget, cameraDepth, hazeMask);
-        Shader.SetGlobalFloat(FxGainId, _settings != null ? _settings.fxGain : 1f);
+        cmd.SetGlobalFloat(FxGainId, 1f);
+        DrawFxLayer(cmd, ref renderingData, colorTarget, cameraDepth, hazeMask);
+        cmd.SetGlobalFloat(FxGainId, _settings != null ? _settings.fxGain : 1f);
     }
 
     void DrawNameplatesAfterComposite(CommandBuffer cmd, RTHandle cameraColor)
@@ -451,28 +437,28 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
     void DecodeToCamera(CommandBuffer cmd, RTHandle source, RTHandle cameraColor)
     {
         _transferMaterial.SetFloat("_TransferMode", _settings.decodeSrgbToLinear ? 2f : 0f);
-        Blitter.BlitCameraTexture(cmd, source, cameraColor, _transferMaterial, 1);
+        Blitter.BlitCameraTexture(cmd, source, cameraColor, SnapshotMaterial(_transferMaterial), 1);
 
         if (_settings.debugMode == 1)
         {
             _transferMaterial.SetFloat("_TransferMode", 3f);
-            Blitter.BlitCameraTexture(cmd, source, cameraColor, _transferMaterial, 1);
+            Blitter.BlitCameraTexture(cmd, source, cameraColor, SnapshotMaterial(_transferMaterial), 1);
         }
     }
 
     void BlitDebug(CommandBuffer cmd, RTHandle source, RTHandle cameraColor)
     {
         _postMaterial.SetFloat("_TransferMode", _settings.decodeSrgbToLinear ? 2f : 0f);
-        Blitter.BlitCameraTexture(cmd, source, cameraColor, _postMaterial, PostDebugPass);
+        Blitter.BlitCameraTexture(cmd, source, cameraColor, SnapshotMaterial(_postMaterial), PostDebugPass);
     }
 
-    void BindPostParams()
+    void BindPostParams(CommandBuffer cmd)
     {
         _postMaterial.SetFloat(BloomThresholdId, _settings.bloomThreshold);
         _postMaterial.SetFloat(BloomPreGainId, 1f);
         _postMaterial.SetFloat(BloomIntensityId, _settings.bloomIntensity);
         _postMaterial.SetFloat(FxGainId, _settings.fxGain);
-        Shader.SetGlobalFloat(FxGainId, _settings.fxGain);
+        cmd.SetGlobalFloat(FxGainId, _settings.fxGain);
     }
 
     static void SetBlitTexelSize(Material material, RTHandle source)
@@ -503,10 +489,10 @@ public sealed class L2FxCompositorRenderPass : ScriptableRenderPass
 
     public override void OnCameraCleanup(CommandBuffer cmd)
     {
-        Shader.SetGlobalFloat(D3D9ActiveId, 0f);
+        cmd.SetGlobalFloat(D3D9ActiveId, 0f);
     }
 
-    bool ShouldRun(ref RenderingData renderingData)
+    bool ShouldRun(ref L2RenderGraphFrame renderingData)
     {
         if (_settings == null || !_settings.enableD3D9Compositor)
             return false;

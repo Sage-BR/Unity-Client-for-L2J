@@ -11,10 +11,12 @@ public class Geodata : MonoBehaviour {
     [SerializeField] private float _mapSize = 624.1524f;
     [SerializeField] private int _maximumLayerCount = 4;
     [SerializeField] private float _maximumElevationError = 5f;
-    [SerializeField] private List<string> _mapsToLoad;
-    [SerializeField] private Dictionary<string, Vector3> _mapsOrigin = new Dictionary<string, Vector3>();
-    [SerializeField] private Dictionary<string, Node[,,]> _geodata;
-    [SerializeField] private bool _loaded = false;
+    // Map data belongs to the current session and is rebuilt by LoadMaps.
+    // Dictionaries and multidimensional node arrays must not enter scene serialization.
+    [NonSerialized] private List<string> _mapsToLoad = new List<string>();
+    [NonSerialized] private Dictionary<string, Vector3> _mapsOrigin = new Dictionary<string, Vector3>();
+    [NonSerialized] private Dictionary<string, Node[,,]> _geodata = new Dictionary<string, Node[,,]>();
+    [NonSerialized] private bool _loaded = false;
 
     [Header("Debug")]
     [SerializeField] private bool _drawGizmos = true;
@@ -42,8 +44,10 @@ public class Geodata : MonoBehaviour {
     }
 
     void OnDestroy() {
-        _geodata.Clear();
-        _instance = null;
+        _geodata?.Clear();
+        if (_instance == this) {
+            _instance = null;
+        }
     }
 
     void Start() {

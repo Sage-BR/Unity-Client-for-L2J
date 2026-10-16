@@ -367,7 +367,6 @@ public abstract class AbstractGetCache
 
     public GameObject GetHair(CharacterRaceAnimation raceId, byte hairStyle, byte hairColor, bool bh) {
         byte index = (byte)(hairStyle * 8 + hairColor * 2);
-        index = GetRemappedIndex(raceId, index);
         if (bh) {
             index += 1;
         }
@@ -380,18 +379,6 @@ public abstract class AbstractGetCache
         }
 
         return go;
-    }
-
-    private byte GetRemappedIndex(CharacterRaceAnimation raceId, byte index) {
-        if (CharacterRaceAnimation.FFighter == raceId) {
-            return index switch {
-                8 => 6,
-                10 => 8,
-                12 => 10,
-                _ => index
-            };
-        }
-        return index;
     }
 
     public GameObject GetNpc(string meshname)

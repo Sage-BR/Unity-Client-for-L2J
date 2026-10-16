@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 public class CreatorVerticalScrollWindows : ICreatorVerticalScroll
 {
     public event Action<int, ItemCategory, int> EventLeftClick;
-    public event Action<int> EventSwitchTabByIndexOfTab;
 
     private ScrollView _scrollView;
     private VisualElement _content;

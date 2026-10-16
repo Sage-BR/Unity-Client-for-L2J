@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEditor;
@@ -40,13 +40,13 @@ public abstract class BaseAnimationManager
     public bool IsPlayerController(int objectId)
     {
         return _animationControllers.ContainsKey(objectId) &&
-               _animationControllers[objectId].GetType() == typeof(PlayerAnimationController);
+               _animationControllers[objectId].GetControllerType() == typeof(PlayerAnimationController);
     }
 
     public bool IsMonsterController(int objectId)
     {
         return _animationControllers.ContainsKey(objectId) &&
-               _animationControllers[objectId].GetType() == typeof(NetworkAnimationController);
+               _animationControllers[objectId].GetControllerType() == typeof(NetworkAnimationController);
     }
 
     public PlayerAnimationController GetPlayerController(int objectId)

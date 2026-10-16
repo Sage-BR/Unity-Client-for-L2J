@@ -37,7 +37,7 @@ public sealed class L2StaticMeshSunMaskRuntime : MonoBehaviour
 
     const bool ShowSunMaskDebug = false;
     // TEMPORARY. Per-mesh sun masks are not applied while the Unity sun is tuned.
-    const bool LoadSunMasks = false;
+    public static bool LoadSunMasks { get; set; } = false;
     static readonly int HasMaskId = Shader.PropertyToID("_L2HasSunMask");
     static readonly int ForceSunVisibleId =
         Shader.PropertyToID("_L2StaticMeshForceSunVisible");

@@ -1,4 +1,4 @@
-﻿// Cristian Pop - https://boxophobic.com/
+// Cristian Pop - https://boxophobic.com/
 
 using UnityEngine;
 using Boxophobic.StyledGUI;
@@ -317,7 +317,7 @@ namespace AtmosphericHeightFog
         {
             if (mainDirectional == null)
             {
-                var allLights = FindObjectsOfType<Light>();
+                var allLights = FindObjectsByType<Light>();
                 var intensity = 0.0f;
 
                 for (int i = 0; i < allLights.Length; i++)

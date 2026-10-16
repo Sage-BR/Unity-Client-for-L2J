@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -122,7 +122,7 @@ public class Entity : MonoBehaviour {
     public EntityBodyType BodyType { get { return _bodyType; } set { _bodyType = value; } }
     public bool EntityLoaded { get { return _entityLoaded; } set { _entityLoaded = value; } }
 
-    protected  void Awake() 
+    protected virtual void Awake()
     {
         _castData = new MagicCastData();
 

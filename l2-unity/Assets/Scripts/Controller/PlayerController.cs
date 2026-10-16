@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
 
     /* Gravity */
     private float _verticalVelocity = 0;
-    [SerializeField] private float _jumpForce = 10;
     [SerializeField] private float _gravity = 28;
 
 
@@ -43,15 +42,10 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance { get { return _instance; } }
 
     private Entity _monster;
-    private bool _isRotate = false;
-    private bool _isFinish = true;
     private bool _turnsAround = true;
 
     private float _moveTimer = 0f;
     private float _elapsedTime = 0;
-
-    
-    private bool _isFirst = false;
   
     private bool _behindPlayer = false;
     private bool _switchWalkToRun = false;
@@ -138,9 +132,6 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation , r_speed);
                 
                 _controller.Move(newPositionPlusGravity * Time.deltaTime);
-
-
-                _isFirst = false;
                 _pp_sender.TickWhileMoving(transform.position, PlayerPositionSender.ToL2Heading(transform.eulerAngles.y), Time.deltaTime);
             }
             else
@@ -313,7 +304,6 @@ public class PlayerController : MonoBehaviour
          if (!is_move)
          {
             _switchWalkToRun = false;
-            _isFirst = true;
          }
     }
 
@@ -330,7 +320,6 @@ public class PlayerController : MonoBehaviour
     public void StartRotateFollow(Entity monster)
     {
         _monster = monster;
-        _isRotate = true;
         _turnsAround = true;
     }
 

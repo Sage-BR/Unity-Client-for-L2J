@@ -31,7 +31,9 @@ public class CompositeEffectV2 : CompositePrefabEffect
     Coroutine _v2ShootWatchdogRoutine;
     bool _v2SubscribedShoot;
     bool _v2SubscribedHit;
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     bool _v2DirectShootObserved;
+#endif
 
     protected override string DebugPrefix => "[CompositeEffectV2]";
 
@@ -82,7 +84,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         _playStartedAt = Time.time;
         RefreshV2Context();
         LogHomeSpawnPlay();
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"{DebugPrefix} Play started at={_playStartedAt:F3}s hit={(_castData != null ? _castData.HitTime : -1f):F3}s " +
             $"flight={(_castData != null ? _castData.FlightTime : -1f):F3}s serverShoot={(_castData != null ? _castData.serverTimeToShoot : -1f):F3}s.");
@@ -158,7 +160,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
 
     protected override void OnTimedCompositeDestroy()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         LogV2TaDestroyState("before flush");
 #endif
         SpawnPendingAnimationShootParts();
@@ -206,7 +208,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
             if (part.spawnTiming == CompositePartSpawnTiming.OnAnimationShoot)
             {
                 _pendingAnimationShoot.Add(part);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
                 if (V2TaSpawnLog.Matches(part))
                 {
                     V2TaSpawnLog.Info(
@@ -233,7 +235,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
                 Part = part,
                 SpawnAtTime = spawnAt
             });
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (V2TaSpawnLog.Matches(part))
             {
                 float compositeLife = _rootRuntimeSettings != null
@@ -267,7 +269,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
 
         if (_spawned.ContainsKey(part))
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (V2TaSpawnLog.Matches(part))
             {
                 V2TaSpawnLog.Warn(
@@ -282,7 +284,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         EnsureHitPointFromTarget();
         if (!part.TryResolveSpawn(_v2Resolver, _context, out Transform followTransform, out Vector3 worldPosition))
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (V2TaSpawnLog.Matches(part))
             {
                 V2TaSpawnLog.Warn(
@@ -336,7 +338,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         }
         instance.Play();
         _spawned[part] = instance;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (V2TaSpawnLog.Matches(part))
         {
             V2TaSpawnLog.Info(
@@ -354,7 +356,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         TryLaunchImmediate(part, instance);
         RaiseStartSpawnAndMaybeSpawnLight();
         LogHomeSpawnPart(part, followTransform, worldPosition, spawnPosition, afterInstantiate, afterAttach, instance, setupOwner);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"{DebugPrefix} Spawned {part.Describe()} owner='{(setupOwner != null ? setupOwner.name : "null")}'.");
 #endif
@@ -585,7 +587,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
 
         if (_context?.CasterEntity?.Identity == null || IncomingPacketActions.Animations == null)
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             V2TaSpawnLog.Warn(
                 "SHOOT SUBSCRIBE FAIL composite='" + name +
                 "' caster=" + (_context?.CasterEntity != null ? "ok" : "null") +
@@ -599,7 +601,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         _v2AnimationEvents = IncomingPacketActions.Animations.GetAnimationEvents(casterId);
         if (_v2AnimationEvents == null || _v2ShootSources.Contains(_v2AnimationEvents))
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (_v2AnimationEvents == null)
             {
                 V2TaSpawnLog.Warn(
@@ -689,8 +691,10 @@ public class CompositeEffectV2 : CompositePrefabEffect
 
     void HandleV2AnimationShoot(string _)
     {
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _v2DirectShootObserved = true;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float fromCast = _castData != null ? Time.time - _castData.StartTime : -1f;
         float expected = _castData != null ? _castData.AnimationShotAtSeconds : -1f;
         Debug.Log(
@@ -703,7 +707,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
     void ProcessV2Shoot(string channel)
     {
         SpawnPendingAnimationShootParts();
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (_castData != null)
         {
             float globalSinceCast = Time.time - _castData.StartTime;
@@ -737,7 +741,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         }
 
         Debug.Log($"[HOME_SPAWN] AnimationShoot spawning {_pendingAnimationShoot.Count} part(s)");
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         for (int logI = 0; logI < _pendingAnimationShoot.Count; logI++)
         {
             CompositePart shootPart = _pendingAnimationShoot[logI];
@@ -850,7 +854,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         RefreshV2Context();
         EnsureHitPointFromTarget();
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"{DebugPrefix} HitTime fallback spawn {_pendingHitCollider.Count} impact part(s) " +
             $"(projectile event did not fire before composite HitTime).");
@@ -885,7 +889,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
                 continue;
             }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (V2TaSpawnLog.Matches(pending.Part))
             {
                 V2TaSpawnLog.Warn(
@@ -901,7 +905,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         }
     }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     void LogV2TaDestroyState(string stage)
     {
         int delayedTa = 0;
@@ -981,7 +985,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
 
                 if (now >= pending.SpawnAtTime)
                 {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
                     if (V2TaSpawnLog.Matches(pending.Part))
                     {
                         V2TaSpawnLog.Info(
@@ -1041,7 +1045,7 @@ public class CompositeEffectV2 : CompositePrefabEffect
         // this frame. This routine is diagnostic only and never launches.
         yield return null;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float fromCast = Time.time - _castData.StartTime;
         string message =
             $"{DebugPrefix} [MAGIC_SHOOT_WATCHDOG] directObserved={_v2DirectShootObserved} " +
@@ -1081,7 +1085,9 @@ public class CompositeEffectV2 : CompositePrefabEffect
         _pendingAnimationShoot.Clear();
         _spawned.Clear();
         _launchedProjectiles.Clear();
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _v2DirectShootObserved = false;
+#endif
     }
 
     static bool HasParticleGroupV2(BaseEffect instance)

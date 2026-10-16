@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public class BaseAnimationController : AnimationEventsBase, IAnimationController
     [SerializeField] protected Animator _animator;
     [SerializeField] protected bool _resetStateOnReceive = false;
     [SerializeField] protected float _spAtk01ClipLength = 1000;
-    [SerializeField] protected Dictionary<string, float> _atkClipLengths;
+    [NonSerialized] protected Dictionary<string, float> _atkClipLengths;
     private string _lastAnimationVariableName;
     private float _lastAtkClipLength;
     private float _pAtkSpd;
@@ -443,7 +443,7 @@ public class BaseAnimationController : AnimationEventsBase, IAnimationController
         if (Time.frameCount == _lastDuplicateShootFrame &&
             string.Equals(_lastDuplicateShootAnim, animationName, StringComparison.Ordinal))
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             AnimationManager.LogAnimationShootFromAnimator(
                 objectId,
                 "SKIP_DEDUP_SAME_FRAME",
@@ -456,7 +456,7 @@ public class BaseAnimationController : AnimationEventsBase, IAnimationController
         _lastDuplicateShootFrame = Time.frameCount;
         _lastDuplicateShootAnim = animationName;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         AnimationManager.LogAnimationShootFromAnimator(
             objectId,
             "DISPATCH",
@@ -467,7 +467,7 @@ public class BaseAnimationController : AnimationEventsBase, IAnimationController
         base.OnAnimationShoot(animationName);
     }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     private string BuildAnimatorShootDebugContext()
     {
         AnimatorStateInfo s0 = _animator.GetCurrentAnimatorStateInfo(0);

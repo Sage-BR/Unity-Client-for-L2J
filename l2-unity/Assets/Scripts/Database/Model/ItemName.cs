@@ -24,16 +24,15 @@ public class ItemName {
     public bool Droppable { get { return _droppable; } set { _droppable = value; } }
     public bool Sellable { get { return _sellable; } set { _sellable = value; } }
 
-    private List<ItemName> items = new List<ItemName>();
     public ItemName[] GetSetsName()
     {
-        items.Clear();
+        var items = new List<ItemName>();
 
         if (_setsThings == null) return null;
 
         foreach (ItemSets setItem in _setsThings)
         {
-            if (setItem != null & setItem.GetArrayId().Length > 0)
+            if (setItem != null && setItem.GetArrayId() != null && setItem.GetArrayId().Length > 0)
             {
                 int[] array = setItem.GetArrayId();
 

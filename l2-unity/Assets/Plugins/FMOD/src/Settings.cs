@@ -808,11 +808,13 @@ namespace FMODUnity
             Count,
         }
 
+        [Serializable]
         public class PlatformSettingBase
         {
             public Platform Platform;
         }
 
+        [Serializable]
         public class PlatformSetting<T> : PlatformSettingBase
         {
             public T Value;

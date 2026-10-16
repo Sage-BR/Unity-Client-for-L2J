@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -43,7 +43,7 @@ public class SkillExecutor : MonoBehaviour
 
         string[] cycle = animationCombo.GetAnimCycle();
         IAnimationManager animations = _animations != null ? _animations : IncomingPacketActions.Animations;
-        _animRunner.StartRun(cycle, objectId , animations  , () => OnAllAnimationFinish(actions));
+        await _animRunner.StartRun(cycle, objectId , animations  , () => OnAllAnimationFinish(actions));
     }
 
     public async Task ExecuteSkillOverride(Skillgrp skill, Entity entity, AnimationCombo animationCombo, AnimationEventsBase actions, bool isLong = false)
@@ -59,11 +59,11 @@ public class SkillExecutor : MonoBehaviour
         IAnimationManager animations = _animations != null ? _animations : IncomingPacketActions.Animations;
         if (isLong)
         {
-            _animRunner.StartRunLongOverride(cycle, objectId, animations, () => OnAllAnimationFinish(actions));
+            await _animRunner.StartRunLongOverride(cycle, objectId, animations, () => OnAllAnimationFinish(actions));
         }
         else
         {
-            _animRunner.StartRunOverride(cycle, objectId, animations, () => OnAllAnimationFinish(actions));
+            await _animRunner.StartRunOverride(cycle, objectId, animations, () => OnAllAnimationFinish(actions));
         }
     }
 
@@ -71,6 +71,7 @@ public class SkillExecutor : MonoBehaviour
     private void OnAllAnimationFinish(AnimationEventsBase actions)
     {
         OnAllAnimationFinished?.Invoke(actions);
+        OnSkillSequenceFinished?.Invoke();
     }
 
 

@@ -1,4 +1,4 @@
-﻿// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
+// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
 // Website & Documentation: https://html-agility-pack.net
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
@@ -12,11 +12,11 @@ namespace HtmlAgilityPack
     /// <summary>
     /// A utility class to compute CRC32.
     /// </summary>
-    [System.Obsolete("This type should not be used; it is intended for internal use in HTML Agility Pack.")]
+
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6) || WINDOWS_UWP
-    [CLSCompliant(false)]
+
 #endif
-    public class Crc32
+    internal class Crc32Calculator
     {
         #region Fields
 
@@ -166,5 +166,14 @@ namespace HtmlAgilityPack
         }
 
         #endregion
+    }
+}
+namespace HtmlAgilityPack
+{
+    [System.Obsolete("This type should not be used; it is intended for internal use in HTML Agility Pack.")]
+    public class Crc32
+    {
+        public static uint CRC32Bytes(byte[] bytes) => Crc32Calculator.CRC32Bytes(bytes);
+        public static uint CRC32String(string text) => Crc32Calculator.CRC32String(text);
     }
 }

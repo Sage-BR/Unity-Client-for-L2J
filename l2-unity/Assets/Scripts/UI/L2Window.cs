@@ -1,4 +1,4 @@
-﻿using NUnit.Framework.Internal;
+using NUnit.Framework.Internal;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -120,7 +120,7 @@ public abstract class L2Window : MonoBehaviour
     {
         if (_listDropDown == null || _listDropDown.Count == 0)
         {
-            evt.PreventDefault();
+            evt.StopPropagation();
             evt.StopImmediatePropagation();
         }
     }
@@ -311,5 +311,13 @@ public abstract class L2Window : MonoBehaviour
     protected void SetUnBlockStatusMouseOver()
     {
         _mouseOverDetection.SetUnBlockDropfieldStatus();
+    }
+}
+
+internal static class L2UiTranslation
+{
+    internal static UnityEngine.UIElements.Translate FromPosition(UnityEngine.Vector3 position)
+    {
+        return new UnityEngine.UIElements.Translate(position.x, position.y, position.z);
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine;
 public sealed class RequestAuthLogin : OutgoingWirePacket<RequestAuthLoginDto>
 {
     private const int TestRsaSize = 113;
-    private const int MaxAccountBytes = 15;
-    private const int MaxPasswordBytes = 15;
+    private const int MaxAccountBytes = 14;
+    private const int MaxPasswordBytes = 16;
     private bool _valid;
 
     protected override byte Opcode => (byte)LoginClientPacketType.RequestAuthLogin;

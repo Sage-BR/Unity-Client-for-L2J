@@ -45,9 +45,15 @@ public class CompositePrefabEffect : TimedCompositeEffectBase
     bool _isSubscribedToAnyShoot;
     bool _isSubscribedToProjectileEffectHit;
     bool _lightSpawned;
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     string _lastShootChannel;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     float _lastShootAt = -1f;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     string _lastShootStack;
+#endif
 
     protected IHomeProjectileService HomeProjectiles =>
         CompositeHomeProjectileAccess.Resolve(ref _homeProjectiles);
@@ -103,11 +109,17 @@ public class CompositePrefabEffect : TimedCompositeEffectBase
         }
 
         _lightSpawned = false;
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _lastShootChannel = null;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _lastShootAt = -1f;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _lastShootStack = null;
+#endif
         _playStartedAt = Time.time;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"{DebugPrefix} Play started at={_playStartedAt:F3}s hit={(_castData != null ? _castData.HitTime : -1f):F3}s " +
             $"flight={(_castData != null ? _castData.FlightTime : -1f):F3}s serverShoot={(_castData != null ? _castData.serverTimeToShoot : -1f):F3}s.");
@@ -128,7 +140,7 @@ public class CompositePrefabEffect : TimedCompositeEffectBase
         {
             DestroyCompositeByLifetime();
         }
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         else
         {
             Debug.Log($"{DebugPrefix} SkipDestroyCompositeByLifetime=true — корень композита не будет уничтожен по lifetime (дочерние объекты остаются в сцене).");
@@ -183,7 +195,7 @@ public class CompositePrefabEffect : TimedCompositeEffectBase
             return;
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (_spawnedPartInstances.ContainsKey(part))
             EffectDoublePlayLog.Note(
                 "Composite.SpawnPart",
@@ -285,20 +297,26 @@ public class CompositePrefabEffect : TimedCompositeEffectBase
 
     void ProcessShootEvent(string channel)
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (_lastShootAt > 0f && _pendingAnimationShootParts.Count > 0)
             EffectDoublePlayLog.Repeat(
                 $"Composite.ShootEvent first={_lastShootChannel} this={channel}",
                 this,
                 _lastShootAt,
                 _lastShootStack);
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _lastShootChannel = channel;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _lastShootAt = Time.time;
+#endif
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _lastShootStack = EffectDoublePlayLog.CaptureStack();
+#endif
 #endif
         SpawnPendingAnimationShootParts();
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (_castData != null)
         {
             float globalSinceCast = Time.time - _castData.StartTime;
@@ -498,7 +516,7 @@ public class CompositePrefabEffect : TimedCompositeEffectBase
         {
             yield return new WaitForSeconds(remaining);
         }
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         else
         {
             Debug.Log($"{DebugPrefix} Shoot fallback catch-up: event time already passed by {-remaining:F3}s.");
@@ -543,7 +561,7 @@ public class CompositePrefabEffect : TimedCompositeEffectBase
 
     void LogSpawnedPart(CompositePrefabPart part, EffectSettings partSettings, Transform setupOwner)
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"{DebugPrefix} Spawned part='{part.name}' point={part.attachmentPoint} " +
             $"follow={part.followResolvedTransform} hitTime={(_castData != null ? _castData.HitTime : -1f):F3}s " +

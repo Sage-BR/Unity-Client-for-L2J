@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class L2Particle : BaseEffect, IRegisteredBillboard
@@ -85,7 +85,7 @@ public class L2Particle : BaseEffect, IRegisteredBillboard
             return;
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float lived = Time.time - _playStartedAt;
         if (lived < 0.25f)
         {
@@ -112,7 +112,7 @@ public class L2Particle : BaseEffect, IRegisteredBillboard
             //_settings.defaultLifeTime = castData.HitTime;
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (ShouldTraceLifetime())
         {
             Debug.Log(
@@ -136,7 +136,7 @@ public class L2Particle : BaseEffect, IRegisteredBillboard
 
     public override void Play()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (_playStartedAt > 0f && Time.time - _playStartedAt < 8f)
             EffectDoublePlayLog.Repeat("L2Particle.Play", this, _playStartedAt, _firstPlayStack);
         _firstPlayStack = EffectDoublePlayLog.CaptureStack();
@@ -152,7 +152,7 @@ public class L2Particle : BaseEffect, IRegisteredBillboard
             DestoryEffect(_settings, _castData);
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (_skipScheduledDestroyForDebug)
         {
             Debug.Log($"[L2Particle] SkipScheduledDestroyForDebug: '{name}' — DestoryEffect не вызывается.");
@@ -173,7 +173,7 @@ public class L2Particle : BaseEffect, IRegisteredBillboard
 
     public void ResetTimer()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (_playStartedAt > 0f && Time.time - _playStartedAt > 0.02f && Time.time - _playStartedAt < 8f)
             EffectDoublePlayLog.Repeat("L2Particle.ResetTimer", this, _playStartedAt, _firstPlayStack);
 #endif
@@ -258,7 +258,7 @@ public class L2Particle : BaseEffect, IRegisteredBillboard
 
     protected override void OnDestroy()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float now = Time.time;
         float elapsed = _playStartedAt > 0f ? now - _playStartedAt : -1f;
         DropAdenaDestroyLog.Event(

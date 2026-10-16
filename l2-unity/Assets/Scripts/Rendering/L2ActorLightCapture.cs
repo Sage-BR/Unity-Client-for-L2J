@@ -132,7 +132,7 @@ public static class L2ActorLightCapture
     static string AppendKaterina(StringBuilder text)
     {
         Entity[] entities = UnityEngine.Object.FindObjectsByType<Entity>(
-            FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            FindObjectsInactive.Exclude);
         var hits = new List<Entity>();
         for (int i = 0; i < entities.Length; i++)
         {

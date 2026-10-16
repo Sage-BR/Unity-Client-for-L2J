@@ -54,7 +54,7 @@ public class FNManagerLight : MonoBehaviour
         if (_debugLog)
         {
             Debug.Log(
-                $"{LOG_TAG} Awake ok on '{name}' id={GetInstanceID()} " +
+                $"{LOG_TAG} Awake ok on '{name}' id={GetEntityId()} " +
                 $"fallback intensity={_intensity:F2} range={_rangeMeters:F3}m duration={_durationSeconds:F3}s pool={_poolSize}");
         }
     }

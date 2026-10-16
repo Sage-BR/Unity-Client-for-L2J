@@ -134,11 +134,8 @@ namespace FMODUnity
         internal override string GetPluginPath(string pluginName)
         {
 #if UNITY_STANDALONE_WIN
-        #if UNITY_64
-            return string.Format("{0}/X86_64/{1}.dll", GetPluginBasePath(), pluginName);
-        #else
-            return string.Format("{0}/X86/{1}.dll", GetPluginBasePath(), pluginName);
-        #endif
+            return string.Format("{0}/{1}/{2}.dll", GetPluginBasePath(),
+                System.IntPtr.Size == 8 ? "X86_64" : "X86", pluginName);
 #else // UNITY_WSA
             return string.Format("{0}.dll", pluginName);
 #endif

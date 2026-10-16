@@ -16,7 +16,7 @@ public class MagicCastData
     /// Код penalty в <c>else</c> намеренно не удалён, чтобы можно было вернуть без восстановления из git.
     /// </para>
     /// </summary>
-    private const bool MagicCastWallPenaltyDisabledForTesting = true;
+    public static bool MagicCastWallPenaltyDisabledForTesting { get; set; } = true;
 
     /// <summary>
     /// Фиксированный сдвиг окна до выстрела (сек): вычитается из номинального <c>serverTimeToShoot</c>,
@@ -150,7 +150,7 @@ public class MagicCastData
         PhaseWallEndSeconds = 0f;
         PhaseWallShotSeconds = 0f;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"[MagicCastData] serverHitMs={serverHitMs:F1}ms hitTime={HitTime:F3}s " +
             $"flyMs={flyMs:F1}ms flightTime={FlightTime:F3}s shotEventTime={shotEventTime:F3}s");
@@ -310,7 +310,7 @@ public class MagicCastData
             $"path={(isTwoClipCastPath ? "two_clip_castend_magicshot" : "default_three_phase")} " +
             $"walls[mid={wallMid:F3},end={wallEnd:F3},notify={wallNotify:F3}]");
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"[CastTimingSetup] hit={HitTime:F3}s flight={FlightTime:F3}s " +
             $"shootTargetNominal={serverTimeToShoot:F3}s wallPenalty={AnimatorWallPenaltySeconds:F3}s " +

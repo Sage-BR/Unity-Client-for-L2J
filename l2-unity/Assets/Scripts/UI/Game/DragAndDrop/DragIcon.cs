@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class DragIcon : L2PopupWindow
 {
-    public VisualElement icon;
+    [System.NonSerialized] public VisualElement icon;
 
 
     private static DragIcon _instance;
@@ -44,7 +44,7 @@ public class DragIcon : L2PopupWindow
 
         yield return new WaitForEndOfFrame();
 
-        icon = GetElementByClass("Icon");
+      icon = GetElementByClass("Icon");
         var content = GetElementByClass("drag_content");
         icon.style.backgroundImage = IconManager.Instance.LoadTextureByName("noimage");
         RegisterClickWindow(content);
@@ -66,13 +66,13 @@ public class DragIcon : L2PopupWindow
                 _isShow = true;
             }
             //icon.style.backgroundImage = IconManager.Instance.LoadTextureByName("skill0914");
-            icon.transform.position = position;
+            icon.style.translate = L2UiTranslation.FromPosition(position);
         }
     }
 
     public void ResetPosition()
     {
-        icon.transform.position = Vector2.zero;
+        icon.style.translate = L2UiTranslation.FromPosition(Vector2.zero);
         if (_isShow)
         {
             _isShow = false;

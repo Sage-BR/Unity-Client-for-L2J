@@ -282,6 +282,17 @@ public sealed class WorldPacketApply
         apply.OnChangeWaitType(entity, dto);
     }
 
+    public void ChangeMoveType(ChangeMoveTypeDto dto)
+    {
+        if (dto == null)
+            return;
+        Entity entity = GetEntity(dto.ObjectId);
+        if (entity == null)
+            return;
+        entity.Identity.IsRunning = dto.Running;
+        entity.UpdateMoveType(dto.Running);
+    }
+
     public void MagicSkillCanceled(MagicSkillCanceledDto dto)
     {
         if (dto == null)

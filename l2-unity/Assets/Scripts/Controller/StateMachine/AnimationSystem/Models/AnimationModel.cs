@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
@@ -25,7 +25,7 @@ public class AnimationModel
 
     public IAnimationController GetController() => _controller;
     public Entity GetEntity() => _entity;
-    public Type GetType() => _typeController;
+    public Type GetControllerType() => _typeController;
 
   
 

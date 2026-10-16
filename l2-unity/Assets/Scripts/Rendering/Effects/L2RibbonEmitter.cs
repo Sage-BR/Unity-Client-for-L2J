@@ -30,9 +30,7 @@ public sealed class L2RibbonEmitter : EffectPart
     [SerializeField] private float _scaleRatio = 1.5f;
     [SerializeField] private float _l2ToUnityScale = 0.2f;
     [SerializeField, Range(0f, 1f)] private float _edgeRatio = 0.5f;
-    [SerializeField] private float _sampleRate = 0.002f;
     [SerializeField, Min(2)] private int _maxPoints = 160;
-    [SerializeField] private int _minPoints = 20;
     [Tooltip("Max midpoint/tip gap between ribbon samples (m). Larger frame motion inserts arc sheets.")]
     [SerializeField] private float _maxSegmentMeters = 0.02f;
     [SerializeField, Min(0)] private int _maxSheetsPerSample = 48;
@@ -71,7 +69,9 @@ public sealed class L2RibbonEmitter : EffectPart
     [SerializeField] private bool _debugTracePoints = false;
     [SerializeField] private float _debugLogInterval = 0.1f;
     [SerializeField] private int _debugTraceFirstFrames = 90;
+#if UNITY_EDITOR
     [SerializeField] private bool _drawGizmos = false;
+#endif
 
     private struct RibbonPoint
     {
@@ -89,7 +89,6 @@ public sealed class L2RibbonEmitter : EffectPart
     private Color[] _colors;
     private int[] _tris;
     private bool _playing;
-    private float _sampleTimer;
     private float _nextDebugLogTime;
     private int _sampleAttempts;
     private int _sampleAccepted;
@@ -139,7 +138,6 @@ public sealed class L2RibbonEmitter : EffectPart
         ResolveBladeAnchors();
         ApplyOpacityToMaterial();
         _points.Clear();
-        _sampleTimer = 0f;
         _sampleAttempts = 0;
         _sampleAccepted = 0;
         _playing = true;

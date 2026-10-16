@@ -5,8 +5,8 @@ using UnityEngine;
 
 public static class ReplayAttackTrace
 {
-    static readonly string PathName =
-        @"C:\Users\hh-soft\source\repos\AutoLoginInterlude\ChainLogs\unity\replay_attack_trace.log";
+    static string PathName =>
+        Path.Combine(Application.persistentDataPath, "ChainLogs", "unity", "replay_attack_trace.log");
 
     public const string VisTag = "[VIS_DIST]";
 

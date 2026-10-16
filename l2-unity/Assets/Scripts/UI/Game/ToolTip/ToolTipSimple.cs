@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,7 +23,6 @@ public class ToolTipSimple : L2PopupWindow, IToolTips
     private VisualTreeAsset _setsElements;
     private VisualTreeAsset _setsEffects;
     private VisualElement _contentInside;
-    private float _lastHeightContent = 0;
     private float _heightContent = 0;
     private float _widtchContent = 0;
     private VisualElement _selectShow;
@@ -626,7 +625,7 @@ public class ToolTipSimple : L2PopupWindow, IToolTips
         var highest = _calcPosition.HighestPoint(newPoint, _heightContent);
         bool insideRoot = L2GameUI.Instance.IsWindowContain(highest);
         Vector2 reversePoint = _calcPosition.GetNewPosition(newPoint, sdfig, _heightContent , insideRoot , isForceBelow);
-        _content.transform.position = reversePoint;
+        _content.style.translate = L2UiTranslation.FromPosition(reversePoint);
         BringToFront();
     }
 
@@ -910,7 +909,7 @@ public class ToolTipSimple : L2PopupWindow, IToolTips
 
     public void ResetPosition(Vector2 vector2)
     {
-        _content.transform.position = vector2;
+        _content.style.translate = L2UiTranslation.FromPosition(vector2);
         SendToBack();
     }
 }

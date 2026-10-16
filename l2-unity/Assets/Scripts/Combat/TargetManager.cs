@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VContainer;
@@ -14,7 +14,7 @@ public class TargetManager : MonoBehaviour
     [SerializeField] private float _maximumTargetDistance = 15f;
     [SerializeField] private LayerMask _entityMask;
     private LayerMask _areaMask = 8192;
-    [SerializeField] private RaycastHit[] _entitiesInRange;
+    [System.NonSerialized] private RaycastHit[] _entitiesInRange;
     [SerializeField] private List<Transform> _visibleEntities;
     [SerializeField] private int _nextTargetIndex;
     private string defaultHexColor = "#ffffff";
@@ -69,7 +69,7 @@ public class TargetManager : MonoBehaviour
 
         VerifyNextTargetIndex();
 
-        _entitiesInRange = Physics.SphereCastAll(_playerTransform.position, _maximumTargetDistance, transform.forward, 0, _entityMask);
+      _entitiesInRange = Physics.SphereCastAll(_playerTransform.position, _maximumTargetDistance, transform.forward, 0, _entityMask);
         _visibleEntities = GetVisibleEntities();
     }
 

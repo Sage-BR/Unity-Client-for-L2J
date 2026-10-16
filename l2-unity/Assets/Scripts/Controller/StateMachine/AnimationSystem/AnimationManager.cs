@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -22,7 +22,7 @@ public class AnimationManager : BaseAnimationManager , IAnimationManager
     private const string SHOT_SOURCE_RUNNER = "Runner";
     private const int OVERRIDE_AWAIT_WARN_TIMEOUT_MS = 5000;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     /// <summary>
     /// Телеметрия: откуда пришёл shoot (параметр ивента на клипе) и что реально играет на animator layer0.
     /// Вызывается из <see cref="BaseAnimationController.OnAnimationShoot"/>.
@@ -534,7 +534,7 @@ public class AnimationManager : BaseAnimationManager , IAnimationManager
 
         Debug.Log($"AnimationManager> start Async AnimationTrigger(  {entity} animation  {animationName}");
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (IsMagicShotTrigger(animationName) && entity != null)
         {
             MagicCastData cd = entity.GetMagicCastData();

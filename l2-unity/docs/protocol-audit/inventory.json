@@ -1,0 +1,27 @@
+{
+  "server_writers": 272,
+  "server_request_routes": 210,
+  "distinct_server_opcode_keys": 267,
+  "client_binding_keys": 101,
+  "writer_statuses": {
+    "present-layout-and-runtime-unverified": 85,
+    "client-apply-empty": 12,
+    "custom-dynamic-admin-packet": 1,
+    "missing-client-binding": 174
+  },
+  "duplicate_bindings": 0,
+  "request_statuses": {
+    "present-layout-unverified": 44,
+    "missing-or-extended-review": 166
+  },
+  "world_handoff_rows": 21,
+  "login_request_routes": 4,
+  "limits": [
+    "Static inventory; present does not mean correct.",
+    "Counts are writer classes and state-dependent routes, not unique opcodes.",
+    "Write/read traces include loops and conditionals without expansion.",
+    "Extended client requests need separate validation.",
+    "Empty Apply must be reviewed with OnParsed and other lifecycle side effects.",
+    "Login request routes are recorded separately from Game."
+  ]
+}

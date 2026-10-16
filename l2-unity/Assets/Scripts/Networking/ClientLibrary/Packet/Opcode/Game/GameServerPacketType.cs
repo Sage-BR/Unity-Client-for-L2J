@@ -34,6 +34,7 @@
     AutoAttackStart = 0x2B,
     AutoAttackStop = 0x2C,
     SocialAction = 0x2D,
+    ChangeMoveType = 0x2E,
     ChangeWaitType = 0x2F,
     ManagePledgePower = 0x30,
     AskJoinParty = 0x39,

@@ -60,7 +60,7 @@ public class DescriptionSkillWindow : L2PopupWindow
         _dataProvider.AddRequiredSkillInfo(packet.RequiredSkillInfo, _content);
     }
 
-    public void ShowWindow()
+    public override void ShowWindow()
     {
         UserInfoDto user = StorageNpc.getInstance().GetFirstUser();
         _spLabel.text = user.PlayerInfoInterlude.Stats.Sp.ToString();

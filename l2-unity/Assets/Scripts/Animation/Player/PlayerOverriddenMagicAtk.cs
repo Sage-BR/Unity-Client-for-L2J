@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PlayerOverriddenMagicAtk : StateMachineBehaviour
 {
@@ -10,7 +10,7 @@ public class PlayerOverriddenMagicAtk : StateMachineBehaviour
     /// Принудительный MagicShot по wall-clock во время CastEnd (включено только при EnableForceSync = true и HitTime пороге ниже).
     /// Сейчас выключено — только SkillAnimationRunner.
     /// </summary>
-    private const bool EnableForceSync = false;
+    public static bool EnableForceSync { get; set; } = false;
 
     /// <summary>
     /// ForceSync только когда server HitTime >= этого порога (сек). Короче 2 с — только runner, без принудительного MagicShot.
@@ -83,9 +83,9 @@ public class PlayerOverriddenMagicAtk : StateMachineBehaviour
             $"globalAtEnter={(_castData != null ? (Time.time - _castData.StartTime).ToString("F3") : "null")} " +
             $"animSpeed={animator.speed:F3} clipLen={_clipLengthAtEnter:F3} " +
             $"exitGate=wall|norm>={PhaseDoneNormalizedTime:F2}→NotifyPhase{(isFinalShotState ? "+SwitchToIdle" : "")} " +
-            $"animId={animator.GetInstanceID()}");
+            $"animId={animator.GetEntityId()}");
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float globalSinceCastStart = (_castData != null) ? (Time.time - _castData.StartTime) : -1f;
         string clipName = (clip != null) ? clip.name : "null";
         if (_castData != null)
@@ -122,7 +122,7 @@ public class PlayerOverriddenMagicAtk : StateMachineBehaviour
             $"[AnimStateEnter] state='{parameterName}' idx={stateIndex} final={isFinalShotState} " +
             $"globalSinceCastStart={globalSinceCastStart:F3}s speed={animator.speed:F3} " +
             $"eventTimeInClip={_eventTimeInClip:F3}s clip='{clipName}' normalized={stateInfo.normalizedTime:F3} " +
-            $"layer={layerIndex} animatorInstanceId={animator.GetInstanceID()}");
+            $"layer={layerIndex} animatorInstanceId={animator.GetEntityId()}");
 #endif
     }
 
@@ -172,19 +172,19 @@ public class PlayerOverriddenMagicAtk : StateMachineBehaviour
                         $"[MAGIC_TRIGGER] now={Time.time:F3} global={globalElapsed:F3} " +
                         $"targetRaw={rawShootAt:F3} shotEventLead={shotEventLeadTime:F3} targetComp={compensatedShootAt:F3} " +
                         $"deltaRaw={(globalElapsed - rawShootAt):F3} deltaComp={(globalElapsed - compensatedShootAt):F3} " +
-                        $"castDataHash={_castData.GetHashCode()} animId={animator.GetInstanceID()} objectId={objectId}");
+                        $"castDataHash={_castData.GetHashCode()} animId={animator.GetEntityId()} objectId={objectId}");
                     Debug.Log($"{coordinatorMessage} action=run");
                 }
                 else
                 {
                     Debug.Log($"{coordinatorMessage} action=skip");
                 }
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
                 Debug.Log(
                     $"[ForceShotSync] Triggered MagicShot from CastEnd at global={globalElapsed:F3}s " +
                     $"targetRaw={rawShootAt:F3}s shotEventLead={shotEventLeadTime:F3}s targetComp={compensatedShootAt:F3}s comp={ShotBlendCompensationSeconds:F3}s " +
                     $"deltaRaw={globalElapsed - rawShootAt:F3}s deltaComp={globalElapsed - compensatedShootAt:F3}s " +
-                    $"animatorSpeedNow={animator.speed:F3} animatorInstanceId={animator.GetInstanceID()}.");
+                    $"animatorSpeedNow={animator.speed:F3} animatorInstanceId={animator.GetEntityId()}.");
 #endif
             }
         }
@@ -299,11 +299,11 @@ public class PlayerOverriddenMagicAtk : StateMachineBehaviour
         Debug.Log(
             $"[MAGIC_EXIT] state={parameterName} idx={stateIndex} now={Time.time:F3} " +
             $"globalAtExit={(_castData != null ? (Time.time - _castData.StartTime).ToString("F3") : "null")} " +
-            $"normalized={stateInfo.normalizedTime:F3} animSpeed={animator.speed:F3} animId={animator.GetInstanceID()}");
+            $"normalized={stateInfo.normalizedTime:F3} animSpeed={animator.speed:F3} animId={animator.GetEntityId()}");
         Debug.Log(
             $"[AnimLog] EXIT {parameterName} | Total Local: {finalLocalTime:F3}s | " +
             $"Global: {globalSinceCastStart:F3}s | normalized: {stateInfo.normalizedTime:F3} | " +
-            $"Layer: {layerIndex} | Animator: {animator.GetInstanceID()}");
+            $"Layer: {layerIndex} | Animator: {animator.GetEntityId()}");
 
     }
 

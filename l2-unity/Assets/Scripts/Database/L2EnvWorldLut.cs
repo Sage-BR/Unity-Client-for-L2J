@@ -54,8 +54,8 @@ public static class L2EnvWorldLut
     const bool UseStoredClientIntensityGrid = true;
     // Original terrain windows from the client map. The generated 17_25 bake
     // lives in L2Unpacker/Beast and is not loaded.
-    const bool LoadStoredIntensityMasks = true;
-    const bool LoadBaked17_25Intensity = false;
+    public static bool LoadStoredIntensityMasks { get; set; } = true;
+    public static bool LoadBaked17_25Intensity { get; set; } = false;
     const string IntensityGridFileName = "L2TerrainIntensityGrid.bin";
     const string StoredIntensityGridFileName = "L2TerrainIntensityGrid_stored.bin";
     const string Baked17_25IntensityFileName = "L2TerrainIntensityGrid_17_25_baked.bin";

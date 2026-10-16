@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 /// Global High Elf Yebis after sky/world/skills. Contrast is primary, bloom secondary.
 /// Not gated on skills: WindStrike has no PostEffectDataID.
 /// </summary>
-public sealed class L2YebisPostRenderPass : ScriptableRenderPass
+public sealed class L2YebisPostRenderPass : L2RenderGraphPass
 {
     const int PassExtract = 0;
     const int PassKawase = 1;
@@ -57,6 +57,7 @@ public sealed class L2YebisPostRenderPass : ScriptableRenderPass
     static readonly ProfilingSampler Sampler = new ProfilingSampler("L2 Yebis Post");
 
     readonly L2FxCompositorSettings _settings;
+    protected override L2FxCompositorSettings EffectSettings => _settings;
     readonly Material _material;
 
     RTHandle _temp;
@@ -83,8 +84,29 @@ public sealed class L2YebisPostRenderPass : ScriptableRenderPass
         renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
     }
 
+    protected override System.Collections.Generic.IEnumerable<RTHandle> PersistentTargets
+    {
+        get
+        {
+            yield return _temp;
+            yield return _bloomA;
+            yield return _bloomB;
+            yield return _luma0;
+            yield return _luma1;
+            yield return _luma2;
+            yield return _adapted;
+            yield return _adaptedPrev;
+            yield return _sceneFloat;
+            yield return _bloomExclude;
+            yield return _captureScene;
+            yield return _captureGrade;
+            yield return _captureControl;
+        }
+    }
+
     public void Dispose()
     {
+        ReleaseMaterialSnapshots();
         _temp?.Release();
         _temp = null;
         _bloomA?.Release();
@@ -117,58 +139,58 @@ public sealed class L2YebisPostRenderPass : ScriptableRenderPass
         _execFrame = 0;
     }
 
-    public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
+    protected override void Prepare(L2RenderGraphFrame renderingData)
     {
         RenderTextureDescriptor desc = ColorDesc(renderingData.cameraData.cameraTargetDescriptor, 0, 0);
 
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _temp, desc, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_L2YebisTemp");
 
         RenderTextureDescriptor curveDesc = ColorDesc(renderingData.cameraData.cameraTargetDescriptor, 0, 0);
         curveDesc.graphicsFormat = GraphicsFormat.R16G16B16A16_SFloat;
         curveDesc.sRGB = false;
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _sceneFloat, curveDesc, FilterMode.Point, TextureWrapMode.Clamp, name: "_L2YebisSceneFloat");
 
         RenderTextureDescriptor halfDesc = ColorDesc(desc, Mathf.Max(1, desc.width / 2), Mathf.Max(1, desc.height / 2));
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _bloomA, halfDesc, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_L2YebisBloomA");
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _bloomB, halfDesc, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_L2YebisBloomB");
 
         RenderTextureDescriptor luma0 = ColorDesc(desc, Mathf.Max(1, desc.width / 4), Mathf.Max(1, desc.height / 4));
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _luma0, luma0, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_L2YebisLuma0");
 
         RenderTextureDescriptor luma1 = ColorDesc(desc, Mathf.Max(1, desc.width / 16), Mathf.Max(1, desc.height / 16));
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _luma1, luma1, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_L2YebisLuma1");
 
         // 8x8, not 1x1: BlitCameraTexture + 1x1 RTV writes black (RenderDoc luma2/adapted = 0).
         RenderTextureDescriptor adapt = ColorDesc(desc, 8, 8);
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _luma2, adapt, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_L2YebisLuma2");
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _adapted, adapt, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_L2YebisAdapted");
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _adaptedPrev, adapt, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_L2YebisAdaptedPrev");
 
-        RenderingUtils.ReAllocateIfNeeded(
+        RenderingUtils.ReAllocateHandleIfNeeded(
             ref _bloomExclude, desc, FilterMode.Point, TextureWrapMode.Clamp, name: "_L2YebisBloomExclude");
 
         if (renderingData.cameraData.cameraType == CameraType.Game
             && renderingData.cameraData.renderType == CameraRenderType.Base)
         {
-            RenderingUtils.ReAllocateIfNeeded(
+            RenderingUtils.ReAllocateHandleIfNeeded(
                 ref _captureScene, desc, FilterMode.Point, TextureWrapMode.Clamp, name: "_L2YebisCaptureScene");
-            RenderingUtils.ReAllocateIfNeeded(
+            RenderingUtils.ReAllocateHandleIfNeeded(
                 ref _captureGrade, desc, FilterMode.Point, TextureWrapMode.Clamp, name: "_L2YebisCaptureGrade");
-            RenderingUtils.ReAllocateIfNeeded(
+            RenderingUtils.ReAllocateHandleIfNeeded(
                 ref _captureControl, desc, FilterMode.Point, TextureWrapMode.Clamp, name: "_L2YebisCaptureControl");
         }
     }
 
-    public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+    protected override void Render(CommandBuffer cmd, ref L2RenderGraphFrame renderingData)
     {
         if (_material == null || _temp == null)
         {
@@ -177,15 +199,13 @@ public sealed class L2YebisPostRenderPass : ScriptableRenderPass
             return;
         }
 
-        RTHandle cameraColor = renderingData.cameraData.renderer.cameraColorTargetHandle;
+        RTHandle cameraColor = renderingData.cameraColor;
         if (cameraColor == null)
         {
             L2NameplateOverlayQueue.FlushImmediateFallback();
             L2YebisPostRuntime.WillFlushNameplates = false;
             return;
         }
-
-        CommandBuffer cmd = CommandBufferPool.Get("L2 Yebis Post");
         using (new ProfilingScope(cmd, Sampler))
         {
             BindParams();
@@ -321,9 +341,6 @@ public sealed class L2YebisPostRenderPass : ScriptableRenderPass
             L2NameplateOverlayQueue.Flush(cmd);
             MaybeLogYebis(cmd, cameraColor);
         }
-
-        context.ExecuteCommandBuffer(cmd);
-        CommandBufferPool.Release(cmd);
         L2YebisPostRuntime.WillFlushNameplates = false;
     }
 
@@ -361,9 +378,9 @@ public sealed class L2YebisPostRenderPass : ScriptableRenderPass
         _material.SetFloat(GradeStageId, L2YebisLiveCapture.GradeStage);
     }
 
-    void FillBloomExcludeMask(CommandBuffer cmd, ref RenderingData renderingData)
+    void FillBloomExcludeMask(CommandBuffer cmd, ref L2RenderGraphFrame renderingData)
     {
-        RTHandle cameraDepth = renderingData.cameraData.renderer.cameraDepthTargetHandle;
+        RTHandle cameraDepth = renderingData.cameraDepth;
         if (_bloomExclude == null || cameraDepth == null)
         {
             BindBloomExclude(cmd, false);
@@ -504,7 +521,7 @@ public sealed class L2YebisPostRenderPass : ScriptableRenderPass
         cmd.SetViewport(new Rect(0f, 0f, w, h));
         // No MaterialPropertyBlock: Blitter's MPB drops material textures
         // (_AdaptedTex → black), so Adapt was lerp(0, luma, 0.08).
-        cmd.DrawProcedural(Matrix4x4.identity, _material, pass, MeshTopology.Triangles, 3, 1);
+        cmd.DrawProcedural(Matrix4x4.identity, SnapshotMaterial(_material), pass, MeshTopology.Triangles, 3, 1);
     }
 
     void SetBlitTexelSize(RTHandle source)

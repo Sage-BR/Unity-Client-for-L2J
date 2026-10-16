@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class CreateScroller
 {
     protected float _scrollStepSize = 32f;
-    private bool _autoscroll = false;
     public void Start(VisualElement _tabContainer)
     {
         if (_tabContainer != null)
@@ -81,11 +80,9 @@ public class CreateScroller
     {
         if (scroller.highValue > 0 && scroller.value == scroller.highValue || scroller.highValue == 0 && scroller.value == 0)
         {
-            _autoscroll = true;
         }
         else
         {
-            _autoscroll = false;
         }
     }
 }

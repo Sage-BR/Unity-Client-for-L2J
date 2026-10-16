@@ -88,7 +88,7 @@ public class SkillLearnWindow : L2PopupWindow
         return null;
 
     }
-    public void ShowWindow()
+    public override void ShowWindow()
     {
         UserInfoDto user = StorageNpc.getInstance().GetFirstUser();
         _spLabel.text = user.PlayerInfoInterlude.Stats.Sp.ToString();

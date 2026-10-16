@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -10,7 +10,7 @@ public class HtmlWindow : L2PopupWindow
     private static HtmlWindow _instance;
     public static HtmlWindow Instance => _instance;
 
-    private VisualElement _root;
+    private VisualElement _htmlRoot;
     private VisualElement _content;
     private ScrollView _scrollView;
     private VisualElement _communityTopButtons;
@@ -55,7 +55,7 @@ public class HtmlWindow : L2PopupWindow
     {
         base.InitWindow(root);
 
-        _root = root;
+        _htmlRoot = root;
 
         VisualElement dragArea = GetElementByClass("drag-area");
 
@@ -92,9 +92,9 @@ public class HtmlWindow : L2PopupWindow
 
         RegisterCommunityButtons();
 
-        if (!_normalWindowPositionInitialized && _root != null)
+        if (!_normalWindowPositionInitialized && _htmlRoot != null)
         {
-            OnCenterScreen(_root);
+            OnCenterScreen(_htmlRoot);
             _normalWindowPositionInitialized = true;
         }
     }
@@ -220,9 +220,9 @@ public class HtmlWindow : L2PopupWindow
             _windowEle.style.bottom = StyleKeyword.Auto;
             _windowEle.style.translate = new Translate(0, 0);
 
-            if (!_normalWindowPositionInitialized && _root != null)
+            if (!_normalWindowPositionInitialized && _htmlRoot != null)
             {
-                OnCenterScreen(_root);
+                OnCenterScreen(_htmlRoot);
                 _normalWindowPositionInitialized = true;
             }
         }
@@ -256,9 +256,9 @@ public class HtmlWindow : L2PopupWindow
             _windowEle.style.bottom = StyleKeyword.Auto;
             _windowEle.style.translate = new Translate(0, 0);
 
-            if (!_communityBoardPositionInitialized && _root != null)
+            if (!_communityBoardPositionInitialized && _htmlRoot != null)
             {
-                OnCenterScreen(_root);
+                OnCenterScreen(_htmlRoot);
                 _communityBoardPositionInitialized = true;
             }
         }

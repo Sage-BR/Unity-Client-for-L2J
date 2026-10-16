@@ -10,8 +10,9 @@ public sealed class AppearFadeService : ITickable
 {
     readonly L2ActorFade _fade;
     readonly Dictionary<int, Entry> _appear = new Dictionary<int, Entry>();
-    readonly Dictionary<int, Entry> _disappear = new Dictionary<int, Entry>();
+    readonly Dictionary<EntityId, Entry> _disappear = new Dictionary<EntityId, Entry>();
     readonly List<int> _remove = new List<int>();
+    readonly List<EntityId> _removeDisappear = new List<EntityId>();
 
     public AppearFadeService(L2ActorFade fade)
     {
@@ -55,11 +56,11 @@ public sealed class AppearFadeService : ITickable
             _appear.Remove(objectId);
             entry.OnFinished = onFinished;
             StartDisappearFromCurrent(entry);
-            _disappear[entity.gameObject.GetInstanceID()] = entry;
+            _disappear[entity.gameObject.GetEntityId()] = entry;
             return;
         }
 
-        int goId = entity.gameObject.GetInstanceID();
+        EntityId goId = entity.gameObject.GetEntityId();
         if (_disappear.ContainsKey(goId))
         {
             return;
@@ -121,23 +122,23 @@ public sealed class AppearFadeService : ITickable
 
     public void Tick()
     {
-        TickDict(_appear, true);
-        TickDict(_disappear, false);
+        TickDict(_appear, true, _remove);
+        TickDict(_disappear, false, _removeDisappear);
     }
 
-    void TickDict(Dictionary<int, Entry> dict, bool appear)
+    void TickDict<TKey>(Dictionary<TKey, Entry> dict, bool appear, List<TKey> remove)
     {
         if (dict.Count == 0)
         {
             return;
         }
 
-        foreach (KeyValuePair<int, Entry> kvp in dict)
+        foreach (KeyValuePair<TKey, Entry> kvp in dict)
         {
             Entry entry = kvp.Value;
             if (entry == null || !entry.IsValid())
             {
-                _remove.Add(kvp.Key);
+                remove.Add(kvp.Key);
                 continue;
             }
 
@@ -153,7 +154,7 @@ public sealed class AppearFadeService : ITickable
                     InvokeFinished(entry.OnFinished, entry.Entity);
                 }
 
-                _remove.Add(kvp.Key);
+                remove.Add(kvp.Key);
                 continue;
             }
 
@@ -163,12 +164,12 @@ public sealed class AppearFadeService : ITickable
             entry.SetAlpha(_fade, alpha);
         }
 
-        for (int i = 0; i < _remove.Count; i++)
+        for (int i = 0; i < remove.Count; i++)
         {
-            dict.Remove(_remove[i]);
+            dict.Remove(remove[i]);
         }
 
-        _remove.Clear();
+        remove.Clear();
     }
 
     void StartDisappearFromCurrent(Entry entry)

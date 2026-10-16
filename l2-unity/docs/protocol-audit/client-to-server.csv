@@ -1,0 +1,211 @@
+﻿state,opcode,extended_opcode,server_packet,client_outgoing,status,server_source,server_reads,client_source,client_writes
+CONNECTED,0x00,,ProtocolVersion,ProtocolVersion,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\ProtocolVersion.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\ProtocolVersion.cs,I
+CONNECTED,0x08,,AuthLogin,AuthLogin,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\AuthLogin.java,S D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\AuthLogin.cs,SOther Char I I I I
+AUTHED,0x09,,Logout,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\Logout.java,,,
+AUTHED,0x0B,,CharacterCreate,CharacterCreate,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\CharacterCreate.java,S D D D D D D D D D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\CharacterCreate.cs,SOther Char I I I I I I I I I I I I
+AUTHED,0x0C,,CharacterDelete,CharacterDelete,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\CharacterDelete.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\CharacterDelete.cs,I
+AUTHED,0x0D,,CharacterSelected,CharacterSelect,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\CharacterSelected.java,D H D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\CharacterSelect.cs,I Short I I I
+AUTHED,0x0E,,NewCharacter,NewCharacter,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\NewCharacter.java,,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\NewCharacter.cs,
+AUTHED,0x62,,CharacterRestore,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\CharacterRestore.java,D,,
+AUTHED,0x68,,RequestPledgeCrest,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeCrest.java,D,,
+ENTERING,0x03,,EnterWorld,EnterWorld,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\EnterWorld.java,,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\EnterWorld.cs,B I I I I B I B
+ENTERING,0xD0,0x0008,RequestManorList,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestManorList.java,,,
+IN_GAME,0x01,,MoveBackwardToLocation,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\MoveBackwardToLocation.java,D D D D D D D,,
+IN_GAME,0x04,,Action,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\Action.java,D D D D C,,
+IN_GAME,0x09,,Logout,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\Logout.java,,,
+IN_GAME,0x0A,,AttackRequest,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\AttackRequest.java,D D D D C,,
+IN_GAME,0x0F,,RequestItemList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestItemList.java,,,
+IN_GAME,0x11,,RequestUnEquipItem,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestUnEquipItem.java,D,,
+IN_GAME,0x12,,RequestDropItem,RequestDropItem,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestDropItem.java,D D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestDropItem.cs,I I I I I
+IN_GAME,0x14,,UseItem,UseItem,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\UseItem.java,D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\UseItem.cs,I I
+IN_GAME,0x15,,TradeRequest,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\TradeRequest.java,D,,
+IN_GAME,0x16,,AddTradeItem,AddTradeItem,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\AddTradeItem.java,D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\AddTradeItem.cs,I I I
+IN_GAME,0x17,,TradeDone,TradeDone,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\TradeDone.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\TradeDone.cs,I
+IN_GAME,0x1A,,DummyPacket,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\DummyPacket.java,,,
+IN_GAME,0x1B,,RequestSocialAction,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSocialAction.java,D,,
+IN_GAME,0x1C,,RequestChangeMoveType,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestChangeMoveType.java,D,,
+IN_GAME,0x1D,,RequestChangeWaitType,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestChangeWaitType.java,D,,
+IN_GAME,0x1E,,RequestSellItem,RequestSellItem,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestSellItem.java,D D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestSellItem.cs,I I I I I I
+IN_GAME,0x1F,,RequestBuyItem,RequestBuyItem,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestBuyItem.java,D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestBuyItem.cs,I I I I I
+IN_GAME,0x20,,RequestLinkHtml,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestLinkHtml.java,S,,
+IN_GAME,0x21,,RequestBypassToServer,RequestBypassToServer,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestBypassToServer.java,S,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestBypassToServer.cs,SOther
+IN_GAME,0x22,,RequestBBSwrite,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestBBSwrite.java,S S S S S S,,
+IN_GAME,0x23,,DummyPacket,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\DummyPacket.java,,,
+IN_GAME,0x24,,RequestJoinPledge,RequestJoinPledge,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestJoinPledge.java,D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestJoinPledge.cs,I I
+IN_GAME,0x25,,RequestAnswerJoinPledge,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestAnswerJoinPledge.java,D,,
+IN_GAME,0x26,,RequestWithdrawPledge,RequestWithdrawPledge,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestWithdrawPledge.java,,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestWithdrawPledge.cs,
+IN_GAME,0x27,,RequestOustPledgeMember,RequestOustPledgeMember,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestOustPledgeMember.java,S,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestOustPledgeMember.cs,OtherS
+IN_GAME,0x29,,RequestJoinParty,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestJoinParty.java,S D,,
+IN_GAME,0x2A,,RequestAnswerJoinParty,RequestAnswerJoinParty,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestAnswerJoinParty.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestAnswerJoinParty.cs,I
+IN_GAME,0x2B,,RequestWithdrawParty,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestWithdrawParty.java,,,
+IN_GAME,0x2C,,RequestOustPartyMember,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestOustPartyMember.java,S,,
+IN_GAME,0x2E,,DummyPacket,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\DummyPacket.java,,,
+IN_GAME,0x2F,,RequestMagicSkillUse,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestMagicSkillUse.java,D D C,,
+IN_GAME,0x30,,Appearing,Appearing,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\Appearing.java,,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\Appearing.cs,
+IN_GAME,0x31,,SendWarehouseDepositList,SendWarehouseDepositList,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\SendWarehouseDepositList.java,D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\SendWarehouseDepositList.cs,I I I I
+IN_GAME,0x32,,SendWarehouseWithdrawList,SendWarehouseWithdrawList,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\SendWarehouseWithdrawList.java,D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\SendWarehouseWithdrawList.cs,I I I I
+IN_GAME,0x33,,RequestShortCutReg,RequestShortCutReg,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestShortCutReg.java,D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestShortCutReg.cs,I I I I
+IN_GAME,0x34,,DummyPacket,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\DummyPacket.java,,,
+IN_GAME,0x35,,RequestShortCutDel,RequestShortCutDel,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestShortCutDel.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestShortCutDel.cs,I
+IN_GAME,0x36,,CannotMoveAnymore,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\CannotMoveAnymore.java,D D D D,,
+IN_GAME,0x37,,RequestTargetCanceld,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestTargetCanceld.java,H,,
+IN_GAME,0x38,,Say2,RequestSay2,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\Say2.java,S D S,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestSay2.cs,OtherS I OtherS
+IN_GAME,0x3C,,RequestPledgeMemberList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeMemberList.java,,,
+IN_GAME,0x3E,,DummyPacket,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\DummyPacket.java,,,
+IN_GAME,0x3F,,RequestSkillList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSkillList.java,,,
+IN_GAME,0x42,,RequestGetOnVehicle,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestGetOnVehicle.java,D D D D,,
+IN_GAME,0x43,,RequestGetOffVehicle,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestGetOffVehicle.java,D D D D,,
+IN_GAME,0x44,,AnswerTradeRequest,AnswerTradeRequest,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\AnswerTradeRequest.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\AnswerTradeRequest.cs,I
+IN_GAME,0x45,,RequestActionUse,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestActionUse.java,D D C,,
+IN_GAME,0x46,,RequestRestart,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRestart.java,,,
+IN_GAME,0x48,,ValidatePosition,ValidatePosition,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\ValidatePosition.java,D D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\ValidatePosition.cs,I I I I I
+IN_GAME,0x4A,,StartRotating,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\StartRotating.java,D D,,
+IN_GAME,0x4B,,FinishRotating,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\FinishRotating.java,D D,,
+IN_GAME,0x4D,,RequestStartPledgeWar,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestStartPledgeWar.java,S,,
+IN_GAME,0x4E,,RequestReplyStartPledgeWar,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestReplyStartPledgeWar.java,D,,
+IN_GAME,0x4F,,RequestStopPledgeWar,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestStopPledgeWar.java,S,,
+IN_GAME,0x50,,RequestReplyStopPledgeWar,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestReplyStopPledgeWar.java,D,,
+IN_GAME,0x51,,RequestSurrenderPledgeWar,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSurrenderPledgeWar.java,S,,
+IN_GAME,0x52,,RequestReplySurrenderPledgeWar,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestReplySurrenderPledgeWar.java,D,,
+IN_GAME,0x53,,RequestSetPledgeCrest,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSetPledgeCrest.java,D,,
+IN_GAME,0x55,,RequestGiveNickName,RequestGiveNickName,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestGiveNickName.java,S S,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestGiveNickName.cs,OtherS OtherS
+IN_GAME,0x57,,RequestShowBoard,RequestShowBoard,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestShowBoard.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestShowBoard.cs,
+IN_GAME,0x58,,RequestEnchantItem,RequestEnchantItem,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestEnchantItem.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestEnchantItem.cs,I
+IN_GAME,0x59,,RequestDestroyItem,RequestDestroyItem,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestDestroyItem.java,D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestDestroyItem.cs,I I
+IN_GAME,0x5B,,SendBypassBuildCmd,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\SendBypassBuildCmd.java,S,,
+IN_GAME,0x5C,,RequestMoveToLocationInVehicle,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestMoveToLocationInVehicle.java,D D D D D D D,,
+IN_GAME,0x5D,,CannotMoveAnymoreInVehicle,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\CannotMoveAnymoreInVehicle.java,D D D D D,,
+IN_GAME,0x5E,,RequestFriendInvite,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestFriendInvite.java,S,,
+IN_GAME,0x5F,,RequestAnswerFriendInvite,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestAnswerFriendInvite.java,D,,
+IN_GAME,0x60,,RequestFriendList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestFriendList.java,,,
+IN_GAME,0x61,,RequestFriendDel,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestFriendDel.java,S,,
+IN_GAME,0x63,,RequestQuestList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestQuestList.java,,,
+IN_GAME,0x64,,RequestQuestAbort,RequestQuestAbort,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestQuestAbort.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestQuestAbort.cs,I
+IN_GAME,0x66,,RequestPledgeInfo,RequestPledgeInfo,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeInfo.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestPledgeInfo.cs,I
+IN_GAME,0x68,,RequestPledgeCrest,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeCrest.java,D,,
+IN_GAME,0x69,,RequestSurrenderPersonally,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSurrenderPersonally.java,S,,
+IN_GAME,0x6B,,RequestAcquireSkillInfo,RequestAcquireSkillInfo,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestAcquireSkillInfo.java,D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestAcquireSkillInfo.cs,I I I
+IN_GAME,0x6C,,RequestAcquireSkill,RequestAcquireSkill,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestAcquireSkill.java,D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestAcquireSkill.cs,I I I
+IN_GAME,0x6D,,RequestRestartPoint,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRestartPoint.java,D,,
+IN_GAME,0x6E,,RequestGMCommand,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestGMCommand.java,S D,,
+IN_GAME,0x6F,,RequestPartyMatchConfig,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPartyMatchConfig.java,D D D,,
+IN_GAME,0x70,,RequestPartyMatchList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPartyMatchList.java,D D D D D S,,
+IN_GAME,0x71,,RequestPartyMatchDetail,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPartyMatchDetail.java,D D D D,,
+IN_GAME,0x72,,RequestCrystallizeItem,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestCrystallizeItem.java,D D,,
+IN_GAME,0x73,,RequestPrivateStoreManageSell,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPrivateStoreManageSell.java,,,
+IN_GAME,0x74,,SetPrivateStoreListSell,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\SetPrivateStoreListSell.java,D D D D D,,
+IN_GAME,0x76,,RequestPrivateStoreQuitSell,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPrivateStoreQuitSell.java,,,
+IN_GAME,0x77,,SetPrivateStoreMsgSell,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\SetPrivateStoreMsgSell.java,S,,
+IN_GAME,0x79,,RequestPrivateStoreBuy,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPrivateStoreBuy.java,D D D D D,,
+IN_GAME,0x7B,,RequestTutorialLinkHtml,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestTutorialLinkHtml.java,S,,
+IN_GAME,0x7C,,RequestTutorialPassCmdToServer,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestTutorialPassCmdToServer.java,S,,
+IN_GAME,0x7D,,RequestTutorialQuestionMark,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestTutorialQuestionMark.java,D,,
+IN_GAME,0x7E,,RequestTutorialClientEvent,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestTutorialClientEvent.java,D,,
+IN_GAME,0x7F,,RequestPetition,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPetition.java,S D,,
+IN_GAME,0x80,,RequestPetitionCancel,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPetitionCancel.java,,,
+IN_GAME,0x81,,RequestGmList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestGmList.java,,,
+IN_GAME,0x82,,RequestJoinAlly,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestJoinAlly.java,D,,
+IN_GAME,0x83,,RequestAnswerJoinAlly,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestAnswerJoinAlly.java,D,,
+IN_GAME,0x84,,AllyLeave,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\AllyLeave.java,,,
+IN_GAME,0x85,,AllyDismiss,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\AllyDismiss.java,S,,
+IN_GAME,0x86,,RequestDismissAlly,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestDismissAlly.java,,,
+IN_GAME,0x87,,RequestSetAllyCrest,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSetAllyCrest.java,D,,
+IN_GAME,0x88,,RequestAllyCrest,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestAllyCrest.java,D,,
+IN_GAME,0x89,,RequestChangePetName,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestChangePetName.java,S,,
+IN_GAME,0x8A,,RequestPetUseItem,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPetUseItem.java,D,,
+IN_GAME,0x8B,,RequestGiveItemToPet,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestGiveItemToPet.java,D D,,
+IN_GAME,0x8C,,RequestGetItemFromPet,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestGetItemFromPet.java,D D D,,
+IN_GAME,0x8E,,RequestAllyInfo,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestAllyInfo.java,,,
+IN_GAME,0x8F,,RequestPetGetItem,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPetGetItem.java,D,,
+IN_GAME,0x90,,RequestPrivateStoreManageBuy,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPrivateStoreManageBuy.java,,,
+IN_GAME,0x91,,SetPrivateStoreListBuy,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\SetPrivateStoreListBuy.java,D D H H D D,,
+IN_GAME,0x93,,RequestPrivateStoreQuitBuy,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPrivateStoreQuitBuy.java,,,
+IN_GAME,0x94,,SetPrivateStoreMsgBuy,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\SetPrivateStoreMsgBuy.java,S,,
+IN_GAME,0x96,,RequestPrivateStoreSell,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPrivateStoreSell.java,D D D D H H D D,,
+IN_GAME,0x9E,,RequestPackageSendableItemList,RequestPackageSendableItemList,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestPackageSendableItemList.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestPackageSendableItemList.cs,I
+IN_GAME,0x9F,,RequestPackageSend,RequestPackageSend,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestPackageSend.java,D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestPackageSend.cs,I I I I I
+IN_GAME,0xA0,,RequestBlock,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestBlock.java,D S,,
+IN_GAME,0xA2,,RequestSiegeAttackerList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSiegeAttackerList.java,D,,
+IN_GAME,0xA3,,RequestSiegeDefenderList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSiegeDefenderList.java,D,,
+IN_GAME,0xA4,,RequestJoinSiege,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestJoinSiege.java,D D D,,
+IN_GAME,0xA5,,RequestConfirmSiegeWaitingList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestConfirmSiegeWaitingList.java,D D D,,
+IN_GAME,0xA7,,MultiSellChoose,MultiSellChoose,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\MultiSellChoose.java,D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\MultiSellChoose.cs,I I I
+IN_GAME,0xAA,,RequestUserCommand,RequestUserCommand,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestUserCommand.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestUserCommand.cs,I
+IN_GAME,0xAB,,SnoopQuit,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\SnoopQuit.java,D,,
+IN_GAME,0xAC,,RequestRecipeBookOpen,RequestRecipeBookOpen,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeBookOpen.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestRecipeBookOpen.cs,I
+IN_GAME,0xAD,,RequestRecipeBookDestroy,RequestRecipeBookDestroy,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeBookDestroy.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestRecipeBookDestroy.cs,I
+IN_GAME,0xAE,,RequestRecipeItemMakeInfo,RequestRecipeItemMakeInfo,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeItemMakeInfo.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestRecipeItemMakeInfo.cs,I
+IN_GAME,0xAF,,RequestRecipeItemMakeSelf,RequestRecipeItemMakeSelf,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeItemMakeSelf.java,D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestRecipeItemMakeSelf.cs,I
+IN_GAME,0xB1,,RequestRecipeShopMessageSet,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeShopMessageSet.java,S,,
+IN_GAME,0xB2,,RequestRecipeShopListSet,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeShopListSet.java,D D D,,
+IN_GAME,0xB3,,RequestRecipeShopManageQuit,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeShopManageQuit.java,,,
+IN_GAME,0xB5,,RequestRecipeShopMakeInfo,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeShopMakeInfo.java,D D,,
+IN_GAME,0xB6,,RequestRecipeShopMakeItem,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeShopMakeItem.java,D D D,,
+IN_GAME,0xB7,,RequestRecipeShopManagePrev,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRecipeShopManagePrev.java,,,
+IN_GAME,0xB8,,ObserverReturn,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\ObserverReturn.java,,,
+IN_GAME,0xB9,,RequestEvaluate,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestEvaluate.java,D,,
+IN_GAME,0xBA,,RequestHennaList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestHennaList.java,D,,
+IN_GAME,0xBB,,RequestHennaItemInfo,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestHennaItemInfo.java,D,,
+IN_GAME,0xBC,,RequestHennaEquip,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestHennaEquip.java,D,,
+IN_GAME,0xBD,,RequestHennaRemoveList,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestHennaRemoveList.java,D,,
+IN_GAME,0xBE,,RequestHennaItemRemoveInfo,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestHennaItemRemoveInfo.java,D,,
+IN_GAME,0xBF,,RequestHennaRemove,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestHennaRemove.java,D,,
+IN_GAME,0xC0,,RequestPledgePower,RequestPledgePower,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgePower.java,D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestPledgePower.cs,I I I
+IN_GAME,0xC1,,RequestMakeMacro,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestMakeMacro.java,D S S S C C C C D C S,,
+IN_GAME,0xC2,,RequestDeleteMacro,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestDeleteMacro.java,D,,
+IN_GAME,0xC3,,RequestBuyProcure,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestBuyProcure.java,D D D D D,,
+IN_GAME,0xC4,,RequestBuySeed,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestBuySeed.java,D D D D,,
+IN_GAME,0xC5,,DlgAnswer,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\DlgAnswer.java,D D D,,
+IN_GAME,0xC6,,RequestPreviewItem,RequestPreviewItem,present-layout-unverified,java\com\l2j4team\gameserver\network\clientpackets\RequestPreviewItem.java,D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Game\RequestPreviewItem.cs,I I I I I
+IN_GAME,0xC7,,RequestSSQStatus,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSSQStatus.java,C,,
+IN_GAME,0xCA,,GameGuardReply,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\GameGuardReply.java,,,
+IN_GAME,0xCB,,Guard.network.clientpackets.GameGuardReply,,missing-or-extended-review,,,,
+IN_GAME,0xCC,,RequestSendFriendMsg,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSendFriendMsg.java,S S,,
+IN_GAME,0xCD,,RequestShowMiniMap,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestShowMiniMap.java,,,
+IN_GAME,0xCF,,RequestRecordInfo,,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRecordInfo.java,,,
+IN_GAME,0xD0,0x0001,RequestOustFromPartyRoom,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestOustFromPartyRoom.java,D,,
+IN_GAME,0xD0,0x0002,RequestDismissPartyRoom,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestDismissPartyRoom.java,D D,,
+IN_GAME,0xD0,0x0003,RequestWithdrawPartyRoom,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestWithdrawPartyRoom.java,D D,,
+IN_GAME,0xD0,0x0004,RequestChangePartyLeader,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestChangePartyLeader.java,S,,
+IN_GAME,0xD0,0x0005,RequestAutoSoulShot,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestAutoSoulShot.java,D D,,
+IN_GAME,0xD0,0x0006,RequestExEnchantSkillInfo,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExEnchantSkillInfo.java,D D,,
+IN_GAME,0xD0,0x0007,RequestExEnchantSkill,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExEnchantSkill.java,D D,,
+IN_GAME,0xD0,0x0008,RequestManorList,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestManorList.java,,,
+IN_GAME,0xD0,0x0009,RequestProcureCropList,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestProcureCropList.java,D D D D D,,
+IN_GAME,0xD0,0x000A,RequestSetSeed,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSetSeed.java,D D D D D,,
+IN_GAME,0xD0,0x000B,RequestSetCrop,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestSetCrop.java,D D D D D C,,
+IN_GAME,0xD0,0x000C,RequestWriteHeroWords,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestWriteHeroWords.java,S,,
+IN_GAME,0xD0,0x000D,RequestExAskJoinMPCC,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExAskJoinMPCC.java,S,,
+IN_GAME,0xD0,0x000E,RequestExAcceptJoinMPCC,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExAcceptJoinMPCC.java,D,,
+IN_GAME,0xD0,0x000F,RequestExOustFromMPCC,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExOustFromMPCC.java,S,,
+IN_GAME,0xD0,0x0010,RequestExPledgeCrestLarge,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExPledgeCrestLarge.java,D,,
+IN_GAME,0xD0,0x0011,RequestExSetPledgeCrestLarge,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExSetPledgeCrestLarge.java,D,,
+IN_GAME,0xD0,0x0012,RequestOlympiadObserverEnd,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestOlympiadObserverEnd.java,,,
+IN_GAME,0xD0,0x0013,RequestOlympiadMatchList,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestOlympiadMatchList.java,,,
+IN_GAME,0xD0,0x0014,RequestAskJoinPartyRoom,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestAskJoinPartyRoom.java,S,,
+IN_GAME,0xD0,0x0015,AnswerJoinPartyRoom,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\AnswerJoinPartyRoom.java,D,,
+IN_GAME,0xD0,0x0016,RequestListPartyMatchingWaitingRoom,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestListPartyMatchingWaitingRoom.java,D D D D,,
+IN_GAME,0xD0,0x0017,RequestExitPartyMatchingWaitingRoom,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExitPartyMatchingWaitingRoom.java,,,
+IN_GAME,0xD0,0x0018,RequestGetBossRecord,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestGetBossRecord.java,D,,
+IN_GAME,0xD0,0x0019,RequestPledgeSetAcademyMaster,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeSetAcademyMaster.java,D S S,,
+IN_GAME,0xD0,0x001A,RequestPledgePowerGradeList,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgePowerGradeList.java,,,
+IN_GAME,0xD0,0x001B,RequestPledgeMemberPowerInfo,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeMemberPowerInfo.java,D S,,
+IN_GAME,0xD0,0x001C,RequestPledgeSetMemberPowerGrade,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeSetMemberPowerGrade.java,S D,,
+IN_GAME,0xD0,0x001D,RequestPledgeMemberInfo,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeMemberInfo.java,D S,,
+IN_GAME,0xD0,0x001E,RequestPledgeWarList,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeWarList.java,D D,,
+IN_GAME,0xD0,0x001F,RequestExFishRanking,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExFishRanking.java,,,
+IN_GAME,0xD0,0x0020,RequestPCCafeCouponUse,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPCCafeCouponUse.java,S,,
+IN_GAME,0xD0,0x0022,RequestCursedWeaponList,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestCursedWeaponList.java,,,
+IN_GAME,0xD0,0x0023,RequestCursedWeaponLocation,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestCursedWeaponLocation.java,,,
+IN_GAME,0xD0,0x0024,RequestPledgeReorganizeMember,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestPledgeReorganizeMember.java,D S D S,,
+IN_GAME,0xD0,0x0026,RequestExMPCCShowPartyMembersInfo,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExMPCCShowPartyMembersInfo.java,D,,
+IN_GAME,0xD0,0x0027,RequestDuelStart,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestDuelStart.java,S D,,
+IN_GAME,0xD0,0x0028,RequestDuelAnswerStart,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestDuelAnswerStart.java,D D D,,
+IN_GAME,0xD0,0x0029,RequestConfirmTargetItem,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestConfirmTargetItem.java,D,,
+IN_GAME,0xD0,0x002A,RequestConfirmRefinerItem,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestConfirmRefinerItem.java,D D,,
+IN_GAME,0xD0,0x002B,RequestConfirmGemStone,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestConfirmGemStone.java,D D D D,,
+IN_GAME,0xD0,0x002C,RequestRefine,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRefine.java,D D D D,,
+IN_GAME,0xD0,0x002D,RequestConfirmCancelItem,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestConfirmCancelItem.java,D,,
+IN_GAME,0xD0,0x002E,RequestRefineCancel,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestRefineCancel.java,D,,
+IN_GAME,0xD0,0x002F,RequestExMagicSkillUseGround,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestExMagicSkillUseGround.java,D D D D D C,,
+IN_GAME,0xD0,0x0030,RequestDuelSurrender,requires-extended-review,missing-or-extended-review,java\com\l2j4team\gameserver\network\clientpackets\RequestDuelSurrender.java,,,

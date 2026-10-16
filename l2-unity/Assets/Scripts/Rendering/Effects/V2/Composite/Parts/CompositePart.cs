@@ -267,7 +267,7 @@ public sealed class ShotProjectilePart : CompositePart
 
         ParticleEmitterV2.SetEmissionWindow(instance, flytime, EmitterStopMode.Drain, skipFixedDuration: false);
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             "[ShotProjectilePart] '" + name + "' emit=ProjectileFlightTimeCalculator flytime=" +
             flytime.ToString("0.###") + "s hideTime=0 drain-until-destroy emitters=" +

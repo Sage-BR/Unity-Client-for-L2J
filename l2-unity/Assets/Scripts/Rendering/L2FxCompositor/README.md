@@ -1,5 +1,18 @@
 # L2 D3D9 FX Compositor — how to enable
 
+## Unity 6000.6 / URP 17.6
+
+The sky, FX compositor, Yebis post-process and terrain overlays now register
+through `RecordRenderGraph`. Keep Render Graph enabled in URP global settings.
+`L2RenderGraphPass` declares camera textures, persistent working/history textures
+and renderer lists, then records the ordered multi-target commands in an unsafe
+graph pass. Materials retain per-draw snapshots to preserve transfer, blur and
+adaptation parameters until the GPU commands execute.
+
+After changing resolution or entering Play mode, verify sky layering, terrain
+overlays, skill particles, nameplates and Yebis exposure/adaptation. Visual parity
+with the previous pipeline must be checked in the Editor or RenderDoc.
+
 RenderDoc evidence (same skill):
 
 - L2 Vulkan FB: `B8G8R8A8_UNORM`, Brighten=`One/InvSrcColor`, Translucent=`One/One`

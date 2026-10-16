@@ -84,7 +84,7 @@ public class TradeWindow : L2PopupWindow
         _cancelButton.RegisterCallback<ClickEvent>(OnCancelClicked);
     }
 
-    protected void RegisterCloseWindowEvent(string closeButtonClass)
+    protected override void RegisterCloseWindowEvent(string closeButtonClass)
     {
         Button closeButton = (Button)GetElementByClass(closeButtonClass);
         if (closeButton == null)
@@ -116,9 +116,16 @@ public class TradeWindow : L2PopupWindow
     {
         _exchangeSlots.Clear();
 
+        VisualElement offerContent = GetElementById("PlayerOfferContent");
+        offerContent.Clear();
+
         for (int i = 1; i <= 8; i++)
         {
-            var slotElement = GetElementById($"exchangeSlot{i}");
+            VisualElement slotElement = _inventorySlotTemplate.CloneTree().Q<VisualElement>("slot");
+            if (slotElement == null)
+                throw new InvalidOperationException("Trade slot template is missing the 'slot' element.");
+            slotElement.name = $"exchangeSlot{i}";
+            offerContent.Add(slotElement);
             if (slotElement != null)
             {
                 var slot = CreateExchangeSlot(i - 1, slotElement);

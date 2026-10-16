@@ -12,8 +12,8 @@ using UnityEngine;
 /// </summary>
 public static class UnityReplaySession
 {
-    public const string Root =
-        @"C:\Users\hh-soft\source\repos\AutoLoginInterlude\ChainLogs\unity\Sessions";
+    public static string Root =>
+        Path.Combine(Application.persistentDataPath, "ChainLogs", "unity", "Sessions");
 
     const float IdleSec = 15f;
     const float FlushSec = 1f;

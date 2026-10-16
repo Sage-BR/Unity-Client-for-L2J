@@ -36,10 +36,6 @@ public sealed class CombatFacingService : MonoBehaviour
         }
     }
 
-
-    [SerializeField] private float _speed = 10f;
-    [SerializeField] private float _angleThreshold = 3f;
-
     private readonly Dictionary<int, FacingEntry> _entries = new Dictionary<int, FacingEntry>(8);
     private readonly List<int> _iterateIds = new List<int>(8);
     private readonly List<int> _removeIds = new List<int>(8);

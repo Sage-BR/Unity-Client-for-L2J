@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +42,7 @@ public class ThirdPersonListener : MonoBehaviour
     }
 
     private ThirdPersonListener FindActiveListener() {
-        ThirdPersonListener[] listeners = FindObjectsByType<ThirdPersonListener>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        ThirdPersonListener[] listeners = FindObjectsByType<ThirdPersonListener>(FindObjectsInactive.Exclude);
         for (int i = 0; i < listeners.Length; i++) {
             if (listeners[i] != null && listeners[i] != this && listeners[i].isActiveAndEnabled) {
                 return listeners[i];

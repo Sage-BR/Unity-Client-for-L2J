@@ -52,7 +52,7 @@ public static class EffectCastDurationResolver
         return Mathf.Max(prefabDuration, authoritativeDuration);
     }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     public static void LogMismatchIfNeeded(
         string context,
         string groupName,

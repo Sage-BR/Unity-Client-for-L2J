@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -71,13 +71,13 @@ public class SysMenu : L2PopupWindow
         if (!_isShow)
         {
             _isShow = true;
-            _windowEle.transform.position = new Vector2(position.x, position.y - _height);
+            _windowEle.style.translate = L2UiTranslation.FromPosition(new Vector2(position.x, position.y - _height));
             ShowWindow();
         }
         else
         {
             _isShow = false;
-            _windowEle.transform.position = new Vector2(position.x, position.y - _height);
+            _windowEle.style.translate = L2UiTranslation.FromPosition(new Vector2(position.x, position.y - _height));
             HideWindow();
         }
        

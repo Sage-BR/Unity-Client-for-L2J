@@ -11,7 +11,7 @@ public static class CompositeProjectileLaunchHelper
         }
 
         SetVisualsVisible(spawned.transform, false);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log($"{debugPrefix} HidePartUntilShoot part='{part.name}' launchMode=OnAnimationShoot.");
 #endif
     }
@@ -137,7 +137,7 @@ public static class CompositeProjectileLaunchHelper
             targetTransform,
             settings);
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float now = Time.time;
         float elapsed = playStartedAt > 0f ? now - playStartedAt : -1f;
         Debug.Log(

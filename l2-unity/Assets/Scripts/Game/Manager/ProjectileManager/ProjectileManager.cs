@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -160,7 +160,7 @@ public class ProjectileManager : AbstractProjectile, IProjectileManager
         projectile.castServerHitSnapshot = castData.HitTime;
         projectile.projectileLaunchGlobalFromCast = Time.time - castData.StartTime;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"{MagicProjectileSyncTag} LAUNCH id={projectile.id} impactType={projectile.impactType} " +
             $"launchGlobalFromCast={projectile.projectileLaunchGlobalFromCast:F3}s " +
@@ -382,7 +382,7 @@ public class ProjectileManager : AbstractProjectile, IProjectileManager
     private void LogProjectileImpactTiming(ProjectileData projectile)
     {
         LogReplayMagicHit(projectile);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float projectileElapsed = Time.time - projectile.startTime;
         if (projectile.castStartTimeSnapshot <= 0f)
         {

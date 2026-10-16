@@ -287,7 +287,7 @@ namespace FMODUnity
 
             currentPlatform.PreSystemCreate(CheckInitResult);
 
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+            #if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             debugCallback = new FMOD.DEBUG_CALLBACK(DEBUG_CALLBACK);
             result = FMOD.Debug.Initialize(fmodSettings.LoggingLevel, FMOD.DEBUG_MODE.CALLBACK, debugCallback, null);
             if(result == FMOD.RESULT.ERR_UNSUPPORTED)
@@ -609,7 +609,12 @@ retry:
         {
             if (studioSystem.isValid() && isOverlayEnabled)
             {
-                windowRect = GUI.Window(GetInstanceID(), windowRect, DrawDebugOverlay, "FMOD Studio Debug");
+#if UNITY_6000_5_OR_NEWER
+                int windowId = GetEntityId().GetHashCode();
+#else
+                int windowId = GetInstanceID();
+#endif
+                windowRect = GUI.Window(windowId, windowRect, DrawDebugOverlay, "FMOD Studio Debug");
             }
         }
 

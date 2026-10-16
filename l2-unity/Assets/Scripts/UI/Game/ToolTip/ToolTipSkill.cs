@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
@@ -241,14 +241,14 @@ public class ToolTipSkill : L2PopupWindow, IToolTips
             float new_y = newPoint.y - newddfig;
             float new_y2 = new_y - sdfig1;
             Vector2 reversePoint = new Vector2(newPoint.x, new_y2);
-            _content.transform.position = reversePoint;
+            _content.style.translate = L2UiTranslation.FromPosition(reversePoint);
         }
         else
         {
             //2px border
             float new_y = newPoint.y + 2;
             Vector2 reversePoint = new Vector2(newPoint.x, new_y);
-            _content.transform.position = reversePoint;
+            _content.style.translate = L2UiTranslation.FromPosition(reversePoint);
         }
         BringToFront();
     }
@@ -260,7 +260,7 @@ public class ToolTipSkill : L2PopupWindow, IToolTips
 
     public void ResetPosition(Vector2 vector2)
     {
-        _content.transform.position = vector2;
+        _content.style.translate = L2UiTranslation.FromPosition(vector2);
         SendToBack();
     }
 
@@ -459,14 +459,14 @@ public class ToolTipSkill : L2PopupWindow, IToolTips
             float new_y = newPoint.y - newddfig;
             float new_y2 = new_y - sdfig1;
             Vector2 reversePoint = new Vector2(newPoint.x, new_y2);
-            _content.transform.position = reversePoint;
+            _content.style.translate = L2UiTranslation.FromPosition(reversePoint);
         }
         else
         {
             //2px border
             float new_y = newPoint.y + 2;
             Vector2 reversePoint = new Vector2(newPoint.x, new_y);
-            _content.transform.position = reversePoint;
+            _content.style.translate = L2UiTranslation.FromPosition(reversePoint);
         }
         BringToFront();
     }

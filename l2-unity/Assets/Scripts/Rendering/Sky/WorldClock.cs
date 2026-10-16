@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -79,7 +79,7 @@ public class WorldClock : MonoBehaviour {
         {
             if (_instance != null)
                 return _instance;
-            return FindFirstObjectByType<WorldClock>(FindObjectsInactive.Include);
+            return FindAnyObjectByType<WorldClock>(FindObjectsInactive.Include);
         }
 
         if (_bootstrapping)
@@ -90,7 +90,7 @@ public class WorldClock : MonoBehaviour {
         WorldClock existing = _instance;
         if (existing == null)
         {
-            existing = FindFirstObjectByType<WorldClock>(FindObjectsInactive.Include);
+            existing = FindAnyObjectByType<WorldClock>(FindObjectsInactive.Include);
         }
 
         _bootstrapping = true;

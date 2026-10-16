@@ -1,11 +1,15 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 
 public class CreatorSimpleTab : AbstractLoaderTemplate, ICreatorSimpleTab
 {
-    public event Action<int> EventSwitchTabByIndexOfTab;
+    public event Action<int> EventSwitchTabByIndexOfTab
+    {
+        add => TabIndexChanged += value;
+        remove => TabIndexChanged -= value;
+    }
 
     private VisualElement _injectTemplate;
     public void SetContent(int idTemplate)

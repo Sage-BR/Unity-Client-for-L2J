@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -84,12 +84,14 @@ public class LoginWindow : L2Window
                 _passwordInput.Focus();
             }
 
-            evt.PreventDefault();
+            evt.StopPropagation();
+            input.focusController.IgnoreEvent(evt);
 
         } else if (keyCode == KeyCode.Return || keyCode == KeyCode.KeypadEnter) {
             AudioManager.Instance.PlayUISound("click_01");
             LoginButtonPressed();
-            evt.PreventDefault();
+            evt.StopPropagation();
+            input.focusController.IgnoreEvent(evt);
         }
     }
 

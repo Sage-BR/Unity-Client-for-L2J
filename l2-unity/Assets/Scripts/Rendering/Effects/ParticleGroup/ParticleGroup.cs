@@ -88,7 +88,7 @@ public class ParticleGroup : EffectPart
 
     public void StartGroupPlayback() => PlayPart();
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     public L2Particle OwnerParticle => _owner;
 #endif
 
@@ -186,7 +186,7 @@ public class ParticleGroup : EffectPart
         if (!isActiveAndEnabled)
             return;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (!_playback.Stopped)
             EffectDoublePlayLog.Repeat(
                 "ParticleGroup.PlayPart",
@@ -220,7 +220,7 @@ public class ParticleGroup : EffectPart
 
         _playback.BaseShaderLifetime = Mathf.Max(0.01f, Renderers.ReadLifetimeMax(_duration));
         _playback.Begin(Now(), _countPerSecond, _hasFixedDuration, _duration);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _playback.FirstPlayStack = EffectDoublePlayLog.CaptureStack();
         DocExtractorDropAdenaCoinLogger.OnPlayPart(this);
 #endif
@@ -283,7 +283,7 @@ public class ParticleGroup : EffectPart
             _particleSpawnTimes))
         {
             _playback.SpawnedCount += _maxCount;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             DocExtractorDropAdenaCoinLogger.OnBurst(
                 this,
                 _playback.MeshRandBase,
@@ -343,7 +343,7 @@ public class ParticleGroup : EffectPart
             Random.Range(-100f, 100f),
             _playback.MeshRandBase,
             _playback.SpriteRandBase);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DocExtractorDropAdenaCoinLogger.OnSlot(
             this,
             slot,
@@ -376,7 +376,7 @@ public class ParticleGroup : EffectPart
             _playback.SpriteRandBase,
             _isParticleActive,
             _particleSpawnTimes);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DocExtractorDropAdenaCoinLogger.OnSlot(
             this,
             slot,

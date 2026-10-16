@@ -155,7 +155,7 @@ public static class L2ActorPointLights
     {
         Lights.Clear();
         L2ActorLocalLight[] found = Object.FindObjectsByType<L2ActorLocalLight>(
-            FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            FindObjectsInactive.Exclude);
         for (int i = 0; i < found.Length; i++)
         {
             if (found[i] != null)
@@ -164,7 +164,7 @@ public static class L2ActorPointLights
 
         Groups.Clear();
         SkinnedMeshRenderer[] skinned = Object.FindObjectsByType<SkinnedMeshRenderer>(
-            FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            FindObjectsInactive.Exclude);
         for (int i = 0; i < skinned.Length; i++)
         {
             SkinnedMeshRenderer renderer = skinned[i];

@@ -1,11 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterStateWait : MonsterStateBase
 {
     public int playBreatheSoundChancePercent = 100;
-    bool started = false;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         LoadComponents(animator);

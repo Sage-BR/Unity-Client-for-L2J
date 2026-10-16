@@ -309,7 +309,7 @@ public static class L2FxCompositorEditorMenus
                 map.arraySize = features.arraySize;
                 // Unique non-zero map id (URP uses these to track feature instances).
                 map.GetArrayElementAtIndex(index).longValue =
-                    System.DateTime.UtcNow.Ticks ^ feature.GetInstanceID();
+                    System.DateTime.UtcNow.Ticks ^ feature.GetEntityId().GetHashCode();
             }
         }
 

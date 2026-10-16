@@ -1,0 +1,8 @@
+Nameplate: PASS child collider translation/scale and positive clearance.
+Hair cache: PASS 406 existing variants resolve to their exact prefab.
+MFighter hair: PASS 12 frontal atlas references, original AlphaRef=5 and alpha blend.
+MFighter_m000_b.mo: mesh=; bones=70; differences=0; submeshes=; materials=material_0
+MFighter_m000_f.mo: mesh=MFighter_m000_f.mo; bones=70; differences=0; submeshes=1; materials=MFighter_m000_t00_f
+MFighter_m000_m00_ah.mo: mesh=MFighter_m000_m00_ah.mo; bones=70; differences=0; submeshes=1; materials=MFighter_m000_t00_m00_ah
+MFighter_m000_m00_bh.mo: mesh=MFighter_m000_m00_bh.mo; bones=70; differences=0; submeshes=1; materials=MFighter_m000_t00_m00_bh
+MFighter_m001_u.mo: mesh=MFighter_m001_u.mo; bones=70; differences=0; submeshes=1; materials=MFighter_m001_t02_u

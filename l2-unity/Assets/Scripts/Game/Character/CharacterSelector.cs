@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
@@ -6,9 +6,9 @@ public class CharacterSelector : MonoBehaviour
 {
     [SerializeField] private int _selectedCharacterSlot;
     [SerializeField] private CharSelectionInfoPackage _selectedCharacter;
-    [SerializeField] private CharSelectInfoPackage _selectedCharacterInterlude;
+    [System.NonSerialized] private CharSelectInfoPackage _selectedCharacterInterlude;
     [SerializeField] private List<CharSelectionInfoPackage> _characters;
-    [SerializeField] private List<CharSelectInfoPackage> _charactersInterlude;
+    [System.NonSerialized] private List<CharSelectInfoPackage> _charactersInterlude;
     [SerializeField] private LayerMask _characterMask;
     [SerializeField] private Camera _charSelectCamera;
     private Dictionary<int, float> dict;
@@ -82,7 +82,7 @@ public class CharacterSelector : MonoBehaviour
             });
         }
 
-        _charactersInterlude = characters;
+      _charactersInterlude = characters;
         _pawnData = LogonGrps;
         _characterGameObjects = new List<GameObject>();
         _selectedCharacterSlot = -1;
@@ -169,7 +169,7 @@ public class CharacterSelector : MonoBehaviour
             _characterGameObjects[slot].GetComponent<SelectableCharacterEntity>().SetDestination(_pawnData[7]);
 
             _selectedCharacterSlot = slot;
-            _selectedCharacterInterlude = _charactersInterlude[slot];
+          _selectedCharacterInterlude = _charactersInterlude[slot];
 
             CharSelectWindow.Instance.SelectInterludeSlot(slot);
         }

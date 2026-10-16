@@ -57,7 +57,7 @@ public class PlayerOverriddenLongAtk : StateMachineBehaviour
 
         StopAnimationTrigger(animator, parameterName);
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         LogStateEnter();
 #endif
     }
@@ -90,7 +90,7 @@ public class PlayerOverriddenLongAtk : StateMachineBehaviour
             if (localElapsed >= _eventTimeInClip)
             {
                 _eventLogged = true;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
                 Debug.Log(
                     $"[LONG_CAST_FIRE] global={globalElapsed:F3}s " +
                     $"delta={(globalElapsed - _castData.ShotTriggerGlobalOffset):F4}s");

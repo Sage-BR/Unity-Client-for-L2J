@@ -21,7 +21,7 @@ public static class ShaderFadeDiagnostic
 
     public static string BuildLine(Material mat, float now)
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (mat == null)
         {
             return "null_mat";
@@ -69,7 +69,7 @@ public static class ShaderFadeDiagnostic
     /// </summary>
     public static string FadePhaseLabel(Material mat, float now)
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (mat == null)
         {
             return "null_mat";
@@ -167,7 +167,7 @@ public static class ShaderFadeDiagnostic
 
     public static string BuildRendererVisibilityLine(Renderer renderer, Material mat, float now)
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (renderer == null)
         {
             return "renderer=null";

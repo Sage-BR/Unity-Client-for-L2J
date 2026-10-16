@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,7 +10,6 @@ public class CreatorSimpleTrade : AbstractTabCreator, ICreatorSimpleTrade
     private const string containerTabName = "Data/UI/_Elements/Template/SimpleTab/TabContainer";
     private VisualElement _elementContainerTab;
     //240px
-    private int _defaultMaximumWidthPx = 240;
 
     public void AddData(List<ItemInstance> allItems , bool checkInventory = false)
     {

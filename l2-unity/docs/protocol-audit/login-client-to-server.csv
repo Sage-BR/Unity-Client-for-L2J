@@ -1,0 +1,5 @@
+﻿state,opcode,server_packet,server_source,server_reads,client_source,client_writes,status
+CONNECTED,0x07,AuthGameGuard,java\com\l2j4team\loginserver\network\clientpackets\AuthGameGuard.java,D D D D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Login\AuthGameGuard.cs,I I I I I B B B,present-layout-unverified
+AUTHED_GG,0x00,RequestAuthLogin,java\com\l2j4team\loginserver\network\clientpackets\RequestAuthLogin.java,B,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Login\RequestAuthLogin.cs,B I I I I I I I,present-layout-unverified
+AUTHED_LOGIN,0x05,RequestServerList,java\com\l2j4team\loginserver\network\clientpackets\RequestServerList.java,D D,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Login\RequestServerList.cs,I I I I,present-layout-unverified
+AUTHED_LOGIN,0x02,RequestServerLogin,java\com\l2j4team\loginserver\network\clientpackets\RequestServerLogin.java,D D C,Assets\Scripts\Networking\ClientLibrary\Packet\Outgoing\Login\RequestServerLogin.cs,I I I,present-layout-unverified

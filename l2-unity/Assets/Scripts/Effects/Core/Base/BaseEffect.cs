@@ -94,7 +94,7 @@ public abstract class BaseEffect : MonoBehaviour
         BeginFadeOut();
         float delay = Mathf.Max(0.05f, destroyDelaySeconds);
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"[HOME_PROJECTILE] BeginHomeArrivalFade effect='{name}' destroyIn={delay:F3}s " +
             $"childGroups={GetComponentsInChildren<ParticleGroup>(true).Length} " +
@@ -138,7 +138,7 @@ public abstract class BaseEffect : MonoBehaviour
             }
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"[HOME_PROJECTILE] DestroyHomeArrivalImmediate effect='{name}' " +
             $"renderers={renderers.Length} parts={parts.Length}");
@@ -181,7 +181,7 @@ public abstract class BaseEffect : MonoBehaviour
         _scheduledLifeTime = settings.defaultLifeTime;
         _scheduledDestroyAt = Time.time + _scheduledLifeTime;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float now = Time.time;
         float globalSinceCastStart = _castStartTimeSnapshot > 0f ? now - _castStartTimeSnapshot : -1f;
         Debug.Log(
@@ -203,7 +203,7 @@ public abstract class BaseEffect : MonoBehaviour
         {
             Destroy(transform.parent.gameObject, settings.defaultLifeTime);
         }
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DropAdenaDestroyLog.Event(
             "SCHEDULE_DESTROY",
             this,
@@ -292,7 +292,7 @@ public abstract class BaseEffect : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DropAdenaDestroyLog.Event(
             "ON_DESTROY",
             this,
@@ -316,7 +316,7 @@ public abstract class BaseEffect : MonoBehaviour
 
     protected void BeginFadeOut()
     {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         float now = Time.time;
         float globalSinceCastStart = _castStartTimeSnapshot > 0f ? now - _castStartTimeSnapshot : -1f;
         Debug.Log(
@@ -328,7 +328,7 @@ public abstract class BaseEffect : MonoBehaviour
 
         foreach (var part in parts)
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             DropAdenaDestroyLog.Event(
                 "BEGIN_FADEOUT_STOPPART",
                 part,

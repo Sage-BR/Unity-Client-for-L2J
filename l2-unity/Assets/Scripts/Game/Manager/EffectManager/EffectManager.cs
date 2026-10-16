@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -45,7 +45,7 @@ public class EffectManager : MonoBehaviour
 
         instance.gameObject.SetActive(true);
         instance.Setup(data.settings, castData, target);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         EffectDoublePlayLog.TrackManagerPlay(id, prefab != null ? prefab.name : "null");
 #endif
         instance.Play();
@@ -178,7 +178,7 @@ public class EffectManager : MonoBehaviour
             composite.SetImpactHit(point, dir);
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         EffectDoublePlayLog.TrackManagerPlay(id, data.prefab != null ? data.prefab.name : "null");
 #endif
         instance.Play();

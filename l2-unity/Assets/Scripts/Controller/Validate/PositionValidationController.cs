@@ -21,7 +21,6 @@ public class PositionValidationController : MonoBehaviour
     private List<ValidateLocationDto> _validateList;
     private List<ValidateLocationDto> _validateRemove;
     private List<CharMoveToLocationDto> _validateInitPosition;
-    private bool validTest = false;
     //197 unit | 3.743f metr
     private float _trigger = 3.743f;
 

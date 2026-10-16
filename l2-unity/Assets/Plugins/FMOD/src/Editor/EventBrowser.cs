@@ -4,6 +4,13 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
+#if UNITY_6000_5_OR_NEWER
+using FMODTreeViewBase = UnityEditor.IMGUI.Controls.TreeView<int>;
+using TreeViewItem = UnityEditor.IMGUI.Controls.TreeViewItem<int>;
+using TreeViewState = UnityEditor.IMGUI.Controls.TreeViewState<int>;
+#else
+using FMODTreeViewBase = UnityEditor.IMGUI.Controls.TreeView;
+#endif
 using UnityEngine;
 using System.IO;
 
@@ -99,7 +106,7 @@ namespace FMODUnity
             treeView.Reload();
         }
 
-        private class TreeView : UnityEditor.IMGUI.Controls.TreeView
+        private class TreeView : FMODTreeViewBase
         {
             private static readonly Texture2D folderOpenIcon = EditorUtils.LoadImage("FolderIconOpen.png");
             private static readonly Texture2D folderClosedIcon = EditorUtils.LoadImage("FolderIconClosed.png");
@@ -1620,7 +1627,11 @@ namespace FMODUnity
 
             SceneView.duringSceneGui += SceneUpdate;
 
+#if UNITY_6000_5_OR_NEWER
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI += HierarchyUpdate;
+#else
             EditorApplication.hierarchyWindowItemOnGUI += HierarchyUpdate;
+#endif
 
             if (isStandaloneWindow)
             {
@@ -1657,7 +1668,11 @@ namespace FMODUnity
         }
 
         // This is an event handler on the hierachy view to handle dragging our objects from the browser
+#if UNITY_6000_5_OR_NEWER
+        private void HierarchyUpdate(EntityId instance, Rect rect)
+#else
         private void HierarchyUpdate(int instance, Rect rect)
+#endif
         {
             if (Event.current.type == EventType.DragPerform && rect.Contains(Event.current.mousePosition))
             {
@@ -1665,7 +1680,11 @@ namespace FMODUnity
                 {
                     UnityEngine.Object data = DragAndDrop.objectReferences[0];
 
+#if UNITY_6000_5_OR_NEWER
+                    GameObject target = EditorUtility.EntityIdToObject(instance) as GameObject;
+#else
                     GameObject target = EditorUtility.InstanceIDToObject(instance) as GameObject;
+#endif
 
                     if (data is EditorEventRef)
                     {

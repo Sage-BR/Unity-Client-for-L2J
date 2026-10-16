@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
@@ -85,7 +85,7 @@ public class SystemMenuWindow : L2PopupWindow
     public override void ToggleHideWindow()
     {
         Vector2 basePosition = MenuWindow.Instance.GetWindowPosition();
-        _windowEle.transform.position = new Vector2(basePosition.x, basePosition.y - _windowHeight);
+        _windowEle.style.translate = L2UiTranslation.FromPosition(new Vector2(basePosition.x, basePosition.y - _windowHeight));
         base.ToggleHideWindow();
     }
 

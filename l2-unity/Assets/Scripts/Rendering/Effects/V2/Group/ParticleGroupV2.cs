@@ -45,7 +45,7 @@ public sealed class ParticleGroupV2 : EffectPart, IParticleEmitterV2
     bool _destroying;
     bool _forceAuthoredTiming;
     Material[] _runtimeMaterialInstances;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     bool _loggedHiddenTick;
 #endif
 
@@ -177,7 +177,7 @@ public sealed class ParticleGroupV2 : EffectPart, IParticleEmitterV2
     {
         if (!isActiveAndEnabled)
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             Debug.LogWarning(
                 "[ParticleGroupV2] Play SKIP inactive '" + name +
                 "' path=" + GetHierarchyPath() +
@@ -210,7 +210,7 @@ public sealed class ParticleGroupV2 : EffectPart, IParticleEmitterV2
             ? float.PositiveInfinity
             : Mathf.Max(_emissionWindow, particleLife);
         runtime.Start(now, emitWindow, particleLife);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _loggedHiddenTick = false;
         int slotCount = runtime.SlotCount;
         float warmupFrac = Mathf.Max(0f, _relativeWarmupTime);
@@ -273,7 +273,7 @@ public sealed class ParticleGroupV2 : EffectPart, IParticleEmitterV2
     {
         if (!_streamVisible)
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (!_loggedHiddenTick && _runtime != null)
             {
                 _loggedHiddenTick = true;
@@ -501,7 +501,7 @@ public sealed class ParticleGroupV2 : EffectPart, IParticleEmitterV2
         }
     }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     string GetHierarchyPath()
     {
         Transform current = transform;

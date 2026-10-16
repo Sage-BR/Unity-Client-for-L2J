@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -9,7 +9,7 @@ public class Armorgrp : Abstractgrp {
     private int _mDef;
     [SerializeField] private ItemSlot _bodypart;
     [SerializeField] private string[] _model;
-    [SerializeField] private List<List<string>> _allModels;
+    [System.NonSerialized] private List<List<string>> _allModels;
     [SerializeField] private string[] _texture;
     private List<List<string>> _allTextures;
     private ArmorType armorType;

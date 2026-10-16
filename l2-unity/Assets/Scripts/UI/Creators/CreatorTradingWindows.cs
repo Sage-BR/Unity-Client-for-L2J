@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +7,11 @@ using static L2Slot;
 
 public class CreatorTradingWindows : AbstractCreator , ICreatorTradeTab
 {
-    public event Action<int> EventSwitchTabByIndexOfTab;
+    public event Action<int> EventSwitchTabByIndexOfTab
+    {
+        add => TabIndexChanged += value;
+        remove => TabIndexChanged -= value;
+    }
     private VisualTreeAsset[] _templates;
     //tabTemplate 0 , tabHeaderTemplate 1
     private readonly string[] loadTemplate = new string[2] { "Data/UI/_Elements/Game/Inventory/InventoryTab", "Data/UI/_Elements/Game/Inventory/InventoryTabHeader" };

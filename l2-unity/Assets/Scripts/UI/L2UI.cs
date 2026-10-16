@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public abstract class L2UI : MonoBehaviour
@@ -6,9 +6,9 @@ public abstract class L2UI : MonoBehaviour
     private VisualElement _rootElement;
 
     [SerializeField] private bool _uiLoaded = false;
-    [SerializeField] private Focusable _focusedElement;
+    [System.NonSerialized] private Focusable _focusedElement;
     [SerializeField] private bool _mouseOverUI = false;
-    [SerializeField] private VisualElement _loadingElement;
+    [System.NonSerialized] private VisualElement _loadingElement;
 
     protected VisualElement _rootVisualContainer;
     protected VisualElement _popupVisualContainer;
@@ -34,7 +34,7 @@ public abstract class L2UI : MonoBehaviour
 
         if (_uiLoaded)
         {
-            _focusedElement = _rootElement.focusController.focusedElement;
+          _focusedElement = _rootElement.focusController.focusedElement;
         }
     }
 
@@ -52,7 +52,7 @@ public abstract class L2UI : MonoBehaviour
         _popupVisualContainer = _rootElement.Q<VisualElement>("UIContainerPopup");
         _tooltipVisualContainer = _rootElement.Q<VisualElement>("UIContainerTooltip");
         _slotVisualContainer = _rootElement.Q<VisualElement>("UIContainerSlot");
-        _loadingElement = _rootElement.Q<VisualElement>("Loading");
+      _loadingElement = _rootElement.Q<VisualElement>("Loading");
     }
 
     public bool IsWindowContain(Vector2 vector2)

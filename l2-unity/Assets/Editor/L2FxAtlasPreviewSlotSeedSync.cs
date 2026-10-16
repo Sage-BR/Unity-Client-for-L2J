@@ -89,13 +89,13 @@ public static class L2FxAtlasPreviewSlotSeedSync
         groups.Clear();
         singles.Clear();
 
-        ParticleGroup[] sceneGroups = Object.FindObjectsByType<ParticleGroup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        ParticleGroup[] sceneGroups = Object.FindObjectsByType<ParticleGroup>(FindObjectsInactive.Include);
         for (int i = 0; i < sceneGroups.Length; i++)
         {
             AddUnique(groups, sceneGroups[i]);
         }
 
-        ParticleSingle[] sceneSingles = Object.FindObjectsByType<ParticleSingle>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        ParticleSingle[] sceneSingles = Object.FindObjectsByType<ParticleSingle>(FindObjectsInactive.Include);
         for (int i = 0; i < sceneSingles.Length; i++)
         {
             AddUnique(singles, sceneSingles[i]);

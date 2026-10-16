@@ -1,4 +1,4 @@
-﻿#if (UNITY_EDITOR) 
+#if (UNITY_EDITOR)
 using UnityEngine;
 using UnityEditor;
 using System.Text;
@@ -14,7 +14,7 @@ public class FileInfoPrinter {
 
             if(AssetDatabase.TryGetGUIDAndLocalFileIdentifier(obj, out guid, out file)) {
                 stringBuilder.AppendFormat("Asset: " + obj.name +
-                    "\n  Instance ID: " + obj.GetInstanceID() +
+                    "\n  Instance ID: " + obj.GetEntityId() +
                     "\n  GUID: " + guid +
                     "\n  File ID: " + file);
             }

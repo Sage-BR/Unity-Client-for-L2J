@@ -1,4 +1,4 @@
-﻿
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
@@ -51,7 +51,7 @@ public class PlayerLoopDebugger : MonoBehaviour
         }
 
         // Находим все рендереры в сцене
-        Renderer[] renderers = FindObjectsOfType<Renderer>();
+        Renderer[] renderers = FindObjectsByType<Renderer>();
 
         foreach (var renderer in renderers)
         {

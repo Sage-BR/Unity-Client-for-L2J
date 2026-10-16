@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +20,7 @@ public class L2TerrainGeneratorTool : MonoBehaviour {
 
     public bool generateMap = true;
     public static List<L2TerrainInfo> terrainInfos;
-    public List<L2StaticMeshActor> meshActors;
+    [System.NonSerialized] public List<L2StaticMeshActor> meshActors;
     public static List<Terrain> terrains;
     public static Dictionary<string, Terrain> terrainsDict;
     public List<MapGenerationData> maps;

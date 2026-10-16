@@ -1,4 +1,4 @@
-﻿#if (UNITY_EDITOR)
+#if (UNITY_EDITOR)
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -11,7 +11,7 @@ public class AddTrunks
     private static void AddTrunksToTrees()
     {
         string treeName = "speaking_tree_s";
-        GameObject[] foundObjects = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        GameObject[] foundObjects = GameObject.FindObjectsByType<GameObject>();
         foreach(var gameObj in foundObjects) {
             if (!gameObj.activeSelf)
                 continue;

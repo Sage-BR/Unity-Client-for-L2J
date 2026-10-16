@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        if (FindFirstObjectByType<AppLifetimeScope>() == null)
+        if (FindAnyObjectByType<AppLifetimeScope>() == null)
             gameObject.AddComponent<AppLifetimeScope>();
     }
 

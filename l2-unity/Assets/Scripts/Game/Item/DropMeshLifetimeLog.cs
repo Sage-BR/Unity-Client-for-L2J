@@ -1,4 +1,4 @@
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,8 +12,8 @@ using UnityEngine;
 /// </summary>
 public static class DropMeshLifetimeLog
 {
-    public const string UnityLogPath =
-        @"C:\Users\hh-soft\source\repos\AutoLoginInterlude\Debug\Unity_DropMesh.log";
+    public static string UnityLogPath =>
+        Path.Combine(Application.persistentDataPath, "Debug", "Unity_DropMesh.log");
 
     public static bool Enabled = false;
 
@@ -48,7 +48,7 @@ public static class DropMeshLifetimeLog
             $"itemObj={objectId} itemId={entity.ItemId} entity='{entity.name}' " +
             $"prefab='{(prefab != null ? prefab.name : "null")}' coinVisual={coinVisual} " +
             $"worldPos={dropMesh.transform.position:F3} activeSelf={dropMesh.activeSelf} " +
-            $"meshId={dropMesh.GetInstanceID()}");
+            $"meshId={dropMesh.GetEntityId()}");
     }
 
     public static void OnNoVisual(int itemId, ItemEntity entity, string dropModel, string equipModel)
@@ -168,7 +168,7 @@ public sealed class DropMeshLifetimeTracker : MonoBehaviour
         DropMeshLifetimeLog.Event(
             "DESTROY",
             $"itemObj={_itemObjectId} itemId={_itemId} prefab='{_prefabName}' coinVisual={_coinVisual} " +
-            $"wallAge={age:F3}s reason={reason} meshId={GetInstanceID()}",
+            $"wallAge={age:F3}s reason={reason} meshId={GetEntityId()}",
             includeStack: reason == "unknown");
     }
 

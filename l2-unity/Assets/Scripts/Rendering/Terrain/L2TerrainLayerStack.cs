@@ -91,7 +91,7 @@ public sealed class L2TerrainLayerStack : MonoBehaviour
 
     static void AttachAll()
     {
-        MeshRenderer[] renderers = Object.FindObjectsByType<MeshRenderer>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        MeshRenderer[] renderers = Object.FindObjectsByType<MeshRenderer>(FindObjectsInactive.Exclude);
         int attached = 0;
         for (int i = 0; i < renderers.Length; i++)
         {

@@ -67,6 +67,13 @@ public class L2BrushBuilder {
             for(int i = 0; i < poly.polyData.Length; i++) {
                 PolyData polyData = poly.polyData[i];
 
+                // Untextured CSG construction faces are not visible map surfaces.
+                // Creating renderers for them produces magenta geometry in the player.
+                if (string.IsNullOrWhiteSpace(polyData.texture)) {
+                    Debug.LogWarning($"Skipping untextured construction face {i} in {b.name}.");
+                    continue;
+                }
+
                 // Adjust verticles
                 for(int p = 0; p < polyData.vertices.Length; p++) {
                     polyData.vertices[p] = VectorUtils.ConvertPosToUnity(polyData.vertices[p]);

@@ -190,13 +190,13 @@ public class EnchantWindow : L2PopupWindow
         return new EnchantSlot(i, slotElement, null, slotType, false);
     }
    
-    private async void OnClick(ClickEvent evt)
+    private void OnClick(ClickEvent evt)
     {
  
          RequestEnchantItem(_selectItem.ObjectId);
     }
 
-    private async void OnCancel(ClickEvent evt)
+    private void OnCancel(ClickEvent evt)
     {
         RequestEnchantItem(-1);
     }

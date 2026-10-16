@@ -108,7 +108,7 @@ public sealed class NpcDecoService
         BindHostOwnedEmitters(instance);
         instance.Setup(_hostSettings, null, parent);
         instance.Play();
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         NpcDeco2911Trace.DumpSpawnedPrefab(instance);
 #endif
         return instance;

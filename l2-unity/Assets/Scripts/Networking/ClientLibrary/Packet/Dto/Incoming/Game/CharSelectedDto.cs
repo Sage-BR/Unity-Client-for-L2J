@@ -17,7 +17,6 @@ public class CharSelectedDto : IWireDto
 
     public void ReadFrom(PacketReader reader)
     {
-        CharSelectInfoPackage selectChar = CharSelectWindow.Instance.GetSelectChar();
         //_info.Identity.Heading = 0;
         _info.Identity.Owned = true;
         _info.Stats.Speed = 50;
@@ -25,16 +24,16 @@ public class CharSelectedDto : IWireDto
         _info.Stats.PCritical = 5;
         _info.Stats.MCritical = 5;
         _info.Stats.Sp = 0;
-        _info.Appearance.HairStyle = selectChar.HairStyle;
-        _info.Appearance.HairColor = selectChar.HairColor;
         // Stats end not found Appearance
 
 
 
         _info.Identity.Name = reader.ReadOtherS();
-        Debug.Log("CharSelected: Name " + _info.Identity.Name);
         _info.Identity.Id = reader.ReadI();
         _info.Identity.Title = reader.ReadOtherS();
+        // This server writes 260 bytes after the two variable-length strings.
+        if (reader.Remaining != 260)
+            throw new System.FormatException("CharSelected does not match the Interlude server layout.");
         int sessionId = reader.ReadI();
         int clan_id = reader.ReadI();
         int empty = reader.ReadI();
@@ -46,8 +45,8 @@ public class CharSelectedDto : IWireDto
 
         //set default (will need to be completed)
         // _info.Appearance.Race = selectChar.Race;
-        _info.Appearance.Sex = selectChar.Sex;
-        _info.Appearance.Race = (int)MapClassId.GetRace(selectChar.Race);
+        _info.Appearance.Sex = sex;
+        _info.Appearance.Race = (int)MapClassId.GetRace(race);
 
 
         _info.Identity.PlayerClass = reader.ReadI(); //classId
@@ -59,11 +58,9 @@ public class CharSelectedDto : IWireDto
 
         _info.Status.SetHp(reader.ReadD());
         _info.Status.SetMp(reader.ReadD());
-        _info.Status.Cp = reader.ReadI();
+        _info.Stats.Sp = reader.ReadI();
         _info.Stats.Exp = reader.ReadLOther();
         _info.Stats.Level = reader.ReadI();
-        _info.Stats.MaxMp = (int)selectChar.MaxMp;
-        _info.Stats.MaxHp = (int)selectChar.MaxHp;
         _info.Stats.MaxExp = LevelServer.GetExp(_info.Stats.Level + 1);
 
         _info.Stats.Karma = reader.ReadI();
@@ -90,16 +87,6 @@ public class CharSelectedDto : IWireDto
         int empty31 = reader.ReadI();
         int empty4 = reader.ReadI();
         int empty5 = reader.ReadI();
-        int empty6= reader.ReadI();
-        int empty7 = reader.ReadI();
-        int empty8 = reader.ReadI();
-        int empty9 = reader.ReadI();
-        int empty10 = reader.ReadI();
-        int empty11 = reader.ReadI();
-        int empty12 = reader.ReadI();
-        int empty13 = reader.ReadI();
-        int empty14 = reader.ReadI();
-
-        Debug.Log("");
+        int empty6 = reader.ReadI();
     }
 }

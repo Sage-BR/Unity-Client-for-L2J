@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,14 +6,11 @@ using UnityEngine;
 public class PathFinderController : MonoBehaviour
 {
     [Header("Path data")]
-    [SerializeField] private Node _startNode;
-    [SerializeField] private Node _targetNode;
+    [System.NonSerialized] private Node _startNode;
+    [System.NonSerialized] private Node _targetNode;
      private Transform _targetDestinationPawn;
      private Vector3 _targetDestinationVector;
-    [SerializeField] private float _defaultDestinationThreshold = 0.10f;
-    [SerializeField] private float _currentDestinationThreshold = 0.10f;
-    [SerializeField] private List<Node> _path;
-    [SerializeField] private bool _simplifyPath = true;
+    [System.NonSerialized] private List<Node> _path;
 
     [Header("Ground check")]
     [SerializeField] private ObjectData _collidingWith;

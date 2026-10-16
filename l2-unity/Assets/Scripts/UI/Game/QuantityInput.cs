@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ public class QuantityInput : L2PopupWindow
 {
     private static QuantityInput _instance;
     private object _parentWindow;
-    private VisualElement _root;
+    private VisualElement _quantityRoot;
     private TextField _userInput;
 
     public static QuantityInput Instance { get { return _instance; } }
@@ -200,7 +200,7 @@ public class QuantityInput : L2PopupWindow
     {
         _count = allCount;
         base.ShowWindow();
-        OnCenterScreen(_root);
+        OnCenterScreen(_quantityRoot);
         _userInput.value = "0";
     }
 

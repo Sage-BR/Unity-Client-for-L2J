@@ -44,7 +44,7 @@ public static class ParticleStreamHijack
         driver.FollowTarget = group.FollowTarget;
         driver.SurfaceNormal = group.SurfaceNormal;
         group.enabled = false;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log($"[CompositeEffectV2] Hijack group='{group.name}' rate={authoring.countPerSecond}/s max={authoring.maxCount}");
 #endif
     }
@@ -62,7 +62,7 @@ public static class ParticleStreamHijack
         driver.FollowTarget = single.FollowTarget;
         driver.SurfaceNormal = single.SurfaceNormal;
         single.enabled = false;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log($"[CompositeEffectV2] Hijack single='{single.name}' max={authoring.maxCount}");
 #endif
     }

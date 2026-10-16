@@ -17,7 +17,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: TransparentCutout
   disabledShaderPasses:
@@ -37,8 +37,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 1
+    - _SrcBlend: 5
+    - _DstBlend: 10
+    - _ZWrite: 1
     - _Cull: 0
-    - _Cutoff: 0.498039216
+    - _Cutoff: 0.019607844
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

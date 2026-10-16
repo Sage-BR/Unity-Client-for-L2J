@@ -16,7 +16,7 @@ public class LobbyNameplatesManager : MonoBehaviour
     [Tooltip("Glyph pixel scale. Tune later to match L2; 1 = native atlas pixels.")]
     [SerializeField] private float _pixelScale = 1f;
     [Tooltip("Meters after L2 capsule top (Location + CollisionHeight). Negative lowers names. Shared with world.")]
-    [SerializeField] private float _headHeightOffset = -0.12f;
+    [SerializeField] private float _headHeightOffset = L2NameplateAnchor.DefaultHeadHeightOffsetMeters;
     [Tooltip("L2 canvas: lock plate to whole screen pixels (hysteresis).")]
     [SerializeField] private bool _snapAnchorToPixels = true;
     [SerializeField] private float _snapHysteresisPx = 0.75f;

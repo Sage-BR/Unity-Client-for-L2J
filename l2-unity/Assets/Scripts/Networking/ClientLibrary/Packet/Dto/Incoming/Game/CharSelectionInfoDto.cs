@@ -157,9 +157,10 @@ public class CharSelectionInfoDto : IWireDto
             //sexdefault = (byte)CharacterRaceAnimation.FDarkElf;
             //}
 
-            CharacterRace race = MapClassId.GetCharacterRace(character.ClassId);
-            bool IsMage = MapClassId.IsMage(character.ClassId);
-            character.CharacterRaceAnimation = CharacterRaceAnimationParser.ParseRace(race, (byte)character.Sex, IsMage);
+            // Race is explicit on the wire; class is not a reliable substitute (subclasses).
+            CharacterRace race = MapClassId.GetRace(character.Race);
+            character.CharacterRaceAnimation = CharacterRaceAnimationParser.ResolveRaceAnimation(
+                race, character.Appreance, character.ClassId);
 
             list.Add(character);
 

@@ -11,8 +11,8 @@ using UnityEngine;
 /// </summary>
 public static class UnityChainLog
 {
-    public const string Root =
-        @"C:\Users\hh-soft\source\repos\AutoLoginInterlude\ChainLogs\unity";
+    public static string Root =>
+        Path.Combine(Application.persistentDataPath, "ChainLogs", "unity");
 
     const float TickSec = 0.033f;
     const float IdleWriteSec = 8f;

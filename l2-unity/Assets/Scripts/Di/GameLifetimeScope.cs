@@ -129,7 +129,7 @@ public sealed class GameLifetimeScope : LifetimeScope
 
     private void RegisterIfFound<T>(IContainerBuilder builder) where T : MonoBehaviour
     {
-        T component = FindFirstObjectByType<T>(FindObjectsInactive.Include);
+        T component = FindAnyObjectByType<T>(FindObjectsInactive.Include);
         if (component != null)
             builder.RegisterComponent(component);
     }

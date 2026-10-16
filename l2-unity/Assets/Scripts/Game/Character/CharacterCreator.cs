@@ -204,6 +204,7 @@ public class CharacterCreator : MonoBehaviour
         pawnObject.transform.name = name;
         pawnObject.transform.parent = container.transform;
         pawnObject.SetActive(true);
+        pawnObject.GetComponent<SelectableCharacterEntity>().SetDestination(pawnData);
 
         UserGear gear = pawnObject.GetComponent<UserGear>();
         BaseAnimationController animController = pawnObject.GetComponent<BaseAnimationController>();
@@ -211,6 +212,7 @@ public class CharacterCreator : MonoBehaviour
         // Unarmed starter → wait_hand; armed → wait_1HS / wait_bow / …
         string waitState = AnimationNames.WAIT.ToString() + gear.WeaponAnim;
         IncomingPacketActions.Animations.PlayLobbyLocomotion(animController, waitState);
+        StartCoroutine(L2LobbyPoseDiagnostics.Record(pawnObject));
     }
 
     public void UpdatePawnPosAndRot(GameObject pawnObject, Logongrp pawnData) {

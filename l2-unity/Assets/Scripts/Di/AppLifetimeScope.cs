@@ -75,7 +75,7 @@ public sealed class AppLifetimeScope : LifetimeScope
         T local = GetComponent<T>();
         if (local != null)
             return local;
-        return FindFirstObjectByType<T>(FindObjectsInactive.Include);
+        return FindAnyObjectByType<T>(FindObjectsInactive.Include);
     }
 
     private void RegisterIfFound<T>(IContainerBuilder builder) where T : MonoBehaviour

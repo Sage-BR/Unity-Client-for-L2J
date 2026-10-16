@@ -1,4 +1,4 @@
-﻿using NUnit.Framework.Constraints;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 [System.Serializable]
@@ -38,8 +38,6 @@ public class Weapongrp : Abstractgrp
 
     public int PAtkSpeed { get { return _patkspeed; } set { _patkspeed = value; } }
     public int CriticalRate { get { return _critRate; } set { _critRate = value; } }
-    public int Weight { get { return _weight; } set { _weight = value; } }
-    public string Icon { get { return _icon; } set { _icon = value; } }
     public string[] ItemSounds { get { return _itemSounds; } set { _itemSounds = value; } }
 
     public string GetSpeedName()

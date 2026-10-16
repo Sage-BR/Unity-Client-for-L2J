@@ -1,4 +1,4 @@
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
 using System;
 using UnityEngine;
 
@@ -46,7 +46,7 @@ public static class DropAdenaDestroyLog
             $"parent='{(parent != null ? parent.name : "null")}' " +
             $"root='{(root != null ? root.name : "null")}' " +
             $"activeSelf={t.gameObject.activeSelf} activeInHierarchy={t.gameObject.activeInHierarchy} " +
-            $"srcId={source.GetInstanceID()}{extraText}{stack}");
+            $"srcId={source.GetEntityId()}{extraText}{stack}");
     }
 
     static bool ContainsDropToken(string name)

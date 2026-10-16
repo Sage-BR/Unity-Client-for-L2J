@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class DragAndDropManipulator : PointerManipulator
@@ -41,7 +41,7 @@ public class DragAndDropManipulator : PointerManipulator
     // makes target capture the pointer, and denotes that a drag is now in progress.
     private void PointerDownHandler(PointerDownEvent evt)
     {
-        targetStartPosition = target.transform.position;
+        targetStartPosition = target.resolvedStyle.translate;
         pointerStartPosition = evt.position;
         target.CapturePointer(evt.pointerId);
         var vector = new Vector2(target.worldBound.position.x , target.worldBound.position.y);
@@ -114,10 +114,9 @@ public class DragAndDropManipulator : PointerManipulator
             //    closestPos = RootSpaceOfSlot(closestOverlappingSlot);
            //     closestPos = new Vector2(closestPos.x - 5, closestPos.y - 5);
           //  }
-           // target.transform.position =
-           //     closestOverlappingSlot != null ?
+           // target.style.translate = L2UiTranslation.FromPosition(//     closestOverlappingSlot != null ?
             //    closestPos :
-            //    targetStartPosition;
+            //    targetStartPosition);
 
             enabled = false;
         }

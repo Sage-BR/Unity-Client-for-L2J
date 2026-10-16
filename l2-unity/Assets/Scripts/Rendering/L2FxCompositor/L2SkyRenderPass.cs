@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 /// Upper sky / sun / clouds stay behind world depth. Hard lower haze
 /// matches EID 1475 and fills the whole below-horizon buffer.
 /// </summary>
-public sealed class L2SkyRenderPass : ScriptableRenderPass
+public sealed class L2SkyRenderPass : L2RenderGraphPass
 {
     static readonly int D3D9ActiveId = Shader.PropertyToID("_L2FxD3D9CompositorActive");
     static readonly int FxGainId = Shader.PropertyToID("_FxGain");
@@ -17,6 +17,7 @@ public sealed class L2SkyRenderPass : ScriptableRenderPass
     static readonly ProfilingSampler Sampler = new ProfilingSampler("L2 Original Sky Layers");
 
     readonly L2FxCompositorSettings _settings;
+    protected override L2FxCompositorSettings EffectSettings => _settings;
     Material _backdropMaterial;
 
     public L2SkyRenderPass(L2FxCompositorSettings settings)
@@ -27,18 +28,16 @@ public sealed class L2SkyRenderPass : ScriptableRenderPass
         renderPassEvent = RenderPassEvent.AfterRenderingDeferredLights;
     }
 
-    public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+    protected override void Render(CommandBuffer cmd, ref L2RenderGraphFrame renderingData)
     {
         if (!ShouldRun(ref renderingData))
             return;
 
         EnsureBackdropMaterial();
-        RTHandle cameraColor = renderingData.cameraData.renderer.cameraColorTargetHandle;
-        RTHandle cameraDepth = renderingData.cameraData.renderer.cameraDepthTargetHandle;
+        RTHandle cameraColor = renderingData.cameraColor;
+        RTHandle cameraDepth = renderingData.cameraDepth;
         if (cameraColor == null)
             return;
-
-        CommandBuffer cmd = CommandBufferPool.Get("L2 Original Sky Layers");
         using (new ProfilingScope(cmd, Sampler))
         {
             if (cameraDepth != null)
@@ -63,13 +62,10 @@ public sealed class L2SkyRenderPass : ScriptableRenderPass
             }
         }
 
-        context.ExecuteCommandBuffer(cmd);
-        cmd.Clear();
-
         // Original: black lower sky (camera clear) -> upper blue -> sun ->
         // hard mauve (slight overlap) -> stars/clouds -> soft WhiteRing.
         DrawLayer(
-            context,
+            cmd,
             ref renderingData,
             _settings.celestialLayerMask,
             QueueRange(3000, 5000));
@@ -87,28 +83,24 @@ public sealed class L2SkyRenderPass : ScriptableRenderPass
                 MeshTopology.Triangles,
                 3,
                 1);
-            context.ExecuteCommandBuffer(cmd);
-            cmd.Clear();
             if (cameraDepth != null)
                 CoreUtils.SetRenderTarget(cmd, cameraColor, cameraDepth, ClearFlag.None, Color.clear);
         }
 
         DrawLayer(
-            context,
+            cmd,
             ref renderingData,
             _settings.celestialLayerMask,
             QueueRange(2501, 2999));
-        DrawLayer(context, ref renderingData, _settings.cloudLayerMask);
-        DrawLayer(context, ref renderingData, _settings.hazeLayerMask);
+        DrawLayer(cmd, ref renderingData, _settings.cloudLayerMask);
+        DrawLayer(cmd, ref renderingData, _settings.hazeLayerMask);
 
         cmd.SetGlobalFloat(D3D9ActiveId, 0f);
-        context.ExecuteCommandBuffer(cmd);
-        CommandBufferPool.Release(cmd);
     }
 
     void DrawLayer(
-        ScriptableRenderContext context,
-        ref RenderingData renderingData,
+        CommandBuffer cmd,
+        ref L2RenderGraphFrame renderingData,
         LayerMask layerMask,
         RenderQueueRange? queueRange = null)
     {
@@ -118,12 +110,7 @@ public sealed class L2SkyRenderPass : ScriptableRenderPass
         var filtering = new FilteringSettings(
             queueRange ?? RenderQueueRange.transparent,
             layerMask);
-        DrawingSettings drawing = CreateDrawingSettings(
-            ForwardOnlyTag,
-            ref renderingData,
-            SortingCriteria.CommonTransparent);
-        drawing.perObjectData = PerObjectData.None;
-        context.DrawRenderers(renderingData.cullResults, ref drawing, ref filtering);
+        renderingData.Draw(cmd, layerMask, queueRange ?? RenderQueueRange.transparent, SortingCriteria.CommonTransparent);
     }
 
     static RenderQueueRange QueueRange(int lower, int upper)
@@ -144,8 +131,17 @@ public sealed class L2SkyRenderPass : ScriptableRenderPass
         return camera != null ? camera.backgroundColor : Color.black;
     }
 
+    protected override void RegisterRendererLists(L2RenderGraphFrame frame)
+    {
+        if (_settings == null) return;
+        frame.Register(_settings.celestialLayerMask, QueueRange(3000, 5000), SortingCriteria.CommonTransparent);
+        frame.Register(_settings.celestialLayerMask, QueueRange(2501, 2999), SortingCriteria.CommonTransparent);
+        frame.Register(_settings.cloudLayerMask, RenderQueueRange.transparent, SortingCriteria.CommonTransparent);
+        frame.Register(_settings.hazeLayerMask, RenderQueueRange.transparent, SortingCriteria.CommonTransparent);
+    }
     public void Dispose()
     {
+        ReleaseMaterialSnapshots();
         CoreUtils.Destroy(_backdropMaterial);
         _backdropMaterial = null;
     }
@@ -160,7 +156,7 @@ public sealed class L2SkyRenderPass : ScriptableRenderPass
             _backdropMaterial = CoreUtils.CreateEngineMaterial(backdropShader);
     }
 
-    bool ShouldRun(ref RenderingData renderingData)
+    bool ShouldRun(ref L2RenderGraphFrame renderingData)
     {
         if (_settings == null ||
             !_settings.enableD3D9Compositor ||

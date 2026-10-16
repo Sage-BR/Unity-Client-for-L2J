@@ -7,6 +7,7 @@ namespace FMODUnity
     [CanEditMultipleObjects]
     public class StudioListenerEditor : Editor
     {
+        [global::System.NonSerialized]
         public SerializedProperty attenuationObject;
 
         private void OnEnable()

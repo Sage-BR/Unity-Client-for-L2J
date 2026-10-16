@@ -31,7 +31,7 @@ public sealed class ParticleStreamRuntime
     bool _visible = true;
     bool _needsWarmup;
     float _warmupAgeAtSpawn;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
     bool _loggedFirstSpawn;
 #endif
 
@@ -129,7 +129,7 @@ public sealed class ParticleStreamRuntime
         _needsWarmup = _authoring.relativeWarmupTime > 0f;
         _warmupAgeAtSpawn = 0f;
         ApplyLifeStretchToGpuMaterials();
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         _loggedFirstSpawn = false;
         if (NpcDeco2911Trace.Matches(DebugName) || NpcDeco2911Trace.Matches(_host != null ? _host.name : null))
         {
@@ -158,7 +158,7 @@ public sealed class ParticleStreamRuntime
     {
         if (!_visible || _state == EmitterState.Idle || _state == EmitterState.Complete)
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (NpcDeco2911Trace.Matches(DebugName) && !_loggedFirstSpawn)
             {
                 NpcDeco2911Trace.Warn(
@@ -190,7 +190,7 @@ public sealed class ParticleStreamRuntime
         {
             if (now >= _emissionEndsAt)
             {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
                 if (_spawn.SpawnedTotal == 0)
                 {
                     Debug.LogWarning(
@@ -301,7 +301,7 @@ public sealed class ParticleStreamRuntime
         }
 
         _warmupAgeAtSpawn = 0f;
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             "[ParticleGroupV2] L2 warmup '" + (string.IsNullOrEmpty(DebugName) ? "?" : DebugName) +
             "' lifeCenter=" + lifeCenter.ToString("0.###") +
@@ -414,7 +414,7 @@ public sealed class ParticleStreamRuntime
             _cursor = 0;
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         if (!_loggedFirstSpawn)
         {
             _loggedFirstSpawn = true;

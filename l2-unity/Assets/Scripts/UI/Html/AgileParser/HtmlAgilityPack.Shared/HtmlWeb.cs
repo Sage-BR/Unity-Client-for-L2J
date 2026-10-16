@@ -1,4 +1,4 @@
-﻿// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
+// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
 // Website & Documentation: https://html-agility-pack.net
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
@@ -1747,10 +1747,10 @@ namespace HtmlAgilityPack
                 ? Encoding.GetEncoding(html ? characterSet : resp.ContentEncoding)
                 : null; 
             }
-            catch (Exception e )
-			{
-
-			} 
+            catch (ArgumentException e)
+            {
+                UnityEngine.Debug.LogException(e);
+            }
 
 			if (OverrideEncoding != null)
                 respenc = OverrideEncoding;

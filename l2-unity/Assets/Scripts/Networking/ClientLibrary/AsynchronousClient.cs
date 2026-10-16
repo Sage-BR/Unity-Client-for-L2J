@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -91,9 +91,9 @@ public class AsynchronousClient
             Debug.Log("Connection success for: " + (isLogin ? " LoginClient." : " GameClient."));
 
             if (isLogin)
-                _loginReceiving.StartReceiving(_socket, _cts.Token);
+                _loginReceiving.StartReceiving(_socket, _cts.Token).Observe();
             else
-                _gameReceiving.StartReceiving(_socket, _cts.Token);
+                _gameReceiving.StartReceiving(_socket, _cts.Token).Observe();
 
             return true;
         }

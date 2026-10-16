@@ -23,7 +23,7 @@ public static class App
             return;
         if (GameContainer == null)
         {
-            GameLifetimeScope scope = UnityEngine.Object.FindFirstObjectByType<GameLifetimeScope>(FindObjectsInactive.Include);
+            GameLifetimeScope scope = UnityEngine.Object.FindAnyObjectByType<GameLifetimeScope>(FindObjectsInactive.Include);
             if (scope != null)
                 GameContainer = scope.Container;
         }

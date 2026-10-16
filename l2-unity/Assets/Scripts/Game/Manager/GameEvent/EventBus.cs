@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using UnityEngine;
-using static UnityEditor.Progress;
+
 
 
 public class EventBus : MonoBehaviour
@@ -35,6 +35,7 @@ public class EventBus : MonoBehaviour
             " body=" + (item != null ? item.BodyPart.ToString() : "null") +
             " sameAsInstance=" + (this == Instance));
         OnEquipped?.Invoke(item , objectId);
+        if (item != null && item.Category == ItemCategory.Weapon) OnWeaponChanged?.Invoke(item, objectId);
     }
 
 
@@ -45,6 +46,7 @@ public class EventBus : MonoBehaviour
             " objectId=" + objectId +
             " itemId=" + (item != null ? item.ItemId : 0));
        OnUnEquipped?.Invoke(item , objectId);
+       if (item != null && item.Category == ItemCategory.Weapon) OnWeaponChanged?.Invoke(item, objectId);
     }
 
     public void LevelUp(Entity entity , int objectID)

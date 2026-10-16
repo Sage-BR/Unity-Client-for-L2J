@@ -19,26 +19,27 @@ public class MagicAttackIntention : IntentionBase
 
             if (anim != null)
             {
-                Rotate(IncomingPacketActions.Player, useSkill);
-                Task.Run(() => WaitAndStart(useSkill, anim, distance));
+                Rotate(IncomingPacketActions.Player, useSkill).Observe();
+                WaitAndStart(useSkill, anim, distance).Observe();
             }
         }
     }
 
-    private async void WaitAndStart(MagicSkillUseDto useSkill , AnimationCombo anim , float distance)
+    private async Task WaitAndStart(MagicSkillUseDto useSkill , AnimationCombo anim , float distance)
     {
-        var timeout = Task.Delay(500);
+        float deadline = Time.realtimeSinceStartup + 0.5f;
 
-        while (IncomingPacketActions.Player.IsTurnsAround())
+        while (IncomingPacketActions.Player != null && IncomingPacketActions.Player.IsTurnsAround())
         {
            // if (await Task.WhenAny(timeout) == timeout) break;
-           Debug.LogWarning("Player turns around");
+           if (Time.realtimeSinceStartup >= deadline) break;
+           await Task.Delay(16);
         }
 
-        StartUseSkill(useSkill, anim, distance);
+        await StartUseSkill(useSkill, anim, distance);
     }
 
-    private async void StartUseSkill(MagicSkillUseDto useSkill , AnimationCombo anim , float distance)
+    private async Task StartUseSkill(MagicSkillUseDto useSkill , AnimationCombo anim , float distance)
     {
         Entity monster =await  IncomingPacketActions.GameWorld.GetEntityNoLock(useSkill.TargetId);
         IncomingPacketActions.Queue(() =>
@@ -51,10 +52,10 @@ public class MagicAttackIntention : IntentionBase
         });
     }
 
-    private async void Rotate(PlayerController controller , MagicSkillUseDto useSkill)
+    private async Task Rotate(PlayerController controller , MagicSkillUseDto useSkill)
     {
         Entity entity = await IncomingPacketActions.GameWorld.GetEntityNoLock(useSkill.TargetId);
-        controller.StartRotateFollow(entity);
+        if (controller != null && entity != null) controller.StartRotateFollow(entity);
     }
 
     public override void Exit() { }

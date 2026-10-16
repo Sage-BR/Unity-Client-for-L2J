@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ public class InventoryWindow : L2PopupWindow
     [SerializeField] private InventoryGearTab _gearTab;
     [SerializeField] private List<InventoryTab> _tabs;
 
-    public List<ItemInstance> _playerItems;
+    [System.NonSerialized] public List<ItemInstance> _playerItems;
 
     [SerializeField] private int _usedSlots;
     [SerializeField] private int _slotCount;
@@ -119,7 +119,7 @@ public class InventoryWindow : L2PopupWindow
         _weightLabel = GetLabelById("CurrentWeight");
     }
 
-    protected void RegisterCloseWindowEvent(string closeButtonClass)
+    protected override void RegisterCloseWindowEvent(string closeButtonClass)
     {
         Button closeButton = (Button)GetElementByClass(closeButtonClass);
         if (closeButton == null)
@@ -184,7 +184,7 @@ public class InventoryWindow : L2PopupWindow
            //UpdateItemList(_playerItems);
         }
 
-        evt.PreventDefault();
+        evt.StopPropagation();
     }
 
     private void CreateMinimizedWindow()

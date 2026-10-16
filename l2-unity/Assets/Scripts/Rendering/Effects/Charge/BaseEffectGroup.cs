@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public abstract class BaseEffectGroup : EffectPart
@@ -110,8 +110,6 @@ public abstract class BaseEffectGroup : EffectPart
         if (_effectInstances == null) return;
         foreach (var inst in _effectInstances) inst.Deactivate();
     }
-
-    protected float Now() => Application.isPlaying ? Time.time : Time.realtimeSinceStartup;
     public override void StopPart() => StopEffect();
 
     public override void Setup(EffectSettings settings, MagicCastData castData)

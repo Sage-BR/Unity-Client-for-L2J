@@ -44,7 +44,7 @@ public abstract class TimedCompositeEffectBase : BaseEffect
         runtime.defaultLifeTime = timedLife;
         runtime.hideTime = Mathf.Min(runtime.hideTime, runtime.defaultLifeTime);
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         Debug.Log(
             $"{DebugPrefix} Runtime settings cloned. Source='{sourceSettings.name}' " +
             $"timed={applyTimedLifetime} " +

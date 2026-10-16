@@ -174,9 +174,9 @@ public static class L2InstancedPropBaker
         }
 
         MeshRenderer[] renderers = root.GetComponentsInChildren<MeshRenderer>(true);
-        var groups = new Dictionary<long, List<Matrix4x4>>();
-        var meshes = new Dictionary<long, Mesh>();
-        var materials = new Dictionary<long, Material>();
+        var groups = new Dictionary<(EntityId, EntityId), List<Matrix4x4>>();
+        var meshes = new Dictionary<(EntityId, EntityId), Mesh>();
+        var materials = new Dictionary<(EntityId, EntityId), Material>();
         Matrix4x4 rootInverse = root.transform.worldToLocalMatrix;
         int skipped = 0;
 
@@ -200,7 +200,7 @@ public static class L2InstancedPropBaker
             material.enableInstancing = true;
             EditorUtility.SetDirty(material);
 
-            long key = ((long)mesh.GetInstanceID() << 32) ^ (uint)material.GetInstanceID();
+            var key = (mesh.GetEntityId(), material.GetEntityId());
             if (!groups.TryGetValue(key, out List<Matrix4x4> matrices))
             {
                 matrices = new List<Matrix4x4>(256);

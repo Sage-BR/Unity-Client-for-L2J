@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class IconManager
 {
-    private const string _iconFolder = "Data\\SysTextures\\Icon";
-    private const string _cursorFolder = "Data\\UI\\Assets\\Cursor";
+    private const string _iconFolder = "Data/SysTextures/Icon";
+    private const string _cursorFolder = "Data/UI/Assets/Cursor";
     private const string _defaultNameIconBackground = "ItemWindow_DF_SlotBox_Default";
     private const string _checkedCheckBoxTexture = "Data/UI/Quest/CheckBox_checked";
     private const string _uncheckedCheckBoxTexture = "Data/UI/Quest/CheckBox_uncheked";
@@ -160,7 +160,7 @@ public class IconManager
     {
         var folder = (iconFolder == null) ? _iconFolder : iconFolder;
 
-        string icon = folder + "\\" + CleanIconName(name);
+        string icon = folder.Replace('\\', '/').TrimEnd('/') + "/" + CleanIconName(name);
 
         var result = Resources.Load<Texture2D>(icon);
 
@@ -209,7 +209,7 @@ public class IconManager
 
     public Texture2D LoadCursorByName(string name)
     {
-        string icon = _cursorFolder + "\\" + name;
+        string icon = _cursorFolder + "/" + name;
         var result = Resources.Load<Texture2D>(icon);
         return result;
     }

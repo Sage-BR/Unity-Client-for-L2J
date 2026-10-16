@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using UnityEditorInternal;
+
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -28,7 +28,7 @@ public class NewPhysicalSkillsState : AbstractAttackEvents
                 AnimationCombo animComboAct = SkillgrpTable.Instance.GetAnimComboBySkillId(useSkill.SkillId, useSkill.SkillLvl);
                 //not use bow atk
                 //RotateFaceToMonster(_stateMachine.Player);
-                SkillExecutor.Instance.ExecuteSkill(_stateMachine.Player, animComboAct, _events);
+                SkillExecutor.Instance.ExecuteSkill(_stateMachine.Player, animComboAct, _events).Observe();
                 // Only skills with a ready EffectDatabase entry (e.g. Power Strike = 3).
                 if (useSkill.SkillId == 3)
                 {
@@ -53,7 +53,7 @@ public class NewPhysicalSkillsState : AbstractAttackEvents
                     int objectId = entity.Identity.Id;
                     SetupDurationHelper.SetupLongCastDurationIfHitTimeNot0(useSkill, objectId, entity, selfCombo);
 
-                    SkillExecutor.Instance.ExecuteSkillOverride(useSkill.SkillGrp, entity, selfCombo, _events, isLong: true);
+                    SkillExecutor.Instance.ExecuteSkillOverride(useSkill.SkillGrp, entity, selfCombo, _events, isLong: true).Observe();
                 } //2031 potion heal , 2011 haste potion
                 else if (SetupDurationHelper.IsUsePotion(useSkill))
                 {
@@ -62,7 +62,7 @@ public class NewPhysicalSkillsState : AbstractAttackEvents
                 else
                 {
                     AnimationCombo combo = new AnimationCombo("-1", new string[1] { skillgrp.GetAnimOperationType3() }, "");
-                    SkillExecutor.Instance.ExecuteSkill(_stateMachine.Player, combo, _events);
+                    SkillExecutor.Instance.ExecuteSkill(_stateMachine.Player, combo, _events).Observe();
                 }
 
 
@@ -93,16 +93,6 @@ public class NewPhysicalSkillsState : AbstractAttackEvents
 
 
 
-    private MagicSkillUseDto GetPayload(object payload)
-    {
-
-        if (payload is MagicSkillUseDto useSkill)
-        {
-            return useSkill;
-        }
-
-        return null;
-    }
     // Disabled with AttackTimingHelper.RotateFaceToMonster — clip pose only.
     // private void RotateFaceToMonster(Entity entity)
     // {

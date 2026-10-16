@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+[System.Serializable]
 public class NpcName {
     [SerializeField] private int _id;
     [SerializeField] private string _name;

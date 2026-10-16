@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -305,7 +305,7 @@ public class SceneLoader : MonoBehaviour
             return L2GameUI.Instance;
         }
 
-        return FindFirstObjectByType<L2GameUI>(FindObjectsInactive.Include);
+        return FindAnyObjectByType<L2GameUI>(FindObjectsInactive.Include);
     }
 
     private static bool IsGameUiRoot(GameObject root)

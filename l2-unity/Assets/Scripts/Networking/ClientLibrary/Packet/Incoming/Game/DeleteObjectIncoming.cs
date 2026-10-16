@@ -15,6 +15,6 @@ public sealed class DeleteObjectIncoming : IncomingPacket<DeleteObjectDto>
     {
         Debug.Log("[DeleteObject] PACKET received id=" + dto.ObjectId);
         if (IncomingPacketActions.GameWorld != null)
-            IncomingPacketActions.GameWorld.DeleteObject(dto.ObjectId);
+            IncomingPacketActions.GameWorld.DeleteObject(dto.ObjectId).Observe();
     }
 }

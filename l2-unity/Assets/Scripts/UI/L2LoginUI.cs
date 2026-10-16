@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class L2LoginUI : L2UI
 {
-    [SerializeField] private VisualElement _loadingElement;
+    [System.NonSerialized] private VisualElement _loadingElement;
 
     private bool loading = false;
 

@@ -1,4 +1,4 @@
-﻿using AtmosphericHeightFog;
+using AtmosphericHeightFog;
 using System;
 using UnityEngine;
 
@@ -44,10 +44,6 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private Color _ambientLightDawnColor = new Color(96f / 255f, 96f / 255f, 79f / 255f);
 
     [Header("Skybox cloud leftover (always off — L2 clouds are separate components)")]
-    [SerializeField] private float _dayCloudsOpcacity = 0f;
-    [SerializeField] private float _nightCloudsOpacity = 0f;
-    [SerializeField] private float _dayHorizonCloudsOpcacity = 0f;
-    [SerializeField] private float _nightHorizonCloudsOpacity = 0f;
 
     [Header("Ambient light intensity")]
     [SerializeField] private float _ambientMinIntensity = 0.2f;

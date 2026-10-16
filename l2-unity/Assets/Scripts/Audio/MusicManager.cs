@@ -8,7 +8,7 @@ public class MusicManager : MonoBehaviour
 {
     [SerializeField] private int _currentEventPriority = -1;
     [SerializeField] private EventReference _currentMusicEvent;
-    [SerializeField] private Dictionary<EventReference, EventInstance> _musicInstances;
+    private Dictionary<EventReference, EventInstance> _musicInstances;
     public int CurrentEventPriority { get { return _currentEventPriority; } }
     public EventReference CurrentMusicEvent { get { return _currentMusicEvent; } }
 

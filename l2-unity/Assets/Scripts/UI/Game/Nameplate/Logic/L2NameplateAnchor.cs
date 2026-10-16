@@ -8,7 +8,7 @@ public static class L2NameplateAnchor
 {
     public const float DefaultCollisionHeightMeters = 0.46f;
     // NameplatesManager._headHeightOffset default. Spawn TargetOverHead uses this too.
-    public const float DefaultHeadHeightOffsetMeters = -0.12f;
+    public const float DefaultHeadHeightOffsetMeters = 0.08f;
 
     /// <summary>
     /// World position just above the capsule top (+ <paramref name="headHeightOffset"/>).
@@ -28,13 +28,17 @@ public static class L2NameplateAnchor
         if (cc != null)
         {
             Vector3 localTop = cc.center + Vector3.up * (cc.height * 0.5f);
-            return target.TransformPoint(localTop) + Vector3.up * headHeightOffset;
+            Vector3 top = cc.transform.TransformPoint(localTop);
+            top.y = Mathf.Max(top.y, target.position.y + HeightFromFeet(collisionHeight, 0f));
+            return top + Vector3.up * headHeightOffset;
         }
 
         if (capsule != null)
         {
             Vector3 localTop = capsule.center + Vector3.up * (capsule.height * 0.5f);
-            return target.TransformPoint(localTop) + Vector3.up * headHeightOffset;
+            Vector3 top = capsule.transform.TransformPoint(localTop);
+            top.y = Mathf.Max(top.y, target.position.y + HeightFromFeet(collisionHeight, 0f));
+            return top + Vector3.up * headHeightOffset;
         }
 
         // Feet GO + 2×CH: UE Location is capsule center (= feet+CH), name = Loc+CH.

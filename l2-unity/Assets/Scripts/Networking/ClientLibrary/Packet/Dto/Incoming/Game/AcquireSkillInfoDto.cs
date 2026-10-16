@@ -69,7 +69,7 @@ public class RequiredSkillInfo
         return _count;
     }
 
-    public int GetType()
+    public int GetRequirementType()
     {
         return _type;
     }

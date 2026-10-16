@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ public class Node {
 	public Vector3 worldPosition;
 	public Vector3 center;
 
-	public Node parentNode;
+	[System.NonSerialized] public Node parentNode;
 	public float cost;
 
 	public Node() {}

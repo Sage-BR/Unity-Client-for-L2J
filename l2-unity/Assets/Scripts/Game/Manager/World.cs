@@ -416,7 +416,7 @@ public class World : MonoBehaviour, IWorldSpawnContext {
     {
         if (_itemDropPresentation != null)
             _itemDropPresentation.PlayPickup(itemObjectId, pickerCharObjId, unityPos);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
         DropMeshLifetimeLog.NotifyRemove(itemObjectId, "GetItem_pickup");
 #endif
         RemoveObject(itemObjectId);
@@ -501,7 +501,7 @@ public class World : MonoBehaviour, IWorldSpawnContext {
         {
             if (_itemDropPresentation != null)
                 _itemDropPresentation.StopItemPresentation(objectId);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             DropMeshLifetimeLog.NotifyRemove(objectId, "DeleteObject_packet");
 #endif
             RemoveObject(objectId);
@@ -711,14 +711,10 @@ public class World : MonoBehaviour, IWorldSpawnContext {
         }
     }
 
-    public async Task<Entity> GetEntityNoLock(int id)
+    public Task<Entity> GetEntityNoLock(int id)
     {
-        if (_objects.ContainsKey(id)){
-            return _objects[id];
-        }
-        return null;
+        return Task.FromResult(GetEntityNoLockSync(id));
     }
-
     public Entity GetEntityNoLockSync(int id)
     {
         if (_objects.ContainsKey(id))

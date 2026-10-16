@@ -6,7 +6,7 @@ public static class DiBootstrap
 {
     public static void EnsureAppScope()
     {
-        if (Object.FindFirstObjectByType<AppLifetimeScope>() != null)
+        if (Object.FindAnyObjectByType<AppLifetimeScope>() != null)
             return;
 
         GameObject go = new GameObject("AppLifetimeScope");
@@ -16,8 +16,8 @@ public static class DiBootstrap
 
     public static void EnsureGameScope()
     {
-        World world = Object.FindFirstObjectByType<World>(FindObjectsInactive.Include);
-        GameLifetimeScope existing = Object.FindFirstObjectByType<GameLifetimeScope>(FindObjectsInactive.Include);
+        World world = Object.FindAnyObjectByType<World>(FindObjectsInactive.Include);
+        GameLifetimeScope existing = Object.FindAnyObjectByType<GameLifetimeScope>(FindObjectsInactive.Include);
 
         if (existing != null)
         {
@@ -35,7 +35,7 @@ public static class DiBootstrap
             return;
 
         EnsureAppScope();
-        AppLifetimeScope app = Object.FindFirstObjectByType<AppLifetimeScope>();
+        AppLifetimeScope app = Object.FindAnyObjectByType<AppLifetimeScope>();
         GameObject go = new GameObject("GameLifetimeScope");
         using (LifetimeScope.EnqueueParent(app))
             go.AddComponent<GameLifetimeScope>();
@@ -43,12 +43,12 @@ public static class DiBootstrap
 
     public static void EnsureLoginScope()
     {
-        if (Object.FindFirstObjectByType<LoginLifetimeScope>() != null)
+        if (Object.FindAnyObjectByType<LoginLifetimeScope>() != null)
             return;
 
         EnsureAppScope();
-        AppLifetimeScope app = Object.FindFirstObjectByType<AppLifetimeScope>();
-        L2LoginUI ui = Object.FindFirstObjectByType<L2LoginUI>(FindObjectsInactive.Include);
+        AppLifetimeScope app = Object.FindAnyObjectByType<AppLifetimeScope>();
+        L2LoginUI ui = Object.FindAnyObjectByType<L2LoginUI>(FindObjectsInactive.Include);
         GameObject go = new GameObject("LoginLifetimeScope");
         if (ui != null)
             go.transform.SetParent(ui.transform);

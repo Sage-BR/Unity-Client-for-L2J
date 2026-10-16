@@ -1,0 +1,60 @@
+CharSelectionInfo: PASS count=0 consumed=4 remaining=0
+CharSelectionInfo: PASS count=2 consumed=650 remaining=0
+ClassBody: PASS wireRace=0 class=10 body=MMagic
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=0 class=9 body=MFighter
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=0 class=92 body=MFighter
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=0 class=12 body=MMagic
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=0 class=94 body=MMagic
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=1 class=24 body=MElf
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=2 class=37 body=MDarkElf
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=3 class=46 body=MOrc
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=3 class=51 body=MShaman
+CharSelectionInfo: PASS count=1 consumed=327 remaining=0
+ClassBody: PASS wireRace=4 class=57 body=MDwarf
+CharSelected: PASS consumed=278 remaining=0 SP preserved; UI independent
+ChangeMoveType: PASS walk/run; truncated input rejected
+LoginFields: PASS 14-byte account / 16-byte password; UTF-8 byte limits; no network authentication
+Skin: race=MMagic rendererScale=(100.00, 100.00, 100.00) root=bip01 animatedRoot=bip01 bounds=(0.42, 0.25, 0.12)
+Skin: race=MMagic sourceBones=86 targetBones=86 indexNameDifferences=0
+Pose: race=MMagic state=wait_hand actual=1551014399 clip=MMagic_M000_b.ao_wait_Gun_MMagic headY=0,6956 deathFlag=False
+Skin: race=MMagic state=wait_hand worldSize=(0.22, 0.27, 0.17) center=(0.05, 0.59, 0.03)
+Pose: race=MMagic state=wait_bow actual=971410273 clip=MMagic_M000_b.ao_wait_Bow_MMagic headY=0,6969 deathFlag=False
+Skin: race=MMagic state=wait_bow worldSize=(0.26, 0.27, 0.15) center=(0.04, 0.59, 0.04)
+Pose: race=MMagic state=walk_bow actual=-1952769407 clip=MMagic_M000_b.ao_walk_Bow_MMagic headY=0,6834 deathFlag=False
+Skin: race=MMagic state=walk_bow worldSize=(0.26, 0.26, 0.18) center=(-0.02, 0.58, 0.00)
+Pose: race=MMagic state=wait_1HS actual=-1311093444 clip=MMagic_M000_b.ao_wait_1HS_MMagic headY=0,6978 deathFlag=False
+Skin: race=MMagic state=wait_1HS worldSize=(0.22, 0.27, 0.17) center=(0.05, 0.60, 0.03)
+Pose: race=MMagic state=walk_1HS actual=61332700 clip=MMagic_M000_b.ao_walk_1HS_MMagic headY=0,6804 deathFlag=False
+Skin: race=MMagic state=walk_1HS worldSize=(0.26, 0.26, 0.17) center=(-0.02, 0.58, 0.00)
+Pose: race=MMagic state=wait_2HS actual=-1281559707 clip=MMagic_M000_b.ao_wait_2HS_MMagic headY=0,7012 deathFlag=False
+Skin: race=MMagic state=wait_2HS worldSize=(0.20, 0.28, 0.16) center=(0.02, 0.59, 0.01)
+Pose: race=MMagic state=walk_2HS actual=31548037 clip=MMagic_M000_b.ao_walk_2HS_MMagic headY=0,6810 deathFlag=False
+Skin: race=MMagic state=walk_2HS worldSize=(0.21, 0.26, 0.18) center=(0.01, 0.58, 0.03)
+Pose: race=MMagic state=death actual=-414722770 clip=MMagic_M000_b.ao_Death_MMagic headY=0,5953 deathFlag=False
+Skin: race=MMagic state=death worldSize=(0.28, 0.27, 0.20) center=(-0.09, 0.49, 0.02)
+Skin: race=MFighter rendererScale=(100.00, 100.00, 100.00) root=bip01 animatedRoot=bip01 bounds=(0.41, 0.23, 0.14)
+Skin: race=MFighter sourceBones=70 targetBones=70 indexNameDifferences=0
+Pose: race=MFighter state=wait_hand actual=1551014399 clip=MFighter_m000_b.ao_wait_Hand_MFighter headY=0,7626 deathFlag=False
+Skin: race=MFighter state=wait_hand worldSize=(0.27, 0.24, 0.20) center=(-0.01, 0.66, -0.05)
+Pose: race=MFighter state=wait_bow actual=971410273 clip=MFighter_m000_b.ao_wait_Bow_MFighter headY=0,7593 deathFlag=False
+Skin: race=MFighter state=wait_bow worldSize=(0.22, 0.25, 0.23) center=(0.00, 0.65, -0.06)
+Pose: race=MFighter state=walk_bow actual=-1952769407 clip=MFighter_m000_b.ao_walk_Bow_MFighter headY=0,7490 deathFlag=False
+Skin: race=MFighter state=walk_bow worldSize=(0.31, 0.25, 0.16) center=(-0.01, 0.64, -0.01)
+Pose: race=MFighter state=wait_1HS actual=-1311093444 clip=MFighter_m000_b.ao_wait_1HS_MFighter headY=0,7611 deathFlag=False
+Skin: race=MFighter state=wait_1HS worldSize=(0.24, 0.25, 0.24) center=(0.00, 0.66, -0.08)
+Pose: race=MFighter state=walk_1HS actual=61332700 clip=MFighter_m000_b.ao_walk_1HS_MFighter headY=0,7490 deathFlag=False
+Skin: race=MFighter state=walk_1HS worldSize=(0.31, 0.25, 0.16) center=(-0.01, 0.64, -0.01)
+Pose: race=MFighter state=wait_2HS actual=-1281559707 clip=MFighter_m000_b.ao_wait_2HS_MFighter headY=0,7536 deathFlag=False
+Skin: race=MFighter state=wait_2HS worldSize=(0.35, 0.23, 0.19) center=(0.06, 0.66, -0.05)
+Pose: race=MFighter state=walk_2HS actual=31548037 clip=MFighter_m000_b.ao_walk_2HS_MFighter headY=0,7534 deathFlag=False
+Skin: race=MFighter state=walk_2HS worldSize=(0.31, 0.24, 0.26) center=(0.01, 0.65, 0.00)
+Pose: race=MFighter state=death actual=-414722770 clip=MFighter_m000_b.ao_Death_MFighter headY=0,7057 deathFlag=False
+Skin: race=MFighter state=death worldSize=(0.32, 0.23, 0.21) center=(-0.05, 0.60, -0.12)

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public static class NpcCombatTrace
 {
-    static readonly string PathName =
-        @"C:\Users\hh-soft\source\repos\AutoLoginInterlude\ChainLogs\unity\npc_combat.log";
+    static string PathName =>
+        Path.Combine(Application.persistentDataPath, "ChainLogs", "unity", "npc_combat.log");
 
     public static bool IsCombatNpc(Entity entity)
     {

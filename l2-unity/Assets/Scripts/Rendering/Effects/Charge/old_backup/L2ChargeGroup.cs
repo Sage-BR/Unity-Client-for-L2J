@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class L2ChargeGroup : EffectPart
 {
@@ -6,7 +6,7 @@ public class L2ChargeGroup : EffectPart
     [SerializeField] private Renderer[] _particles;
     [SerializeField] private bool _hasFixedDuration = true;
     [SerializeField] private float _duration = 5f;
-    public Vector3 SurfaceNormal { get; set; }
+    public override Vector3 SurfaceNormal { get; set; }
     private Transform _casterTransform;
     private Transform _followTarget;
     private Vector3 _ownerPosition;

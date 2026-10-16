@@ -1,4 +1,4 @@
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,8 +12,8 @@ using UnityEngine;
 /// </summary>
 public static class DocExtractorParticleSnapshotLogger
 {
-    public const string DefaultLogPath =
-        @"C:\Users\hh-soft\source\repos\AutoLoginInterlude\Debug\Unity_ParticleSnapshot.log";
+    public static string DefaultLogPath =>
+        Path.Combine(Application.persistentDataPath, "Debug", "Unity_ParticleSnapshot.log");
 
     public const float SampleIntervalSec = 0.05f;
 
@@ -25,8 +25,8 @@ public static class DocExtractorParticleSnapshotLogger
     public static bool Enabled = true;
 
     private static readonly object WriteLock = new object();
-    private static readonly Dictionary<int, GroupSession> Sessions = new Dictionary<int, GroupSession>();
-    private static int OpenEffectOwnerId;
+    private static readonly Dictionary<EntityId, GroupSession> Sessions = new Dictionary<EntityId, GroupSession>();
+    private static EntityId OpenEffectOwnerId;
 
     private sealed class GroupSession
     {
@@ -245,7 +245,7 @@ public static class DocExtractorParticleSnapshotLogger
         session.StartSpinRollUruBySlot.Clear();
 
         L2Particle owner = group.OwnerParticle;
-        int ownerId = owner != null ? owner.GetInstanceID() : group.GetInstanceID();
+        EntityId ownerId = owner != null ? owner.GetEntityId() : group.GetEntityId();
         if (OpenEffectOwnerId == ownerId)
         {
             return;
@@ -1367,7 +1367,7 @@ public static class DocExtractorParticleSnapshotLogger
 
     private static GroupSession GetOrCreateSession(ParticleGroup group)
     {
-        int key = group.GetInstanceID();
+        EntityId key = group.GetEntityId();
         if (!Sessions.TryGetValue(key, out GroupSession session))
         {
             session = new GroupSession();
@@ -1403,7 +1403,7 @@ public static class DocExtractorParticleSnapshotLogger
             return "00000000";
         }
 
-        return unchecked((uint)obj.GetInstanceID()).ToString("X8", CultureInfo.InvariantCulture);
+        return obj.GetEntityId().ToString();
     }
 
     private static string FormatPointer(Transform transform)
@@ -1422,7 +1422,7 @@ public static class DocExtractorParticleSnapshotLogger
         lock (WriteLock)
         {
             Sessions.Clear();
-            OpenEffectOwnerId = 0;
+            OpenEffectOwnerId = EntityId.None;
             try
             {
                 string dir = Path.GetDirectoryName(path);

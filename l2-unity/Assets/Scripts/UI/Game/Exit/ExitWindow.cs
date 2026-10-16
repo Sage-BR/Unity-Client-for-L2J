@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -67,7 +67,7 @@ public class ExitWindow : L2PopupWindow
         float exit_width = _windowEle.worldBound.width / 2;
         float width = root_width - exit_width;
         Vector2 center = new Vector2(root.worldBound.x + width, root.worldBound.y);
-        _windowEle.transform.position = center;
+        _windowEle.style.translate = L2UiTranslation.FromPosition(center);
 
         HideWindow();
 

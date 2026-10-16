@@ -16,7 +16,6 @@ public class ClanWindow : L2TwoPanels
     private PledgeClanInfoDto _pladgeClanInfo = new PledgeClanInfoDto();
 
     private DropdownField _dropdown;
-    private string _selectDropDown = "";
 
     private DataProviderClanInfo _dataProviderClanInfo;
 

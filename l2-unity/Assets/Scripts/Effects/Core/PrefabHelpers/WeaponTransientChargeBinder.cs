@@ -69,7 +69,7 @@ public sealed class WeaponTransientChargeBinder : MonoBehaviour, IEffectPrePlayC
             group.SetRuntimeMaterialVector(
                 L2MaterialPropertyCopier.StartVelocityRangeXUcId,
                 range);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
             if (_debugLogs)
             {
                 Debug.Log(

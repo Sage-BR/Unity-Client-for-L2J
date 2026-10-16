@@ -1,4 +1,4 @@
-﻿
+
 using UnityEngine.UIElements;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
@@ -16,7 +16,7 @@ namespace Assets.Scripts.UI
     public class IconOverlay : MonoBehaviour
     {
         private VisualTreeAsset _overlayTemplate;
-        public VisualElement result;
+        [System.NonSerialized] public VisualElement result;
 
         private static IconOverlay _instance;
         public static IconOverlay Instance
@@ -62,7 +62,7 @@ namespace Assets.Scripts.UI
 
             var statusWindowEle = _overlayTemplate.Instantiate()[0];
 
-            result = statusWindowEle.Q(className: "image-opacity");
+          result = statusWindowEle.Q(className: "image-opacity");
             // Debug.LogError(result.ToString());
             
 
@@ -77,7 +77,7 @@ namespace Assets.Scripts.UI
             // var element = (VisualElement)evt.currentTarget;
             // float x = element.transform.position.x;
             // Debug.Log("");
-            result.transform.position = vector;
+            result.style.translate = L2UiTranslation.FromPosition(vector);
             // Vector2 diff = _startMousePosition - new Vector2(evt.position.x, evt.position.y);
             // overlayImage.style.left = _startMousePosition.x - diff.x;
             // overlayImage.style.top = _startMousePosition.y - diff.y;

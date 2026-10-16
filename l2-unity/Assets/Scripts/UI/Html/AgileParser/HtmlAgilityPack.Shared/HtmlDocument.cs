@@ -1,4 +1,4 @@
-﻿// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
+// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
 // Website & Documentation: https://html-agility-pack.net
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
@@ -64,7 +64,7 @@ namespace HtmlAgilityPack
         private static int _maxDepthLevel = int.MaxValue;
 
         private int _c;
-        private Crc32 _crc32;
+        private Crc32Calculator _crc32;
         private HtmlAttribute _currentattribute;
         private HtmlNode _currentnode;
         private Encoding _declaredencoding;
@@ -1351,7 +1351,7 @@ namespace HtmlAgilityPack
             int lastquote = 0;
             if (OptionComputeChecksum)
             {
-                _crc32 = new Crc32();
+                _crc32 = new Crc32Calculator();
             }
 
             Lastnodes = new Dictionary<string, HtmlNode>();

@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,7 @@ public abstract class AbstractCreator
     protected ITab _activeTab;
     public event Action<int, ItemCategory, int> EventLeftClick;
     public event Action<ITab , bool> EventSwitchOut;
+    public event Action<int> TabIndexChanged;
     public void InitTradeTabs(string[] nameTabs)
     {
         _nameTabs = nameTabs;
@@ -154,7 +155,12 @@ public abstract class AbstractCreator
             if (_activeTab != null) _activeTab.UnselectTabContainerClass();
             _activeTab = switchTo;
             if (_activeTab != null) _activeTab.SelectTabContainerClass();
-            if(useEvent == true) EventSwitchOut?.Invoke(switchTo, isTrade);
+            if (useEvent)
+            {
+                EventSwitchOut?.Invoke(switchTo, isTrade);
+                var tabs = isTrade ? _tabsTradeTabs : _tabsContentTabs;
+                if (tabs != null) TabIndexChanged?.Invoke(Array.IndexOf(tabs, switchTo));
+            }
 
         }
     }

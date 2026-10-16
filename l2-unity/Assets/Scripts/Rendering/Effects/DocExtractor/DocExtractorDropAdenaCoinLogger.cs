@@ -1,4 +1,4 @@
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || UNITY_ENABLE_CHECKS
 using System;
 using System.Globalization;
 using System.IO;
@@ -12,10 +12,10 @@ using UnityEngine;
 /// </summary>
 public static class DocExtractorDropAdenaCoinLogger
 {
-    public const string UnityLogPath =
-        @"C:\Users\hh-soft\source\repos\AutoLoginInterlude\Debug\Unity_DropAdenaCoin.log";
-    public const string LiveLogPath =
-        @"C:\Users\hh-soft\source\repos\AutoLoginInterlude\Debug\SpawnParticleSnapshot.log";
+    public static string UnityLogPath =>
+        Path.Combine(Application.persistentDataPath, "Debug", "Unity_DropAdenaCoin.log");
+    public static string LiveLogPath =>
+        Path.Combine(Application.persistentDataPath, "Debug", "SpawnParticleSnapshot.log");
 
     public const float LiveSlot0AgeSeconds = 0.0059466f;
     public const uint LiveSlot0StateBeforeVelocity = 0x918511C5u;

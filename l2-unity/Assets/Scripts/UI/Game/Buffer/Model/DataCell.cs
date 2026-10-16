@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class DataCell : L2Slot
 {
     private bool _isBusy;
     private int _idSkill;
-    private int _level;
+    private int _skillLevel;
     private VisualElement _element;
-    private int _position = 0;
+    private int _cellPosition = 0;
     private Skillgrp _skill;
     private float _activeTime = 0;
     private float _startTime;
@@ -29,7 +29,7 @@ public class DataCell : L2Slot
         _idSkill = idSkill;
         _element = element;
         _isBusy = false;
-        _position = position;
+        _cellPosition = position;
         _label = labelTemplate.Q<Label>("LabelText");
         _labelShadow = labelTemplate.Q<Label>("LabelTextShadow");
         _labelTemplate = labelTemplate;
@@ -78,12 +78,12 @@ public class DataCell : L2Slot
     public void SetSkillId(int skillId)
     {
         _idSkill = skillId;
-        _skillInstance.RefreshData(skillId , _level , IsPassiveSkill() , false);
+        _skillInstance.RefreshData(skillId , _skillLevel , IsPassiveSkill() , false);
     }
 
     public void SetLevel(int level)
     {
-        _level = level;
+        _skillLevel = level;
         _skillInstance.RefreshData(_idSkill, level, IsPassiveSkill(), false);
     }
 
@@ -94,7 +94,7 @@ public class DataCell : L2Slot
 
     public int GetLevel()
     {
-        return _level;
+        return _skillLevel;
     }
 
     public bool IsBusy()
@@ -175,7 +175,7 @@ public class DataCell : L2Slot
 
     public int GetPosition()
     {
-        return _position;
+        return _cellPosition;
     }
 
     public void SetIcon(int skillId  , int level)

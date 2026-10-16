@@ -1,0 +1,70 @@
+{
+  "source": "D:/Jogos/L2 C2 (Splendor)/systextures/MFighter.utx",
+  "source_sha256": "967e9eb5fe79578b80fb8ab2c51a6e0c38597cf1e1140f56b7575ceccd327e71",
+  "package_version": 123,
+  "license_version": 23,
+  "alpha_ref": 5,
+  "frame_buffer_blending": 2,
+  "textures": [
+    {
+      "name": "MFighter_m000_t00_m00_ah_ori.png",
+      "before_sha256": "733698fb9f9acda343b756c08750589e02b4e57cf0dce281ed5d1f1217eb4f55",
+      "after_sha256": "7f80d8e87244f3baab37ad5cfed3c56f9f2950650d9fdc1949326e4e1c765ba6"
+    },
+    {
+      "name": "MFighter_m000_t01_m00_ah_ori.png",
+      "before_sha256": "b2b1f766204a7cfd2872ac21b2c894fa5dff0d98b771ac428f30a970ae814d72",
+      "after_sha256": "875cca0e1e297eb3db37a3cb6ca5f10d6f4ed6c7aad17ab57122a57deed974ea"
+    },
+    {
+      "name": "MFighter_m000_t02_m00_ah_ori.png",
+      "before_sha256": "4e14797b489c87e3fe220fc3288595def293368df0f4f3463a8c9e29c8afab23",
+      "after_sha256": "ccd8a2713b0de51bd64c0ba4d0bf494424fc854d3678940e8af0146740ca32f5"
+    },
+    {
+      "name": "MFighter_m000_t03_m00_ah_ori.png",
+      "before_sha256": "c039f950dd93bc04c0beda3eb53ad0d48a57fa794142f5647e5dae1dfe485af7",
+      "after_sha256": "2ad161b86ffa6f64d759e4c4720eb1785f72079365c179eda955cc5eca996b1b"
+    },
+    {
+      "name": "MFighter_m001_t00_m00_ah_ori.png",
+      "before_sha256": "b4f154374c1f01a1c5b835df02fa6dc3e9528bb08e7fccace2b9d17f801c4512",
+      "after_sha256": "b44299ee0161e45fcee2203e4066db3a5903b6b883dffe4044b89cc0002f7d70"
+    },
+    {
+      "name": "MFighter_m001_t01_m00_ah_ori.png",
+      "before_sha256": "e8edc3564982b5252158a9e846ee2fc36c9bc8c671d68844310ae0c1bc25c618",
+      "after_sha256": "03a5d6b72d198b6ae3132b5dda8c74becf91888a040a80c754be5d79f1bbd2b9"
+    },
+    {
+      "name": "MFighter_m001_t02_m00_ah_ori.png",
+      "before_sha256": "7195391fad94d23f345de949f0ecf3375c9aca693fcf1d3183a89525dee22b29",
+      "after_sha256": "da172ed61f3114c00aa72ae496cbd998674f0af1933d8bee3f94bbb44f7135f2"
+    },
+    {
+      "name": "MFighter_m001_t03_m00_ah_ori.png",
+      "before_sha256": "aa50c6e462d472e4a65ebbcdaf38759e35c68149028caba81d1fdd9541f59fc3",
+      "after_sha256": "b7623971468653d192a9568688d73ecea8135b004a254b4ef17e1149a241cd13"
+    },
+    {
+      "name": "MFighter_m002_t00_m00_ah_ori.png",
+      "before_sha256": "4ef074dfb0f90b742b9e59472fd60899333fc8c4c05d1043b496443858294f2e",
+      "after_sha256": "e3b604598da080066f83f1c1d694dfa55e52c309a84e9ee685c91cfe0d6a49d4"
+    },
+    {
+      "name": "MFighter_m002_t01_m00_ah_ori.png",
+      "before_sha256": "ddb72a6a3f90cf3b1cd14979754019e6a05e2d9cf664ccd0ddc64e4f5e9491c3",
+      "after_sha256": "4b57cc4c91a778bb36ab3a46fbe292b32df4be99e472868c7180989ad8669167"
+    },
+    {
+      "name": "MFighter_m002_t02_m00_ah_ori.png",
+      "before_sha256": "3605e5e337abd3afa87d18b3cd8506be8af9dd3583b2e5766f6f15643c0b722b",
+      "after_sha256": "c24884adb04cffbbeff62acbf30377902b20de37b2f6eab5918de2fcc913057a"
+    },
+    {
+      "name": "MFighter_m002_t03_m00_ah_ori.png",
+      "before_sha256": "9a465c6356e177e57bc839dfa72a23920af733b0b4c6f99f9dfa5b0c6d6df32b",
+      "after_sha256": "61790f5d01cde28e6b52de6dbeb7ae9326feb41b953af5ac9b40f14b021d4146"
+    }
+  ]
+}
